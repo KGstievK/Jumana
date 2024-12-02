@@ -1,15 +1,18 @@
-import scss from './CatalogSection.module.scss'
+import Cards from "./cards/Cards";
+import scss from "./CatalogSection.module.scss";
+import SideBar from "./sideBar/SideBar";
 
 const CatalogSection = () => {
   return (
     <section className={scss.CatalogSection}>
       <div className="container">
         <div className={scss.content}>
-          <h1>CatalogSection</h1>
+          <SideBar />
+          <Cards />
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default CatalogSection
+export default CatalogSection;
