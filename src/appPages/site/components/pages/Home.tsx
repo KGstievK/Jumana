@@ -1,11 +1,11 @@
-import Welcome from "./HomeSections/Welcome/Welcome"
+import Welcome from "./HomeSections/Welcome/Welcome";
 
 const Home = () => {
   return (
     <div>
-      <Welcome/>
+      <Welcome />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
