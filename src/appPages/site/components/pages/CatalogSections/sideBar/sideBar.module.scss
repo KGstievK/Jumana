@@ -2,6 +2,11 @@
   width: 300px;
   background: #af8f77;
   height: 60vh;
-  .content {
+  .container {
+    .content {
+      form {
+        display: flex;
+      }
+    }
   }
 }
