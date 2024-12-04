@@ -21,7 +21,7 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
 					router.push('/');
 				}
 				break;
-			case '/admin':
+			// case '/admin':
 			case '/profile':
 				if (status === 'rejected') {
 					router.push('/auth/sign-in');
