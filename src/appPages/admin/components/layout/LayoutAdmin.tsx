@@ -1,6 +1,7 @@
 
 import { FC, ReactNode } from 'react';
-import scss from './LayoutAuth.module.scss';
+import scss from './LayoutAdmin.module.scss';
+import HeaderAdmin from './HeaderAdmin/HeaderAdmin';
 
 interface LayoutAdminProps {
 	children: ReactNode;
@@ -9,6 +10,7 @@ interface LayoutAdminProps {
 const LayoutAdmin: FC<LayoutAdminProps> = ({ children }) => {
 	return (
 		<div className={scss.LayoutPage}>
+			<HeaderAdmin/>
 			<main>{children}</main>
 		</div>
 	);

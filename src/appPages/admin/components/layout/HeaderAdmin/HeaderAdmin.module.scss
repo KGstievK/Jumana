@@ -1,0 +1,37 @@
+.HeaderAdmin {
+  margin: auto 0;
+  .content {
+    width: 100%;
+    margin: auto 0;
+    .nav {
+      margin: auto 0;
+      ul {
+        margin: auto 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+        li {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            button {
+              width: 150px;
+              height: 35px;
+              border-radius: 2px;
+              border: transparent;
+              font-size: 20px;
+              font-weight: 700;
+              
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,12 @@ const Header = () => {
     <header className={scss.Header}>
       <div className="container">
         <div className={scss.content}>
-          <h1>Header</h1>
+          <div className={scss.Logo}>
+            <h1>Logo</h1>
+          </div>
+          <div className={scss.nav}>
+            <h1>Nav</h1>
+          </div>
         </div>
       </div>
     </header>

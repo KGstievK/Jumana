@@ -1,11 +1,11 @@
-import HomeSection from "./AdminSections/AdminSection"
+import AdminSection from "./AdminSections/AdminSection"
 
-const Home = () => {
+const Admin = () => {
   return (
     <div>
-      <HomeSection/>
+      <AdminSection/>
     </div>
   )
 }
 
-export default Home
+export default Admin

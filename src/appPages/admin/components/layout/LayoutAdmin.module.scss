@@ -1,6 +1,7 @@
 .LayoutPage {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: 10% 85%;
+	justify-content: flex-start;
 	min-height: 100vh;
+	margin: 20px 0;
 }

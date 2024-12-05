@@ -1,3 +1,4 @@
+"use client"
 import LayoutAdmin from '@/appPages/admin/components/layout/LayoutAdmin';
 import { FC, ReactNode } from 'react';
 interface LayoutType {
