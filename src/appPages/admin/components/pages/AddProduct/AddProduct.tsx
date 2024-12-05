@@ -1,14 +1,21 @@
 "use client";
 import { FC, useState } from "react";
 import scss from "./AddProduct.module.scss";
-import { close, edit, remove } from "../icons";
+import { close, createImage, edit, remove } from "../icons";
+import Image from "next/image";
+import Create_image from "@/assets/icons/Create_Image.svg";
 
 interface AddProductProps {
   _id?: number;
   image: string;
 }
 
-const AddProduct: FC<AddProductProps> = () => {
+const AddProduct: FC= () => {
+  const infoProduct = ["name", "price", "discount", "article"];
+
+  const [addProduct, setAddProduct] = useState(
+    infoProduct.reduce((acc, el) => ({ ...acc, [el]: "" }), {})
+  );
   // const [create, setCreate] = useState(false)
   // const [edited, setEdited] = useState(false)
   // const [product, setProduct] = useState(null)
@@ -53,12 +60,7 @@ const AddProduct: FC<AddProductProps> = () => {
         <div className={scss.content}>
           <form action="">
             <div className={scss.Product}>
-              <button
-                className={scss.cancel}
-                onClick={() => {
-                  
-                }}
-              >
+              <button className={scss.cancel} onClick={() => {}}>
                 cancel
               </button>
               <div className={scss.Product_image}>
@@ -75,7 +77,8 @@ const AddProduct: FC<AddProductProps> = () => {
                     >
                       {edit}
                     </label>
-                    <img src="" alt="Image" />
+
+                    <Image src='' alt="Image" />
                   </div>
                   <input
                     onChange={(e) => editImage(e)}
@@ -91,6 +94,25 @@ const AddProduct: FC<AddProductProps> = () => {
                     />
                   </div>
                 </div>
+              </div>
+              <div className={scss.Product_name}>
+                {infoProduct.map(
+                  (el) =>
+                    el !== "description" && (
+                      <input
+                        key={el}
+                        type="text"
+                        name={el}
+                        onChange={(e) =>
+                          setAddProduct({
+                            ...addProduct,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
+                        placeholder={el}
+                      />
+                    )
+                )}
               </div>
             </div>
           </form>

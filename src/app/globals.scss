@@ -1,13 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --border: #BA9B86;
+  --active: #562C2C;
+  --button-background: #AF8F77;
+  --button-background-active: #A73539;
 }
 
 html,
@@ -17,12 +14,7 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #ffffff;
+  font-family: 'Playfair Display', sans-serif;
 }
 
 * {
@@ -37,17 +29,27 @@ a {
 }
 
 li {
-	list-style: none;
+  list-style: none;
+}
+
+input {
+  outline: none;
+  border-radius: 8px;
+  border: 2px solid var(--border) ;
+}
+
+button {
+  background-color: var(--button-background);
+  border-radius: 8px;
+  border: 2px solid var(--button-background);
+  &:active {
+  background-color: var(--button-background-active);
+  border: 2px solid var(--button-background-active);
+  }
 }
 
 .container {
   width: 90%;
   margin: 0 auto;
   padding: 0 20px;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
