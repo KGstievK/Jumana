@@ -12,6 +12,7 @@ interface AddProductProps {
 
 const AddProduct: FC= () => {
   const infoProduct = ["name", "price", "discount", "article"];
+  
 
   const [addProduct, setAddProduct] = useState(
     infoProduct.reduce((acc, el) => ({ ...acc, [el]: "" }), {})

@@ -4,55 +4,30 @@ import Link from "next/link";
 
 const HeaderAdmin = () => {
   const pathname = usePathname();
-
+  console.log(pathname);
+  
+  const tabs = [
+    { label: "Статистика", path: "/admin" },
+    { label: "Редактор продуктов", path: "/admin/addproduct" },
+    { label: "Редактор категорий", path: "/admin/addcategory" },
+    { label: "Редактор слайдеров", path: "/admin/addslider" },
+    { label: "Контроль заказов", path: "/admin/order" },
+  ];
   return (
     <section className={scss.HeaderAdmin}>
       <div className="container">
         <div className={scss.content}>
           <div className={scss.nav}>
             <ul>
-              <li>
-                <Link href="/admin/addproduct">
-                  <button
-                    className={
-                      pathname === "/admin/addproduct" ? scss.active : ""
-                    }
-                  >
-                    Add Product
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin/addcategory">
-                  <button
-                    className={
-                      pathname === "/admin/addcategory" ? scss.active : ""
-                    }
-                  >
-                    Add Category
-                  </button>
-                </Link>
-              </li> 
-              <li>
-                <Link href="/admin/addslider">
-                  <button
-                    className={
-                      pathname === "/admin/addslider" ? scss.active : ""
-                    }
-                  >
-                    Add Slider
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin/order">
-                  <button
-                    className={pathname === "/admin/order" ? scss.active : ""}
-                  >
-                    Order
-                  </button>
-                </Link>
-              </li>
+              {tabs.map((tab, idx) => (
+                <li key={idx}>
+                    <Link href={tab.path}>
+                      <button className={pathname === tab.path ? scss.active : ''}>
+                        {tab.label}
+                      </button>
+                    </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
