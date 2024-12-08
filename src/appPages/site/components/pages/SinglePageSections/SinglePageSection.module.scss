@@ -1,9 +1,24 @@
 .SinglePageSection {
+  padding: 50px 0;
+
+  .header {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 20px;
+    padding: 20px 0;
+
+    a {
+      color: #a73539;
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+
   .content {
     display: flex;
     align-items: start;
     justify-content: start;
-
     gap: 50px;
 
     .images {
@@ -41,7 +56,7 @@
 
       h1 {
         font-family: Playfair Display;
-        font-size: 76px;
+        font-size: clamp(20px, 35vw, 45px);
         font-weight: 500;
         color: #562c2c;
       }
@@ -85,6 +100,41 @@
           color: #562c2c;
           font-family: SF Pro Text;
           font-size: 32px;
+          font-weight: 500;
+        }
+      }
+
+      .textile {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        flex-direction: column;
+        gap: 10px;
+        h5 {
+          color: #a73539;
+          font-size: 20px;
+          font-weight: 500;
+        }
+        h4 {
+          color: #ba9b86;
+          font-family: Inter;
+          font-size: 20px;
+          font-weight: 500;
+        }
+      }
+
+      .description {
+        color: #b4b4b4;
+        font-family: Inter;
+        font-size: 20px;
+        font-weight: 500;
+        width: 510px;
+      }
+
+      .sizes {
+        h5 {
+          color: #a73539;
+          font-size: 20px;
           font-weight: 500;
         }
       }
