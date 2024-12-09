@@ -1,19 +1,83 @@
-import scss from './Header.module.scss'
+import { usePathname } from "next/navigation";
+import scss from "./Header.module.scss";
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import logo from "@/assets/images/logo.svg";
+import profile from "@/assets/icons/Profile.svg";
+import cart from "@/assets/icons/cart.svg";
+import search from "@/assets/icons/Search.svg";
+import searchData from "@/appPages/site/components/ui/Search/Search";
+import Search from "@/appPages/site/components/ui/Search/Search";
+import BurgeMenu from "../../ui/BurgeMenu/BurgeMenu";
+
+
 const Header = () => {
+  const pathname = usePathname();
+
+  const links = [
+    {
+      link: "/",
+      name: "Главная",
+    },
+    {
+      link: "/new",
+      name: "Новинки",
+    },
+    {
+      link: "/catalog",
+      name: "Категории",
+    },
+    {
+      link: "/about",
+      name: "О нас",
+    },
+    {
+      link: "/contacts",
+      name: "Контакты",
+    },
+  ];
   return (
     <header className={scss.Header}>
       <div className="container">
         <div className={scss.content}>
           <div className={scss.Logo}>
-            <h1>Logo</h1>
+            <a href="/">
+              <Image src={logo} alt="Logo" />
+            </a>
           </div>
           <div className={scss.nav}>
-            <h1>Nav</h1>
+            <ul>
+              {links.map((item, idx) => (
+                <li key={idx}>
+                  <Link
+                    href={item.link}
+                    className={pathname === item.link ? scss.active : ""}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={scss.profile_cart}>
+            <div>
+              <Search/>
+            </div>
+            <Link href="/profile">
+              <Image src={profile} alt="Profile" />
+            </Link>
+            <Link href="/profile">
+              <Image src={cart} alt="Profile" />
+            </Link>
+          </div>
+          <div className={scss.burgerMenu}>
+            <BurgeMenu/>
           </div>
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

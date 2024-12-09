@@ -5,9 +5,56 @@
     align-items: center;
     justify-content: space-between;
     .Logo {
+      width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+    }
+    .nav {
+      width: 100%;
+      @media (max-width: 375px) {
+        display: none;
+      }
+      ul {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        li {
+          a {
+            &:hover {
+              color: var(--nav);
+            }
+          }
+        }
+        li a.active {
+          color: var(--nav);
+        }
+      }
+    }
+    .profile_cart {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 20px;
+      button.Search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        border: none;
+      }
+      @media (max-width: 375px) {
+        display: none;
+      }
+    }
+    .burgerMenu {
+      display: none;
+      transition: .3s;
+      @media (max-width: 375px) {
+        display: block;
+      }
     }
   }
 }
