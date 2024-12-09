@@ -56,13 +56,26 @@ const SinglePageSection = () => {
 
             <div className={scss.sizes}>
               <h5>Размеры:</h5>
-              <span>XXS</span>
-              <span>XS</span>
-              <span>S</span>
-              <span>M</span>
-              <span>L</span>
-              <span>XL</span>
-              <span>XXL</span>
+              <div className={scss.spans}>
+                <span>XXS</span>
+                <span>XS</span>
+                <span>S</span>
+                <span>M</span>
+                <span>L</span>
+                <span>XL</span>
+                <span>XXL</span>
+              </div>
+            </div>
+
+            <div className={scss.quantity}>
+              <div className={scss.counter}>
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+              </div>
+              <div className={scss.cart}>
+                <button>В корзинку</button>
+              </div>
             </div>
           </div>
         </div>
