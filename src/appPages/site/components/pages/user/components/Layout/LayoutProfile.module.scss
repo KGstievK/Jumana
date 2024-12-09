@@ -1,0 +1,26 @@
+.LayoutProfile {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-top: 50px;
+  p {
+    font-family: 'inter', sans-serif;
+    font-size: 16px;
+    line-height: 15px;
+    font-weight: 500;
+    color: var(--main-color);
+    span {
+      color: #00000080;
+      margin: 0 15px;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+  }
+  .content {
+    display: grid;
+    grid-template-columns: 20% 75%;
+    margin-top: 25px;
+
+  }
+}

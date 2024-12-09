@@ -1,0 +1,19 @@
+.History {
+  width: 100%;
+  margin-left: 50px;
+  .content {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    h1 {
+      font-family: 'inter', sans-serif;
+    }
+    p {
+      font-size: 16px;
+      font-family: 'inter', sans-serif;
+      color: var(--silver);  
+    }
+  }
+}
