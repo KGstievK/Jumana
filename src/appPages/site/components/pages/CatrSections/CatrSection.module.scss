@@ -1,2 +1,42 @@
 .CatrSection {
+  .content {
+    .block_left {
+      .box {
+        width: 702px;
+        height: 212px;
+        border-radius: 8px;
+        background: #f8f1ed;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        padding: 10px;
+        gap: 20px;
+        .text {
+          display: flex;
+          flex-direction: column;
+          width: 480px;
+          gap: 20px;
+          .top_text {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+          .center {
+            display: flex;
+            flex-direction: column;
+          }
+          .bottom_text {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .cur {
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
 }
