@@ -2,12 +2,9 @@ import { usePathname } from "next/navigation";
 import scss from "./Header.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import logo from "@/assets/images/logo.svg";
+import logo from "@/assets/icons/logo.svg";
 import profile from "@/assets/icons/Profile.svg";
 import cart from "@/assets/icons/cart.svg";
-import search from "@/assets/icons/Search.svg";
-import searchData from "@/appPages/site/components/ui/Search/Search";
 import Search from "@/appPages/site/components/ui/Search/Search";
 import BurgeMenu from "../../ui/BurgeMenu/BurgeMenu";
 
