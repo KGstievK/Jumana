@@ -1,39 +1,58 @@
 .CatrSection {
   .content {
+    h1 {
+      color: #a73539;
+      font-size: 48px;
+    }
     .block_left {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      .title {
+        width: 702px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        gap: 20px;
+        .title_cur {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 320px;
+        }
+      }
       .box {
         width: 702px;
-        height: 212px;
-        border-radius: 8px;
-        background: #f8f1ed;
+        padding-block: 20px;
+        border-top: 1px solid #a73539;
         display: flex;
         align-items: center;
         justify-content: start;
-        padding: 10px;
         gap: 20px;
+        img {
+          width: 100px;
+          height: 100px;
+        }
         .text {
           display: flex;
           flex-direction: column;
           width: 480px;
           gap: 20px;
-          .top_text {
+        }
+        .price_text {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          .cur {
             display: flex;
             align-items: center;
-            justify-content: space-between;
           }
-          .center {
-            display: flex;
-            flex-direction: column;
-          }
-          .bottom_text {
+          .total_price_text {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-
-            .cur {
-              display: flex;
-              align-items: center;
-            }
           }
         }
       }
