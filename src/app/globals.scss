@@ -39,14 +39,15 @@ input {
   font-size: 18px;
   outline: none;
   border-radius: 8px;
-  background-color: var(--input);
-  border: 2px solid var(--main-color);
+  background-color: transparent;
+  border: 2px solid #D3D3D3;
 }
 
 button {
   background-color: var(--main-color);
   border-radius: 8px;
   border: 2px solid var(--main-color);
+  cursor: pointer;
 }
 
 .container {

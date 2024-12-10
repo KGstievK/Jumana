@@ -1,4 +1,4 @@
-.LoginPage {
+.ForgotPage {
   padding: 45px 40px;
   background: #fff;
   border: 1px solid rgb(219, 219, 219);
@@ -80,14 +80,14 @@
       color: var(--background);
     }
   }
-  .nav {
+  .links {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     p {
       font-size: 16px;
-      font-family: 'inter', sans-serif;
+      font-family: "inter", sans-serif;
       font-weight: 500;
     }
     .link {
@@ -100,34 +100,6 @@
       &:hover {
         text-decoration: underline;
         color: var(--main-color);
-      }
-    }
-  }
-  .orLine {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    .line {
-      width: 100%;
-      border-bottom: 2px solid #95959599;
-    }
-    p {
-      font-size: 14px;
-      color: var(--silver);
-    }
-  }
-  .google {
-    align-self: center;
-    a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      img {
-        width: 50px;
-        height: 40px;
-        margin: 0;
       }
     }
   }

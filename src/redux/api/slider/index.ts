@@ -35,3 +35,5 @@ const api = index.injectEndpoints({
     }),
   })
 })
+
+export const {useGetSliderQuery, usePostSliderMutation, usePatchSliderMutation, useDeleteSliderMutation} = api
