@@ -4,6 +4,7 @@ import { usePostRegistrationMutation } from "@/redux/api/auth";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
+import { Link } from "react-router-dom";
 
 interface RegisterType {
 	email: string;
@@ -50,19 +51,26 @@ const SignUpPage = () => {
 
 	const password = watch('password');
 	return (
-		<section>
+		<section className={scss.RegistrationPage}>
 			<h1>Sign-Up Page</h1>
 			<form action="">
-				<input type="text" {...register("email", {required: true})} />
-				<input type="text" {...register("userName", {required: true})} />
-				<input type="text" {...register("photo", {required: true})} />
-				<input type="text" {...register("password", {required: true})} />
-				<input type="text" {...register("confirmPassword", {required: true, validate: (value: string) => value === 'password' || 'Пароли не совпадают'})} />
+				<input type="text" {...register("email", {required: true})} placeholder="email"/>
+				<input type="text" {...register("userName", {required: true})} placeholder="Имя аккаунта"/>
+				<input type="text" {...register("password", {required: true})} placeholder="Пароль"/>
+				<input type="text" {...register("confirmPassword", {required: true, validate: (value: string) => value === 'password' || 'Пароли не совпадают'})} placeholder="Повторите пароль" />
 				<Checkbox className={scss.customCheckbox} onChange={handleRememberMeChange}>
 					Сохранить вход
 				</Checkbox>
 				<button type="submit">Зарегистрироваться</button>
 			</form>
+			<div className={scss.links}>
+						<Link to="/auth/sign-in" className={scss.link}>
+							У вас уже есть аккаунт?
+						</Link>
+						<Link to="/auth/forgot" className={scss.link}>
+							Забыли пароль?
+						</Link>
+					</div>
 		</section>
 	);
 };

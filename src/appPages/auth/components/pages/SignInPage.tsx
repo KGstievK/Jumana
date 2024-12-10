@@ -44,14 +44,14 @@ const SignInPage = () => {
 		}
 	};
 	return (
-		<section>
+		<section className={scss.LoginPage}>
 			<h1>Sign-In Page</h1>
 			<form action="" onSubmit={handleSubmit(onSubmit)}>
 				<input
 					type="text"
 					placeholder="User Name"
 					{...register('email', { required: true })}
-				/>
+					/>
 				<input
 					type="password"
 					placeholder="Password"
@@ -66,7 +66,7 @@ const SignInPage = () => {
 				<button type="submit">Войти</button>
 			</form>
 			<div className={scss.links}>
-				<Link to="/auth/registration" className={scss.link}>
+				<Link to="/auth/sign-up" className={scss.link}>
 					У вас нет аккаунта?
 				</Link>
 				<Link to="/auth/forgot" className={scss.link}>

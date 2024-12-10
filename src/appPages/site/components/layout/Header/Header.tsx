@@ -64,8 +64,8 @@ const Header = () => {
             <Link href="/profile">
               <Image src={profile} alt="Profile" />
             </Link>
-            <Link href="/profile">
-              <Image src={cart} alt="Profile" />
+            <Link href="/cart">
+              <Image src={cart} alt="cart" />
             </Link>
           </div>
           <div className={scss.burgerMenu}>
