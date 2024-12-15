@@ -12,6 +12,7 @@ const CatrSection = () => {
           <h1>Корзина</h1>
           <div className={scss.block}>
             <div className={scss.block_left}>
+            
               <div className={scss.title}>
                 <p>Продукт</p>
                 <div className={scss.title_cur}>
@@ -90,6 +91,7 @@ const CatrSection = () => {
                 <div className={scss.text}>
                   <h3>JUMANA-21</h3>
                   <p>Черный</p>
+                  <p className={scss.quantity}>2 x 1400</p>
                 </div>
               </div>{" "}
               <div className={scss.box}>
@@ -97,6 +99,24 @@ const CatrSection = () => {
                 <div className={scss.text}>
                   <h3>JUMANA-21</h3>
                   <p>Черный</p>
+                </div>
+              </div>
+              <div className={scss.summary}>
+                <div className={scss.row}>
+                  <span>Итог</span>
+                  <span>4800с</span>
+                </div>
+                <div className={scss.row}>
+                  <span>Доставка</span>
+                  <span>Бесплатно</span>
+                </div>
+                <div className={scss.row}>
+                  <span>Скидка</span>
+                  <span>-600с</span>
+                </div>
+                <div className={scss.total_row}>
+                  <span>Итого к оплате:</span>
+                  <span>4400с</span>
                 </div>
               </div>
               <div className={scss.information}></div>
