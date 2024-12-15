@@ -22,7 +22,7 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
 				}
 				break;
 			// case '/admin':
-			case '/profile':
+			// case '/profile':
 				if (status === 'rejected') {
 					router.push('/auth/sign-in');
 				}
