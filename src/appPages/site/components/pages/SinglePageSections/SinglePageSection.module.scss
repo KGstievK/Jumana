@@ -13,6 +13,9 @@
       font-size: 15px;
       font-weight: 500;
     }
+    a:hover {
+      text-decoration: underline;
+    }
   }
 
   .content {
@@ -115,7 +118,7 @@
       .textile {
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: center;
         gap: 10px;
         h5 {
           color: #a73539;
@@ -124,7 +127,6 @@
         }
         h4 {
           color: #ba9b86;
-          font-family: Inter;
           font-size: 20px;
           font-weight: 500;
         }
@@ -156,7 +158,6 @@
           justify-content: start;
           gap: 16px;
           span {
-            font-family: Playfair Display;
             font-size: 20px;
             font-weight: 500;
             background: #a73539;
@@ -219,6 +220,7 @@
             justify-content: center;
             gap: 5px;
             border-radius: 8px;
+            cursor: pointer;
             button {
               background: none;
               border: none;

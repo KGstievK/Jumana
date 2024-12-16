@@ -49,7 +49,7 @@ const SinglePageSection = () => {
 
             <div className={scss.price}>
               <del>{data.price}сом</del>
-              <h4>{(data.price * data.sale) / 100}сом</h4>
+              <h4>{data.price - (data.price * data.sale) / 100}сом</h4>
             </div>
 
             <div className={scss.colors}>
