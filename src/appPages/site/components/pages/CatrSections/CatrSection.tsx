@@ -1,10 +1,16 @@
+"use client";
 import Image from "next/image";
 import scss from "./CatrSection.module.scss";
 import img1 from "@/assets/image.png";
-import { table } from "console";
+import { useRouter } from "next/navigation";
 //! Это Корзина
 
 const CatrSection = () => {
+  // const router = useRouter();
+
+  // const handleCheckout = () => {
+  //   router.push("/cart/checkout");
+  // };
   return (
     <section className={scss.CatrSection}>
       <div className="container">
@@ -12,93 +18,126 @@ const CatrSection = () => {
           <h1>Корзина</h1>
           <div className={scss.block}>
             <div className={scss.block_left}>
-            
-              <div className={scss.title}>
-                <p>Продукт</p>
-                <div className={scss.title_cur}>
-                  <p>Цена</p>
-                  <p>Количество</p>
-                  <p>Всего</p>
-                </div>
-              </div>
               <div className={scss.table}>
-                <div className={scss.box}>
-                  <Image src={img1} alt="" />
-                  <div className={scss.text}>
-                    <h3>JUMANA-21</h3>
-                    <p>Черный</p>
-                  </div>
-                  <div className={scss.price_text}>
-                    <h2>1400c</h2>
-                    <div className={scss.cur}>
-                      <div className={scss.plus_minus}>
-                        <button className="decrement">-</button>
-                        <h4>2</h4>
-                        <button className="increment">+</button>
-                      </div>
-                      <p>удалить</p>
-                    </div>
-                    <h2>1200c</h2>
-                  </div>
-                </div>
-                <hr />{" "}
-                <div className={scss.box}>
-                  <Image src={img1} alt="" />
-                  <div className={scss.text}>
-                    <h3>JUMANA-21</h3>
-                    <p>Черный</p>
-                  </div>
-                  <div className={scss.price_text}>
-                    <h2>1400c</h2>
-                    <div className={scss.cur}>
-                      <div className={scss.plus_minus}>
-                        <button className="decrement">-</button>
-                        <h4>2</h4>
-                        <button className="increment">+</button>
-                      </div>
-                      <p>удалить</p>
-                    </div>
-                    <h2>1200c</h2>
-                  </div>
-                </div>
-                <hr />
-                <div className={scss.box}>
-                  <Image src={img1} alt="" />
-                  <div className={scss.text}>
-                    <h3>JUMANA-21</h3>
-                    <p>Черный</p>
-                  </div>
-                  <div className={scss.price_text}>
-                    <h2>1400c</h2>
-                    <div className={scss.cur}>
-                      <div className={scss.plus_minus}>
-                        <button className="decrement">-</button>
-                        <h4>2</h4>
-                        <button className="increment">+</button>
-                      </div>
-                      <p>удалить</p>
-                    </div>
-                    <h2>1200c</h2>
-                  </div>
-                </div>
-                <hr />
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Продукт</th>
+                      <th>Цена</th>
+                      <th>Количество</th>
+                      <th>Всего</th>
+                    </tr>
+                  </thead>
+               
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div className={scss.product}>
+                          <Image
+                            width={100}
+                            height={100}
+                            src={img1}
+                            alt="product"
+                          />
+                          <div className={scss.title}>
+                            <h3>JUMANA-21</h3>
+                            <p>Черный</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <h2>1400c</h2>
+                      </td>
+                      <td>
+                        <div className={scss.plus_minus}>
+                          <button>-</button>
+                          <h4>2</h4>
+                          <button>+</button>
+                        </div>
+                      </td>
+                      <td>
+                        <h2>2800c</h2>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className={scss.product}>
+                          <Image
+                            width={100}
+                            height={100}
+                            src={img1}
+                            alt="product"
+                          />
+                          <div className={scss.title}>
+                            <h3>JUMANA-21</h3>
+                            <p>Черный</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <h2>1400c</h2>
+                      </td>
+                      <td>
+                        <div className={scss.plus_minus}>
+                          <button>-</button>
+                          <h4>2</h4>
+                          <button>+</button>
+                        </div>
+                      </td>
+                      <td>
+                        <h2>2800c</h2>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div className={scss.product}>
+                          <Image
+                            width={100}
+                            height={100}
+                            src={img1}
+                            alt="product"
+                          />
+                          <div className={scss.title}>
+                            <h3>JUMANA-21</h3>
+                            <p>Черный</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <h2>1400c</h2>
+                      </td>
+                      <td>
+                        <div className={scss.plus_minus}>
+                          <button>-</button>
+                          <h4>2</h4>
+                          <button>+</button>
+                        </div>
+                      </td>
+                      <td>
+                        <h2>2800c</h2>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
+
             <div className={scss.block_right}>
               <h2>Детали оплаты</h2>
               <div className={scss.box}>
-                <Image src={img1} alt="" />
+                <Image src={img1} alt="product" />
                 <div className={scss.text}>
                   <h3>JUMANA-21</h3>
                   <p>Черный</p>
-                  <p className={scss.quantity}>2 x 1400</p>
+                  <p className={scss.quantity}>2 x 1400c</p>
                 </div>
-              </div>{" "}
+              </div>
               <div className={scss.box}>
-                <Image src={img1} alt="" />
+                <Image src={img1} alt="product" />
                 <div className={scss.text}>
                   <h3>JUMANA-21</h3>
                   <p>Черный</p>
+                  <p className={scss.quantity}>2 x 1400c</p>
                 </div>
               </div>
               <div className={scss.summary}>
@@ -119,7 +158,6 @@ const CatrSection = () => {
                   <span>4400с</span>
                 </div>
               </div>
-              <div className={scss.information}></div>
               <button>Оформить заказ</button>
             </div>
           </div>
