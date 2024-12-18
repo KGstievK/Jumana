@@ -12,7 +12,7 @@ const Search = () => {
       className={scss.Search}
       style={{
         maxWidth: isOpen ? "250px" : "50px",
-        border: isOpen ? "2px solid var(--main-color)" : "",
+        border: isOpen ? "2px solid var(--silver)" : "",
         borderRadius: isOpen ? "8px" : "8px",
         padding: isOpen ? "0 20px" : "0 0",
       }}

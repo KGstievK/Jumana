@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 :root {
   --background: #ffffff;
   --active: #562c2c;
@@ -26,6 +27,8 @@ body {
 
 a {
   color: inherit;
+  font-family: "inter", sans-serif;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -49,9 +52,41 @@ button {
   border: 2px solid var(--main-color);
   cursor: pointer;
 }
+button.favorite {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    fill: var(--background);
+  }
+  
+}
+button.cart {
+  background-color: var(--background);
+  border: var(--background);
+  border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    fill: var(--background);
+  }
 
+}
+h1.title {
+  font-family: "Playfair Display", sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 62px;
+  color: var(--main-color);
+}
 .container {
-  width: 90%;
+  max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 20px;
 }
