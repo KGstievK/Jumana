@@ -10,11 +10,14 @@
 
     a {
       color: #a73539;
-      font-size: 15px;
+      font-size: clamp(12px, 2vw, 15px);
       font-weight: 500;
     }
     a:hover {
       text-decoration: underline;
+    }
+    img {
+      display: none;
     }
   }
 
@@ -58,8 +61,7 @@
       gap: 20px;
 
       h1 {
-        font-family: Playfair Display;
-        font-size: clamp(20px, 35vw, 45px);
+        font-size: clamp(20px, 25vw, 45px);
         font-weight: 500;
         color: #562c2c;
       }
@@ -71,8 +73,7 @@
         justify-content: space-between;
         h3 {
           color: #757575;
-          font-family: Lato;
-          font-size: 24px;
+          font-size: clamp(12px, 15vw, 24px);
           font-weight: 400;
         }
 
@@ -134,7 +135,6 @@
 
       .description {
         color: #b4b4b4;
-        font-family: Inter;
         font-size: 20px;
         font-weight: 500;
         width: 510px;
@@ -158,12 +158,15 @@
           justify-content: start;
           gap: 16px;
           span {
+            text-align: center;
+            width: 69px;
             font-size: 20px;
             font-weight: 500;
             background: #a73539;
-            padding: 12px;
+            padding: 12px 0;
             border-radius: 4px;
             color: white;
+            cursor: pointer;
           }
         }
       }
@@ -227,6 +230,82 @@
               color: white;
               font-size: 22px;
               font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .SinglePageSection {
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+
+      img {
+        display: block;
+        width: 20px;
+      }
+    }
+
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+
+      .images {
+        width: 100%;
+        .image {
+          display: none;
+        }
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+      .price {
+        h4 {
+          font-size: 20px;
+        }
+      }
+
+      .info {
+        .description {
+          p {
+            width: 79%;
+            font-size: 20px;
+          }
+        }
+        .colors {
+          h5 {
+            font-size: 20px;
+          }
+        }
+
+        .textile {
+          h5 {
+            font-size: 20px;
+          }
+        }
+
+        .sizes {
+          .spans {
+            gap: 10px;
+
+            span {
+              padding: 10px;
+              font-size: 15px;
+              width: 50px;
+              font-size: 20px;
+            }
+
+            h5 {
+              font-size: 20px;
             }
           }
         }
