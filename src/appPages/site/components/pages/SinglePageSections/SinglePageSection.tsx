@@ -4,6 +4,7 @@ import img from "@/assets/images/cardImage.png";
 import star from "@/assets//images//star.png";
 import Link from "next/link";
 import bagSvg from "@/assets/icons/bag-happy.svg";
+import backIcon from "@/assets/icons/backIcon.svg";
 
 //! Это Карточка товаров
 
@@ -24,9 +25,11 @@ const SinglePageSection = () => {
     <section className={scss.SinglePageSection}>
       <div className="container">
         <div className={scss.header}>
+          <Image src={backIcon} alt="icon " width={22} height={22} />
           <Link href="/">Главная</Link>/<Link href="category">Категории</Link>/
           <Link href="/">Платья</Link>/ <Link href="">JUMANA “24</Link>
         </div>
+
         <div className={scss.content}>
           <div className={scss.images}>
             <Image src={img} alt="photo" />
