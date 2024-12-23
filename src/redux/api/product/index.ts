@@ -1,40 +1,43 @@
-import {api as index} from '..'
-
+import { api as index } from "..";
 
 const api = index.injectEndpoints({
   endpoints: (build) => ({
     getProduct: build.query({
       query: () => ({
-        url: '/',
-        method: 'GET'
+        url: "/",
+        method: "GET",
       }),
-      providesTags: ['product']
+      providesTags: ["product"],
     }),
     postProduct: build.mutation({
       query: (data) => ({
-        url: '',
-        method: 'POST',
-        body: data
+        url: "",
+        method: "POST",
+        body: data,
       }),
-      invalidatesTags: ['product']
+      invalidatesTags: ["product"],
     }),
     patchProduct: build.mutation({
-      query: ({id, data}) => ({
+      query: ({ id, data }) => ({
         url: `/${id}`,
-        method: 'PATCH',
-        body: data
+        method: "PATCH",
+        body: data,
       }),
-      invalidatesTags: ['product']
+      invalidatesTags: ["product"],
     }),
     deleteProduct: build.mutation({
       query: (id) => ({
         url: `/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
-      invalidatesTags: ['product']
+      invalidatesTags: ["product"],
     }),
+  }),
+});
 
-  })
-})
-
-export const {useGetProductQuery, usePostProductMutation, usePatchProductMutation, useDeleteProductMutation} = api
+export const {
+  useGetProductQuery,
+  usePostProductMutation,
+  usePatchProductMutation,
+  useDeleteProductMutation,
+} = api;
