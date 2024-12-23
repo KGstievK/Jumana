@@ -1,4 +1,24 @@
 .CatalogSection {
+  .header {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 10px;
+    padding-bottom: 10px;
+
+    a {
+      color: #a73539;
+      font-size: clamp(12px, 2vw, 15px);
+      font-weight: 500;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    img {
+      display: none;
+    }
+  }
+
   .content {
     display: flex;
     align-items: start;
