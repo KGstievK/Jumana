@@ -9,7 +9,18 @@ const api = index.injectEndpoints({
       }),
       providesTags: ["category"],
     }),
+
+    getAllClothes: build.query<
+      ICATEGORY.getAllClothesRes,
+      ICATEGORY.getAllClothesReq
+    >({
+      query: () => ({
+        url: "/",
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
   }),
 });
 
-export const { useGetAllCategoryQuery } = api;
+export const { useGetAllCategoryQuery, useGetAllClothesQuery } = api;

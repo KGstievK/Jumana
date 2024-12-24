@@ -1,9 +1,5 @@
-const page = () => {
-  return (
-    <div>
-      <h1>new</h1>
-    </div>
-  );
-};
+import NewClothes from "@/appPages/site/components/pages/NewClothes";
+
+const page = () => <NewClothes />;
 
 export default page;

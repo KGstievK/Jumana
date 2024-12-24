@@ -6,13 +6,10 @@ import star from "@/assets/images/star.png";
 import cart from "@/assets/icons/bag-happyBlack.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
 import heartRed from "@/assets/icons/red-heart-icon.svg";
-import { useGetAllCategoryQuery } from "@/redux/api/category";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Cards = () => {
-  // const { data } = useGetAllCategoryQuery();
-  // console.log("🚀 ~ Cards ~ data:", data);
   const [state, setState] = useState(false);
   const router = useRouter();
 

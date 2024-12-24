@@ -1,12 +1,93 @@
-.SideBar {
-  width: 320px;
-  background: #dcbebe;
-  height: 60vh;
-  .container {
-    .content {
-      form {
-        display: flex;
-      }
-    }
+.filterContainer {
+  width: 100%;
+  max-width: 320px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.filterSection {
+  margin-bottom: 16px;
+}
+
+.filterHeader {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 15px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #a73539;
+  border-radius: 4px;
+
+  h4 {
+    font-size: 16px;
+    color: white;
+    font-weight: 400;
+  }
+}
+
+.filterHeader:hover {
+  color: #800000;
+}
+
+.filterContent {
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterContent input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.filterContent input[type="number"],
+.filterContent input[type="range"] {
+  width: 100%;
+  margin-top: 8px;
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 8px;
+  font-size: 16px;
+  user-select: none;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .customCheckbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #090909;
+    border-radius: 4px;
+    margin-right: 8px;
+    background-color: #fff;
+    position: relative;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+
+  input[type="checkbox"]:checked + .customCheckbox {
+    background-color: #a73539;
+    border-color: #b22222;
+  }
+
+  input[type="checkbox"]:checked + .customCheckbox::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
   }
 }
