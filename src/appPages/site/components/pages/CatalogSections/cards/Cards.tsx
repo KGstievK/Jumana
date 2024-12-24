@@ -94,7 +94,7 @@ const Cards = () => {
             <div className={scss.blockText}>
               <div className={scss.productCategory}>
                 <h4>Product Category</h4>
-                <div className={scss.colors}>❤️❤️❤️</div>
+                <div className={scss.colors}>❤️</div>
               </div>
               <h2>JUMANA “22</h2>
               <div className={scss.price}>
