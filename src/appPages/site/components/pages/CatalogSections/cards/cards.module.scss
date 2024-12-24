@@ -2,14 +2,15 @@
   .content {
     display: flex;
     align-items: start;
-    justify-content: space-between;
-    gap: 15px;
+    justify-content: start;
+    gap: 10px;
     flex-wrap: wrap;
     .card {
-      max-width: 340px;
+      max-width: clamp(150px, 20vw, 350px);
       width: 100%;
       background: #fff;
       cursor: pointer;
+      margin-bottom: 20px;
       .blockImg {
         position: relative;
         width: 100%;
@@ -69,7 +70,7 @@
           justify-content: space-between;
           h4 {
             font-family: "Lato";
-            font-size: 18px;
+            font-size: clamp(12px, 2vw, 18px);
             font-weight: 400;
             color: #757575;
           }
@@ -79,7 +80,7 @@
         h2 {
           color: #3e3e3e;
           font-family: "Playfair Display";
-          font-size: 28px;
+          font-size: clamp(16px, 2vw, 28px);
           font-weight: 400;
         }
         .price {
@@ -99,6 +100,15 @@
             font-weight: 400;
           }
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 505px) {
+  #Cards {
+    .content {
+      .card {
       }
     }
   }
