@@ -1,103 +1,120 @@
 #Cards {
+  // padding: 20px 0;
   .content {
     display: flex;
-    align-items: start;
-    justify-content: start;
-    gap: 10px;
-    flex-wrap: wrap;
-    .card {
-      max-width: clamp(150px, 20vw, 350px);
-      width: 100%;
-      background: #fff;
-      cursor: pointer;
-      margin-bottom: 20px;
-      .blockImg {
-        position: relative;
+    align-items: center;
+    justify-content: center;
+    .header {
+      display: none;
+      align-items: center;
+      justify-content: start;
+      gap: 10px;
+      h4 {
+        font-size: 12px;
+        font-weight: 500;
+        color: #1d1f22;
+      }
+    }
+    .cards {
+      display: flex;
+      align-items: start;
+      justify-content: start;
+      gap: 10px;
+      flex-wrap: wrap;
+      .card {
+        max-width: clamp(150px, 20vw, 350px);
         width: 100%;
-        .mainImg {
+        background: #fff;
+        cursor: pointer;
+        margin-bottom: 20px;
+        .blockImg {
+          position: relative;
           width: 100%;
-          height: auto;
-          object-fit: cover;
-        }
-        .like {
-          position: absolute;
-          z-index: 12;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: 100%;
-          padding: 15px;
-          .star {
+          .mainImg {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+          }
+          .like {
+            position: absolute;
+            z-index: 12;
             display: flex;
             align-items: center;
-            img {
-              width: 20px;
-              object-fit: cover;
+            justify-content: space-between;
+            width: 100%;
+            padding: 15px;
+            .star {
+              display: flex;
+              align-items: center;
+              img {
+                width: 20px;
+                object-fit: cover;
+              }
+              h6 {
+                color: #fff;
+                font-size: 18px;
+                font-weight: 400;
+              }
             }
-            h6 {
-              color: #fff;
-              font-size: 18px;
-              font-weight: 400;
+            .heart {
+              img {
+                width: 25px;
+                height: 25px;
+              }
             }
           }
-          .heart {
+          .cart {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 5px;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 12;
+            bottom: 20px;
+            right: 15px;
             img {
               width: 25px;
-              height: 25px;
             }
           }
         }
-        .cart {
-          display: flex;
-          align-items: center;
-          background: #fff;
-          padding: 5px;
-          border-radius: 50%;
-          position: absolute;
-          z-index: 12;
-          bottom: 20px;
-          right: 15px;
-          img {
-            width: 25px;
-          }
-        }
-      }
 
-      .blockText {
-        .productCategory {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          h4 {
-            font-family: "Lato";
-            font-size: clamp(12px, 2vw, 18px);
+        .blockText {
+          .productCategory {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h4 {
+              font-family: "Lato";
+              font-size: clamp(12px, 2vw, 18px);
+              font-weight: 400;
+              color: #757575;
+            }
+            .colors {
+            }
+          }
+          h2 {
+            color: #3e3e3e;
+            font-family: "Playfair Display";
+            font-size: clamp(16px, 2vw, 28px);
             font-weight: 400;
-            color: #757575;
           }
-          .colors {
-          }
-        }
-        h2 {
-          color: #3e3e3e;
-          font-family: "Playfair Display";
-          font-size: clamp(16px, 2vw, 28px);
-          font-weight: 400;
-        }
-        .price {
-          display: flex;
-          align-items: center;
-          justify-content: start;
-          gap: 15px;
+          .price {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 15px;
 
-          span {
-            font-size: 16px;
-            font-weight: 500;
-            color: #121212;
-          }
-          del {
-            color: #6c7275;
-            font-size: 16px;
-            font-weight: 400;
+            span {
+              font-size: 16px;
+              font-weight: 500;
+              color: #121212;
+            }
+            del {
+              color: #6c7275;
+              font-size: 16px;
+              font-weight: 400;
+            }
           }
         }
       }
@@ -105,10 +122,23 @@
   }
 }
 
-@media (max-width: 505px) {
+@media (max-width: 700px) {
   #Cards {
     .content {
-      .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      gap: 10px;
+      .header {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+      }
+
+      .cards {
+        .card {
+        }
       }
     }
   }

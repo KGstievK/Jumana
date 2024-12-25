@@ -8,6 +8,7 @@ import heart from "@/assets/icons/HeartStraight.svg";
 import heartRed from "@/assets/icons/red-heart-icon.svg";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import filterImg from "@/assets/icons/Filter.svg";
 
 const Cards = () => {
   const [state, setState] = useState(false);
@@ -63,47 +64,54 @@ const Cards = () => {
   return (
     <div id={scss.Cards}>
       <div className={scss.content}>
-        {data.map((item, idx) => (
-          <div
-            key={idx}
-            className={scss.card}
-            onClick={() => router.push("/single")}
-          >
-            <div className={scss.blockImg}>
-              <div className={scss.like}>
-                <div className={scss.star}>
-                  <Image src={star} alt="photo" />
-                  <h6>{item.starts}</h6>
+        <div className={scss.header}>
+          <Image src={filterImg} alt="photo" />
+          <h4>ФИЛЬТР</h4>
+        </div>
+
+        <div className={scss.cards}>
+          {data.map((item, idx) => (
+            <div
+              key={idx}
+              className={scss.card}
+              onClick={() => router.push("/single")}
+            >
+              <div className={scss.blockImg}>
+                <div className={scss.like}>
+                  <div className={scss.star}>
+                    <Image src={star} alt="photo" />
+                    <h6>{item.starts}</h6>
+                  </div>
+                  <div
+                    className={scss.heart}
+                    onClick={() => setState((prevState) => !prevState)}
+                  >
+                    {state ? (
+                      <Image src={heartRed} alt="heart" />
+                    ) : (
+                      <Image src={heart} alt="heart" />
+                    )}
+                  </div>
                 </div>
-                <div
-                  className={scss.heart}
-                  onClick={() => setState((prevState) => !prevState)}
-                >
-                  {state ? (
-                    <Image src={heartRed} alt="heart" />
-                  ) : (
-                    <Image src={heart} alt="heart" />
-                  )}
+                <Image src={photo} alt="photo" className={scss.mainImg} />
+                <div className={scss.cart}>
+                  <Image src={cart} alt="cart" />
                 </div>
               </div>
-              <Image src={photo} alt="photo" className={scss.mainImg} />
-              <div className={scss.cart}>
-                <Image src={cart} alt="cart" />
+              <div className={scss.blockText}>
+                <div className={scss.productCategory}>
+                  <h4>Product Category</h4>
+                  <div className={scss.colors}>❤️</div>
+                </div>
+                <h2>JUMANA “22</h2>
+                <div className={scss.price}>
+                  <span>{item.price - (item.price * item.sale) / 100}com</span>
+                  <del>{item.price}c</del>
+                </div>
               </div>
             </div>
-            <div className={scss.blockText}>
-              <div className={scss.productCategory}>
-                <h4>Product Category</h4>
-                <div className={scss.colors}>❤️</div>
-              </div>
-              <h2>JUMANA “22</h2>
-              <div className={scss.price}>
-                <span>{item.price - (item.price * item.sale) / 100}com</span>
-                <del>{item.price}c</del>
-              </div>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
