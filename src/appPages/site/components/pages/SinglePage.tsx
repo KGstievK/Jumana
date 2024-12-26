@@ -1,15 +1,14 @@
-import React from 'react'
-import SinglePageSection from './SinglePageSections/SinglePageSection'
-
+import React from "react";
+import SinglePageSection from "./SinglePageSections/SinglePageSection";
 
 //! Это Карточка товаров
 
 const SinglePage = () => {
   return (
     <div>
-      <SinglePageSection/>
+      <SinglePageSection />
     </div>
-  )
-}
+  );
+};
 
-export default SinglePage
+export default SinglePage;
