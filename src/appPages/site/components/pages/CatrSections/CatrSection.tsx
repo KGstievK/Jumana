@@ -3,6 +3,7 @@ import Image from "next/image";
 import scss from "./CatrSection.module.scss";
 import img1 from "@/assets/image.png";
 import { useRouter } from "next/navigation";
+import logoBasket from "@/assets/images/basket.svg";
 //! Это Корзина
 
 const CatrSection = () => {
@@ -16,7 +17,7 @@ const CatrSection = () => {
       <div className="container">
         <div className={scss.content}>
           <h1>Корзина</h1>
-          <div className={scss.block}>
+          {/* <div className={scss.block}>
             <div className={scss.block_left}>
               <div className={scss.table}>
                 <table>
@@ -159,6 +160,19 @@ const CatrSection = () => {
                 </div>
               </div>
               <button>Оформить заказ</button>
+            </div>
+          </div> */}
+
+          <div className={scss.basket}>
+            <Image src={logoBasket} alt="basket" />
+
+            <div className={scss.basketBlock}>
+              <h3>Ваша корзина пуста</h3>
+              <p>
+                Похоже, вы еще не добавили в корзину никаких товаров. Начните
+                делать покупки, чтобы заполнить ее.
+              </p>
+              <button>Добавить товар</button>
             </div>
           </div>
         </div>
