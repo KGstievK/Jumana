@@ -13,9 +13,8 @@ import google from "@/assets/icons/google.svg";
 interface RegisterType {
   email: string;
   userName: string;
-  photo: string;
-  password: string;
-  confirmPassword: string;
+  password1: string;
+  password2: string;
 }
 
 const SignUpPage = () => {
@@ -29,17 +28,17 @@ const SignUpPage = () => {
     const userDataRest = {
       userName: userData.userName,
       email: userData.email,
-      password: userData.password,
-      photo: userData.photo,
+      password1: userData.password1,
+      password2: userData.password2,
     };
 
     try {
       const response = await postRegisterMutation(userDataRest);
-      if (response.data?.accessToken) {
+      if (response.data?.key) {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem(
           "accessToken",
-          JSON.stringify(response.data.accessToken)
+          JSON.stringify(response.data.key)
         );
         // window.location.reload();
       }
@@ -52,7 +51,7 @@ const SignUpPage = () => {
     setRememberMe(e.target.checked);
   };
 
-  const password = watch("password");
+  const password = watch("password1");
   return (
     <section className={scss.RegistrationPage}>
       <Image src={logo} alt="LOGO" />
@@ -60,25 +59,25 @@ const SignUpPage = () => {
       <form action="">
         <input
           type="text"
+          {...register("userName", { required: true })}
+          placeholder="Имя аккаунта"
+        />  
+        <input
+          type="text"
           {...register("email", { required: true })}
           placeholder="Email"
         />
         <input
           type="text"
-          {...register("userName", { required: true })}
-          placeholder="Имя аккаунта"
-        />
-        <input
-          type="text"
-          {...register("password", { required: true })}
+          {...register("password1", { required: true })}
           placeholder="Пароль"
         />
         <input
           type="text"
-          {...register("confirmPassword", {
+          {...register("password2", {
             required: true,
             validate: (value: string) =>
-              value === "password" || "Пароли не совпадают",
+              value === "password1" || "Пароли не совпадают",
           })}
           placeholder="Повторите пароль"
         />

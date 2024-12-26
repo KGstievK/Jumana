@@ -5,42 +5,46 @@ namespace AUTH {
 	type GetRequest = void;
 
 	type PostLoginResponse = {
-		accessToken: string;
-		accessTokenExpiration: number;
-		refreshToken: string
+		// accessToken: string;
+		// accessTokenExpiration: number;
+		// refreshToken: string
+		key: string
 	};
 	
 	type PostLoginRequest = {
+		username: string;
 		email: string;
 		password: string;
 	};
 
 	type PostRegistrationResponse = {
-		message: string;
-		accessToken: string;
-		accessTokenExpiration: number;
-		refreshToken: string
+		key: string
+		// message: string;
+		// accessToken: string;
+		// accessTokenExpiration: number;
+		// refreshToken: string
 	};
 	type PostRegistrationRequest = {
-		email: string;
-		password: string;
 		userName: string;
-		photo: string;
+		email: string;
+		password1: string;
+		password2: string;
 	};
 
 	type PostLogoutResponse = {
-		message: string;
+		// message: string;
 	};
 	type PostLogoutRequest = void;
 
 	type PatchRefreshResponse = {
-		accessToken: string;
-		accessTokenExpiration: number;
+		// accessToken: string;
+		// accessTokenExpiration: number;
+		key: string
 	};
 	type PatchRefreshRequest = void;
 
 	type PostForgotPasswordResponse = {
-		message: string;
+		// message: string;
 	};
 	type PostForgotPasswordRequest = {
 		email: string;
@@ -48,10 +52,11 @@ namespace AUTH {
 	};
 
 	type PatchResetPasswordResponse = {
-		message: string;
+		// message: string;
 	};
 	type PatchResetPasswordRequest = {
-		token: string;
+		// token: string;
+		key: string;
 		newPassword: string;
 	};
 }

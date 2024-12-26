@@ -16,6 +16,9 @@ body {
 }
 
 body {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
   font-family: "Playfair Display", sans-serif;
 }
 
@@ -86,7 +89,7 @@ h1.title {
 }
 .container {
   max-width: 1440px;
-  width: 100%;
+  width: 95%;
   margin: 0 auto;
   padding: 0 20px;
 }

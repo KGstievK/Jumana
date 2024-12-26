@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const Welcome = () => {
   const [tab, setTab] = useState(img1.src);
-  const [visibleImages, setVisibleImages] = useState([1, 2]); 
+  const [visibleImages, setVisibleImages] = useState([1, 2]);
   const images = [
     { id: 1, image: img1.src },
     { id: 2, image: img2.src },
@@ -26,9 +26,7 @@ const Welcome = () => {
       const nextIndex = images.findIndex(
         (_, idx) => !prevVisible.includes(idx)
       );
-      return prevVisible.map((idx) =>
-        idx === clickedIndex ? nextIndex : idx
-      );
+      return prevVisible.map((idx) => (idx === clickedIndex ? nextIndex : idx));
     });
   };
 
@@ -55,18 +53,13 @@ const Welcome = () => {
                   <Image src={arrow} alt="Valid src" />
                 </button>
               </div>
-              <div
-                className={scss.Swiper_Image}
-                style={{
-                  backgroundImage: `url(${tab})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "left",
-                  backgroundSize: "420px auto",
-                }}
-              >
-                <Link href="/single">
-                  Купить <Image src={arrow} alt="Valid src" />
-                </Link>
+              <div className={scss.Swiper_Image}>
+                <div className={scss.Swiper_Image_tab}>
+                  <Image src={tab} alt="tab" width={420} height={630} />
+                  <Link href="/single">
+                    Купить <Image src={arrow} alt="Valid src" />
+                  </Link>
+                </div>
                 {visibleImages.map((visibleIndex) => (
                   <Image
                     key={images[visibleIndex].id}

@@ -47,53 +47,75 @@
           gap: 10px;
           background-size: 420px auto;
           transition: 0.3s;
-          a {
-            position: absolute;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: var(--background);
-            top: 0;
-            left: 180px;
-            bottom: 90px;
-            z-index: 1;
-            font-size: 18px;
-            font-weight: 500;
-            line-height: 22px;
-            transition: 0.3s ease-in-out;
-            
-            img {
-              margin: 0;
-              margin-top: 5px;
+          &_tab {
+            width: 420px;
+            height: 630px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            transition: 0.3s;
+            &:hover {
+              a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 1;
+                z-index: 1;
+              }
+              &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 420px;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1;
+                pointer-events: none;
+                transition: 0.3s;
+              }
             }
-          }
-          &:hover {
             a {
-              display: flex;
-              opacity: 1;
-            }
-            &::before {
-              content: "";
               position: absolute;
+              display: none;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 10px;
+              color: var(--background);
+              top: 0;
+              left: 180px;
+              bottom: 90px;
+              width: 68px;
+              z-index: 0;
+              font-size: 18px;
+              font-weight: 500;
+              line-height: 22px;
+              transition: 0.3s ease-in-out;
+
+              img {
+                position: absolute;
+                top: 49%;
+                left: 70px;
+              }
+            }
+            img {
+              position: absolute;
+              z-index: 0;
               top: 0;
               left: 0;
-              width: 420px; 
-              height: 100%; 
-              background: rgba(0, 0, 0, 0.5); 
-              z-index: 0;
-              pointer-events: none;
-              transition: 0.3s;
             }
           }
           img {
-            z-index: 1;
-            margin-bottom: 50px;
             &:nth-child(2) {
               border-radius: 52px 4px 4px 4px;
+              z-index: 1;
+              margin-bottom: 50px;
             }
             &:nth-child(3) {
               border-radius: 4px 4px 52px 4px;
+              z-index: 1;
+              margin-bottom: 50px;
             }
           }
           img.hidden {

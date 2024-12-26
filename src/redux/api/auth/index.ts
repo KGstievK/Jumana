@@ -4,14 +4,14 @@ const api = index.injectEndpoints({
   endpoints: (build) => ({
     getMe: build.query<AUTH.GetResponse, AUTH.GetRequest>({
       query: () => ({
-        url: "/user",
+        url: "/auth/user",
         method: "GET",
       }),
       providesTags: ["auth"],
     }),
     postLogin: build.mutation<AUTH.PostLoginResponse, AUTH.PostLoginRequest>({
       query: (data) => ({
-        url: "/auth/sign-in",
+        url: "/auth/login",
         method: "POST",
         body: data,
       }),
@@ -22,7 +22,7 @@ const api = index.injectEndpoints({
       AUTH.PostRegistrationRequest
     >({
       query: (data) => ({
-        url: "/auth/sign-up",
+        url: "/auth/registration/",
         method: "POST",
         body: data,
       }),
