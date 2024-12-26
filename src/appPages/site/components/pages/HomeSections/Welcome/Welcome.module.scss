@@ -1,5 +1,120 @@
 .Welcome {
   .content {
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .textBlock {
+      display: flex;
+      align-items: start;
+      justify-content: start;
+      flex-direction: column;
+      gap: 20px;
+      h6 {
+        font-family: "Inter";
+        font-size: 16px;
+        font-weight: 400;
+        color: #333333;
+      }
+      h1 {
+        font-family: "Playfair Display";
+        font-size: 70px;
+        font-weight: 400;
+        color: #a73539;
+      }
+
+      .cart {
+        background: #a73539;
+        padding: 23px;
+        width: 250px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        button {
+          background: none;
+          border: none;
+          color: white;
+          font-size: 18px;
+          font-weight: 500;
+        }
+        img {
+          width: 20px;
+        }
+      }
+    }
+
+    .imageBlock {
+      width: 100%;
+      display: flex;
+      align-items: end;
+      justify-content: start;
+      // flex-direction: column;
+      .image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .cartBtn {
+          position: absolute;
+          background: transparent;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          cursor: pointer;
+
+          button {
+            color: white;
+            background: none;
+            border: none;
+            font-size: 18px;
+            font-weight: 500;
+          }
+          img {
+            position: relative;
+            width: 18px;
+          }
+        }
+        .mainImg {
+          img {
+            width: 415px;
+            height: 631px;
+            border-radius: 8px;
+            object-fit: cover;
+            transition: background-color 0.3s;
+          }
+        }
+      }
+      .image:hover {
+        .cartBtn {
+          display: flex;
+          transition: all 0.5s;
+        }
+      }
+
+      .images {
+        position: absolute;
+        margin-left: 300px;
+        margin-bottom: 25px;
+        display: flex;
+        gap: 10px;
+
+        .foto {
+          width: 156px;
+          height: 234px;
+          object-fit: cover;
+          border-radius: 50px 5px 5px 5px;
+        }
+        .foto2 {
+          width: 156px;
+          height: 234px;
+          object-fit: cover;
+          border-radius: 5px 5px 40px 5px;
+        }
+      }
+    }
   }
 }

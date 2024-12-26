@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import scss from "./newClothes.module.scss";
-import photo from "@/assets/images/cardImage.png";
+import arrow from "@/assets/icons/Icon.svg";
 import star from "@/assets/images/star.png";
 import cart from "@/assets/icons/bag-happyBlack.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
@@ -88,10 +88,12 @@ const NewClothesSection = () => {
                   </div>
                 </div>
                 <Image
-                  src={photo}
+                  src={item.clothes_photo}
                   alt="photo"
+                  width={500}
+                  height={300}
                   className={scss.mainImg}
-                  onClick={() => router.push("/single")}
+                  // onClick={() => router.push("/single")}
                 />
                 <div className={scss.cart}>
                   <Image src={cart} alt="cart" />
@@ -102,10 +104,15 @@ const NewClothesSection = () => {
                   <h4>Product Category</h4>
                   <div className={scss.colors}>❤️❤️❤️</div>
                 </div>
-                <h2>JUMANA “22</h2>
+                <h2>{item.clothes_name}</h2>
                 <div className={scss.price}>
-                  <span>{item.price - (item.price * item.sale) / 100}com</span>
-                  <del>{item.price}c</del>
+                  {/* <span>{item.price - (item.price * item.sale) / 100}com</span> */}
+                  <span>{item.price}сом</span>
+                  {/* <del>{item.price}c</del> */}
+                  <div className={scss.cart} onClick={() => "/single"}>
+                    <button>Подробнее</button>
+                    <Image src={arrow} alt="bag" width={24} height={24} />
+                  </div>
                 </div>
               </div>
             </div>

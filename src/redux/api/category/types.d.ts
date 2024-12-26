@@ -1,4 +1,4 @@
 namespace ICATEGORY {
-  type getAllClothesRes = ICATEGORY[];
+  type getAllClothesRes = AllClothes[];
   type getAllClothesReq = void;
 }
