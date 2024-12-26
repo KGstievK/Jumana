@@ -55,6 +55,7 @@
             align-items: flex-end;
             justify-content: flex-end;
             transition: 0.3s;
+            border-radius: 4px;
             &:hover {
               a {
                 display: flex;
@@ -73,6 +74,7 @@
                 background: rgba(0, 0, 0, 0.5);
                 z-index: 1;
                 pointer-events: none;
+                border-radius: 4px;
                 transition: 0.3s;
               }
             }
@@ -104,6 +106,7 @@
               z-index: 0;
               top: 0;
               left: 0;
+              border-radius: 4px;
             }
           }
           img {
