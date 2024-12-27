@@ -121,9 +121,9 @@ const New = () => {
                 disableOnInteraction: false,
               }}
               breakpoints={{
-                640: {
+                375: {
                   slidesPerView: 2,
-                  spaceBetween: 20,
+                  spaceBetween: 10,
                 },
                 768: {
                   slidesPerView: 4,
@@ -145,6 +145,7 @@ const New = () => {
                       background: `url(${item.image})`,
                       backgroundRepeat: "no-repeat",
                       backgroundPosition: "top",
+                      backgroundSize: 'cover'
                     }}
                   >
                     <p>
@@ -172,6 +173,13 @@ const New = () => {
               ))}
             </Swiper>
           </>
+          <div className={scss.navigate_mobile}>
+            <Link href="">
+              <button>
+                Посмотреть все <Image src={arrow} alt="arrow" />
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

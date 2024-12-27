@@ -13,7 +13,7 @@ const Catalog = () => {
         <div className={scss.content}>
           <div className={scss.navigate_title}>
             <h1 className="title">Каталог</h1>
-            <Link href="">
+            <Link href="catalog">
               <button>
                 Посмотреть все <Image src={arrow} alt="arrow" />
               </button>
@@ -31,6 +31,13 @@ const Catalog = () => {
             <div className={scss.catalogRight} onClick={() => navigate('/catalog')}>
               <h1>Туники</h1>
             </div>
+          </div>
+          <div className={scss.navigate_mobile}>
+            <Link href="/catalog">
+              <button>
+              Каталог <Image src={arrow} alt="arrow" />
+              </button>
+            </Link>
           </div>
         </div>
       </div>

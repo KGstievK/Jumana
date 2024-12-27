@@ -1,5 +1,8 @@
 .Popular {
   margin-top: 130px;
+  @media (max-width: 375px) {
+    margin-top: 30px;
+  }
   .content {
     .navigate_title {
       display: flex;
@@ -9,9 +12,39 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        @media (max-width: 375px) {
+          display: none;
+        }
         button {
           display: flex;
           align-items: center;
+          gap: 10px;
+          color: var(--background);
+          font-family: "iter", sans-serif;
+          font-size: 18px;
+          line-height: 18px;
+          padding: 16px 37px;
+        }
+      }
+    }
+    .navigate_mobile {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      a {
+        width: 100%;
+        display: none;
+        align-items: center;
+        justify-content: flex-end;
+        @media (max-width: 375px) {
+          display: flex;
+        }
+        button {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           gap: 10px;
           color: var(--background);
           font-family: "iter", sans-serif;
@@ -31,8 +64,8 @@
         list-style: inside;
         font-family: "Playfair Display";
         font-style: italic;
-        font-size: 20px;
-        line-height: 26px;
+        font-size: clamp(16px, 2vw, 20px);
+        line-height: clamp(18px, 2vw, 26px);
         color: var(--main-color);
       }
     }
@@ -42,6 +75,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    
       &_slide {
         max-width: 282px;
         width: 100%;
@@ -49,6 +83,10 @@
         display: grid;
         align-items: center;
         gap: 10px;
+        @media (max-width: 375px) {
+          max-width: 252px;
+          height: 300px;
+        }
         .ProductNew {
           position: relative;
           width: 100%;
@@ -58,6 +96,17 @@
           align-items: flex-start;
           justify-content: space-between;
           border-radius: 4px;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: top; 
+          @media (max-width: 375px) {
+            display: grid;
+            align-items: end;
+            flex-direction: column;
+            justify-content: end;
+
+            height: 200px;
+          }
           p {
             display: flex;
             align-items: center;
@@ -65,17 +114,25 @@
             font-family: "Outfit", sans-serif;
             gap: 10px;
             color: var(--background);
+            @media (max-width: 375px) {
+              display: none;
+            }
           }
           button {
             &:nth-child(2) {
               position: absolute;
               right: 18px;
+              top: 10px;
               align-self: flex-start;
               justify-self: flex-end;
             }
             &:nth-child(3) {
               align-self: flex-end;
               justify-self: end;
+              @media (max-width: 375px) {
+                align-self: flex-end;
+                justify-self: end;
+              }
             }
           }
         }

@@ -4,11 +4,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 375px) {
+     flex-direction: column;
+    }
     .Logo {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      @media (max-width: 375px) {
+        justify-content: center;
+      }
+    }
+    .Search {
+      display: none;
+      @media (max-width: 375px) {
+        display: block;
+      }
     }
     .nav {
       width: 100%;

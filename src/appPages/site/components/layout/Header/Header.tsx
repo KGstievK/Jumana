@@ -43,6 +43,9 @@ const Header = () => {
               <Image src={logo} alt="Logo" />
             </a>
           </div>
+          <div className={scss.Search}>
+            <Search/>
+          </div>
           <div className={scss.nav}>
             <ul>
               {links.map((item, idx) => (
@@ -69,7 +72,6 @@ const Header = () => {
             </Link>
           </div>
           <div className={scss.burgerMenu}>
-            <BurgeMenu/>
           </div>
         </div>
       </div>

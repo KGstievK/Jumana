@@ -1,5 +1,8 @@
 import Link from "next/link";
 import scss from "./Footer.module.scss";
+import Image from "next/image";
+import logo from "@/assets/icons/logoWite.svg";
+
 
 const Footer = () => {
   const links = [
@@ -48,6 +51,11 @@ const Footer = () => {
     <footer className={scss.Footer}>
       <div className="container">
         <div className={scss.content}>
+          <div className={scss.footerLogo}>
+            <Link href='/'>
+              <Image src={logo} alt="Logo"/>
+            </Link> 
+          </div>
           <div className={scss.footerResurse}>
             <div className={scss.footerContacts}>
               <ul className={scss.footerUl}>

@@ -1,5 +1,8 @@
 .Catalog {
   margin-top: 130px;
+  @media (max-width: 375px) {
+    margin-top: 30px;
+  }
   .content {
     .navigate_title {
       display: flex;
@@ -9,9 +12,39 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        @media (max-width: 375px) {
+          display: none;
+        }
         button {
           display: flex;
           align-items: center;
+          gap: 10px;
+          color: var(--background);
+          font-family: "iter", sans-serif;
+          font-size: 18px;
+          line-height: 18px;
+          padding: 16px 37px;
+        }
+      }
+    }
+    .navigate_mobile {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      a {
+        width: 100%;
+        display: none;
+        align-items: center;
+        justify-content: flex-end;
+        @media (max-width: 375px) {
+          display: flex;
+        }
+        button {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           gap: 10px;
           color: var(--background);
           font-family: "iter", sans-serif;
@@ -27,6 +60,11 @@
       grid-template-columns: 59% 39%;
       align-items: center;
       justify-content: space-between;
+      @media (max-width: 375px) {
+        grid-template-columns: 100%;
+        height: auto;
+        gap: 22px;
+      }
       h1 {
         font-family: "Playfair Display";
         font-size: clamp(32px, 3vw, 58px);
@@ -43,6 +81,11 @@
         align-items: center;
         justify-items: space-between;
         gap: 22px;
+        @media (max-width: 375px) {
+          grid-template-columns: 100%;
+          height: auto;
+          gap: 22px;
+        }
         .Dresses {
           position: relative;
           display: flex;
@@ -53,9 +96,13 @@
           background: url("../../../../../../assets/images/Catalog1.png")
             no-repeat center / cover;
           border-radius: 4px;
-          padding: 0 30px;
+          padding: 0 clamp(14px, 2vw, 30px);
           transition: 0.3s;
           cursor: pointer;
+          @media (max-width: 375px) {
+            height: 244px;
+            width: 100%;
+          }
           &::before {
             content: "";
             position: absolute;
@@ -82,9 +129,13 @@
           background: url("../../../../../../assets/images/Catalog2.png")
             no-repeat top / cover;
           border-radius: 4px;
-          padding: 0 30px;
+          padding: 0 clamp(14px, 2vw, 30px);
           transition: 0.3s;
           cursor: pointer;
+          @media (max-width: 375px) {
+            height: 244px;
+            width: 100%;
+          }
           &::before {
             content: "";
             position: absolute;
@@ -114,6 +165,12 @@
         border-radius: 4px;
         transition: 0.3s;
         cursor: pointer;
+        @media (max-width: 375px) {
+          height: 244px;
+          width: 100%;
+          justify-content: flex-start;
+          padding: 14px;
+        }
         &::before {
           content: "";
           position: absolute;

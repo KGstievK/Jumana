@@ -11,10 +11,10 @@ const Search = () => {
     <div
       className={scss.Search}
       style={{
-        maxWidth: isOpen ? "250px" : "50px",
-        border: isOpen ? "2px solid var(--silver)" : "",
-        borderRadius: isOpen ? "8px" : "8px",
-        padding: isOpen ? "0 20px" : "0 0",
+        maxWidth: isOpen ? "350px" : "",
+        border: isOpen ? "2px solid var(--main-color)" : "",
+        borderRadius: isOpen ? "15px" : "15px",
+        padding: isOpen ? "0 20px" : "",
       }}
     >
       <input
@@ -31,3 +31,5 @@ const Search = () => {
 };
 
 export default Search;
+
+
