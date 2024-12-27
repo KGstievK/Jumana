@@ -11,6 +11,7 @@ import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
 
 interface LoginType {
+  username: string
   email: string;
   password: string;
 }
@@ -26,22 +27,22 @@ const SignInPage = () => {
 
   const onSubmit: SubmitHandler<LoginType> = async (userData) => {
     // const datalogin = {
-    // 	username: userData.username,
-    // 	password: userData.password
+    // 	username: userData.email,
+    	// password: userData.password1
     // }
     try {
       const response = await postLoginMutation(userData);
       // const responseToken = await refreshAccessToken(userData)
-      if (response.data?.accessToken) {
+      if (response.data?.key) {
         const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem(
-          "accessToken",
-          JSON.stringify(response.data.accessToken)
-        );
-        // storage.setItem("id", JSON.stringify(response.data.id!))
+        // storage.setItem(
+        //   "key",
+        //   JSON.stringify(response.data.key)
+        // );
+        storage.setItem("key", JSON.stringify(response.data.key))
       }
 
-      window.location.reload();
+      // window.location.reload();
       console.log(response.data);
     } catch (e) {
       console.error("An error occurred:", e);
@@ -55,6 +56,11 @@ const SignInPage = () => {
         <input
           type="text"
           placeholder="User Name"
+          {...register("username", { required: true })}
+        />
+        <input
+          type="text"
+          placeholder="Email"
           {...register("email", { required: true })}
         />
         <input
