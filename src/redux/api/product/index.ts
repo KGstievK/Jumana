@@ -32,6 +32,12 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+    getBasket: build.query<PRODUCT.getBasketRes, PRODUCT.getBasketReq>({
+      query: () => ({
+        url: `/cart-list`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -40,4 +46,5 @@ export const {
   usePostProductMutation,
   usePatchProductMutation,
   useDeleteProductMutation,
+  useGetBasketQuery,
 } = api;

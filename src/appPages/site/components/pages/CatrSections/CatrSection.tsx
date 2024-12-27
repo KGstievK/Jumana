@@ -4,9 +4,12 @@ import scss from "./CatrSection.module.scss";
 import img1 from "@/assets/image.png";
 import { useRouter } from "next/navigation";
 import logoBasket from "@/assets/images/basket.svg";
+import { useGetBasketQuery } from "@/redux/api/product";
 //! Это Корзина
 
 const CatrSection = () => {
+  const { data } = useGetBasketQuery();
+  console.log("🚀 ~ CatrSection ~ data:", data)
   // const router = useRouter();
 
   // const handleCheckout = () => {
