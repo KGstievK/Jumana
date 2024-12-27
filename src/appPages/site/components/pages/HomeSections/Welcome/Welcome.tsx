@@ -55,7 +55,9 @@ const Welcome = () => {
               </div>
               <div className={scss.Swiper_Image}>
                 <div className={scss.Swiper_Image_tab}>
-                  <Image src={tab} alt="tab" width={420} height={630} />
+                  <Image className={scss.image_wrapper} src={tab} alt="tab" width={420}
+                  height={630}
+                  />
                   <Link href="/single">
                     Купить <Image src={arrow} alt="Valid src" />
                   </Link>
