@@ -1,22 +1,23 @@
 #Cards {
+  padding: 50px 0;
   .content {
     display: flex;
     align-items: start;
-    justify-content: space-between;
+    justify-content: center;
     gap: 15px;
     flex-wrap: wrap;
     .card {
       max-width: 340px;
       width: 100%;
       background: #fff;
-      // cursor: pointer;
       .blockImg {
         position: relative;
         width: 100%;
         .mainImg {
           width: 100%;
-          height: auto;
           object-fit: cover;
+          border-radius: 5px;
+          height: 440px !important;
         }
         .like {
           position: absolute;
