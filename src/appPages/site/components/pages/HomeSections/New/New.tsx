@@ -1,3 +1,4 @@
+"use client";
 import scss from "./New.module.scss";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";

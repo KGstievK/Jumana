@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import scss from "./SinglePageSection.module.scss";
 import img from "@/assets/images/cardImage.png";
@@ -5,6 +6,7 @@ import star from "@/assets//images//star.png";
 import Link from "next/link";
 import bagSvg from "@/assets/icons/bag-happy.svg";
 import backIcon from "@/assets/icons/backIcon.svg";
+import { useRouter } from "next/navigation";
 
 //! Это Карточка товаров
 
@@ -21,6 +23,7 @@ const data = {
 };
 
 const SinglePageSection = () => {
+  const route = useRouter();
   return (
     <section className={scss.SinglePageSection}>
       <div className="container">
@@ -91,7 +94,9 @@ const SinglePageSection = () => {
                   <button>+</button>
                 </div>
                 <div className={scss.cart}>
-                  <button>В корзинку</button>
+                  <button onClick={() => route.push("/cart")}>
+                    В корзинку
+                  </button>
                   <Image src={bagSvg} alt="bag" width={24} height={24} />
                 </div>
               </div>
