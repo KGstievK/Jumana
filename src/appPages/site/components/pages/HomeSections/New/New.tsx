@@ -121,7 +121,11 @@ const New = () => {
                 disableOnInteraction: false,
               }}
               breakpoints={{
-                375: {
+                325: {
+                  slidesPerView: 2,
+                  spaceBetween: 5,
+                },
+                400: {
                   slidesPerView: 2,
                   spaceBetween: 10,
                 },

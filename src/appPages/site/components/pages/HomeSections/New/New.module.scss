@@ -1,6 +1,6 @@
 .New {
   margin-top: 130px;
-  @media (max-width: 375px) {
+  @media (max-width: 400px) {
     margin-top: 30px;
   }
   .content {
@@ -12,7 +12,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        @media (max-width: 375px) {
+        @media (max-width: 400px) {
           display: none;
         }
         button {
@@ -37,7 +37,7 @@
         display: none;
         align-items: center;
         justify-content: flex-end;
-        @media (max-width: 375px) {
+        @media (max-width: 400px) {
           display: flex;
         }
         button {
@@ -75,7 +75,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    
+
       &_slide {
         max-width: 282px;
         width: 100%;
@@ -83,7 +83,7 @@
         display: grid;
         align-items: center;
         gap: 10px;
-        @media (max-width: 375px) {
+        @media (max-width: 400px) {
           max-width: 252px;
           height: 300px;
         }
@@ -98,8 +98,8 @@
           border-radius: 4px;
           background-size: cover;
           background-repeat: no-repeat;
-          background-position: top; 
-          @media (max-width: 375px) {
+          background-position: top;
+          @media (max-width: 400px) {
             display: grid;
             align-items: end;
             flex-direction: column;
@@ -114,7 +114,7 @@
             font-family: "Outfit", sans-serif;
             gap: 10px;
             color: var(--background);
-            @media (max-width: 375px) {
+            @media (max-width: 400px) {
               display: none;
             }
           }
@@ -129,7 +129,7 @@
             &:nth-child(3) {
               align-self: flex-end;
               justify-self: end;
-              @media (max-width: 375px) {
+              @media (max-width: 400px) {
                 align-self: flex-end;
                 justify-self: end;
               }

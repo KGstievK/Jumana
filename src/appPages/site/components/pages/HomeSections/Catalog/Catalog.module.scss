@@ -1,6 +1,6 @@
 .Catalog {
   margin-top: 130px;
-  @media (max-width: 375px) {
+  @media (max-width: 400px) {
     margin-top: 30px;
   }
   .content {
@@ -12,7 +12,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        @media (max-width: 375px) {
+        @media (max-width: 400px) {
           display: none;
         }
         button {
@@ -37,7 +37,7 @@
         display: none;
         align-items: center;
         justify-content: flex-end;
-        @media (max-width: 375px) {
+        @media (max-width: 400px) {
           display: flex;
         }
         button {
@@ -60,7 +60,7 @@
       grid-template-columns: 59% 39%;
       align-items: center;
       justify-content: space-between;
-      @media (max-width: 375px) {
+      @media (max-width: 400px) {
         grid-template-columns: 100%;
         height: auto;
         gap: 22px;
@@ -81,7 +81,7 @@
         align-items: center;
         justify-items: space-between;
         gap: 22px;
-        @media (max-width: 375px) {
+        @media (max-width: 400px) {
           grid-template-columns: 100%;
           height: auto;
           gap: 22px;
@@ -99,7 +99,7 @@
           padding: 0 clamp(14px, 2vw, 30px);
           transition: 0.3s;
           cursor: pointer;
-          @media (max-width: 375px) {
+          @media (max-width: 400px) {
             height: 244px;
             width: 100%;
           }
@@ -112,7 +112,7 @@
             height: 100%;
             background: #00000033;
             border-radius: 4px;
-            }
+          }
           &:hover {
             h1 {
               text-decoration: underline;
@@ -132,7 +132,7 @@
           padding: 0 clamp(14px, 2vw, 30px);
           transition: 0.3s;
           cursor: pointer;
-          @media (max-width: 375px) {
+          @media (max-width: 400px) {
             height: 244px;
             width: 100%;
           }
@@ -165,7 +165,7 @@
         border-radius: 4px;
         transition: 0.3s;
         cursor: pointer;
-        @media (max-width: 375px) {
+        @media (max-width: 400px) {
           height: 244px;
           width: 100%;
           justify-content: flex-start;
