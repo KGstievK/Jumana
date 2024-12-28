@@ -1,11 +1,13 @@
-import React from "react";
-import CheckoutSection from "./CheckoutSections/CheckoutSection";
+import React from 'react'
+import CheckoutSection from './CheckoutSections/CheckoutSection'
+
 
 //! Это Оформление Заказа
 const Checkout = () => {
   return (
     <div>
-      <CheckoutSection />
+      <CheckoutSection/>
+
     </div>
   );
 };

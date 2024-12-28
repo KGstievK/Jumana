@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import scss from "./SinglePageSection.module.scss";
 import img from "@/assets/images/cardImage.png";
@@ -5,6 +6,7 @@ import star from "@/assets//images//star.png";
 import Link from "next/link";
 import bagSvg from "@/assets/icons/bag-happy.svg";
 import backIcon from "@/assets/icons/backIcon.svg";
+import { useRouter } from "next/navigation";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
 
 //! Это Карточка товаров
@@ -22,6 +24,7 @@ import { useGetClothesByIdQuery } from "@/redux/api/category";
 // };
 
 const SinglePageSection = () => {
+  const route = useRouter();
   const { data } = useGetClothesByIdQuery();
   console.log("🚀 ~ SinglePageSection ~ data:", data);
 
@@ -96,7 +99,9 @@ const SinglePageSection = () => {
                   <button>+</button>
                 </div>
                 <div className={scss.cart}>
-                  <button>В корзинку</button>
+                  <button onClick={() => route.push("/cart")}>
+                    В корзинку
+                  </button>
                   <Image src={bagSvg} alt="bag" width={24} height={24} />
                 </div>
               </div>
