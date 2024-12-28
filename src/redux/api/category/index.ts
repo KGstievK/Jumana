@@ -2,7 +2,10 @@ import { api as index } from "..";
 
 const api = index.injectEndpoints({
   endpoints: (build) => ({
-    getAllCategory: build.query({
+    getAllCategory: build.query<
+      ICATEGORY.getCategoryRes,
+      ICATEGORY.getCategoryReq
+    >({
       query: () => ({
         url: "/category/",
         method: "GET",
@@ -20,7 +23,22 @@ const api = index.injectEndpoints({
       }),
       providesTags: ["category"],
     }),
+
+    getClothesById: build.query<
+      ICATEGORY.getClothesByIdRes,
+      ICATEGORY.getClothesBuIdReq
+    >({
+      query: (id) => ({
+        url: `/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
   }),
 });
 
-export const { useGetAllCategoryQuery, useGetAllClothesQuery } = api;
+export const {
+  useGetAllCategoryQuery,
+  useGetAllClothesQuery,
+  useGetClothesByIdQuery,
+} = api;

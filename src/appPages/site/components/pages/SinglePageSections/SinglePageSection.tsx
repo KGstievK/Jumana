@@ -7,23 +7,27 @@ import Link from "next/link";
 import bagSvg from "@/assets/icons/bag-happy.svg";
 import backIcon from "@/assets/icons/backIcon.svg";
 import { useRouter } from "next/navigation";
+import { useGetClothesByIdQuery } from "@/redux/api/category";
 
 //! Это Карточка товаров
 
-const data = {
-  title: "JUMANA “24",
-  price: 6000,
-  sale: 20,
-  colors: ["red", "white", "black"],
-  textstyle: "Таффета",
-  description:
-    "Красивые платья оптом от производителя из Бишкека , КыргызстанКрасивые платья оптом от производителя из Бишкека , Кыргызстан",
-  sales: ["xxs", "xs", "s", "m"],
-  starts: 4.95,
-};
+// const data = {
+//   title: "JUMANA “24",
+//   price: 6000,
+//   sale: 20,
+//   colors: ["red", "white", "black"],
+//   textstyle: "Таффета",
+//   description:
+//     "Красивые платья оптом от производителя из Бишкека , КыргызстанКрасивые платья оптом от производителя из Бишкека , Кыргызстан",
+//   sales: ["xxs", "xs", "s", "m"],
+//   starts: 4.95,
+// };
 
 const SinglePageSection = () => {
   const route = useRouter();
+  const { data } = useGetClothesByIdQuery();
+  console.log("🚀 ~ SinglePageSection ~ data:", data);
+
   return (
     <section className={scss.SinglePageSection}>
       <div className="container">
@@ -48,14 +52,15 @@ const SinglePageSection = () => {
               <h3>Product Category</h3>
               <div className={scss.mark}>
                 <Image src={star} alt="star" width={24} height={24} />
-                <h6> {data.starts}</h6>
+                <h6> {data?.average_rating}</h6>
               </div>
             </div>
-            <h1>{data.title}</h1>
+            <h1>{data?.clothes_name}</h1>
 
             <div className={scss.price}>
-              <del>{data.price}сом</del>
-              <h4>{data.price - (data.price * data.sale) / 100}сом</h4>
+              {/* <del>{data.price}сом</del> */}
+              {/* <h4>{data.price - (data.price * data.sale) / 100}сом</h4> */}
+              <h4>{data?.price}</h4>
             </div>
 
             <div className={scss.colors}>

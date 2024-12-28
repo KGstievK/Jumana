@@ -1,7 +1,5 @@
 import SinglePage from "@/appPages/site/components/pages/SinglePage";
+import React from "react";
 
-const page = () => {
-  return <div>{/* <SinglePage/> */}</div>;
-};
-
+const page = () => <SinglePage />;
 export default page;
