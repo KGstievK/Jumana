@@ -8,19 +8,17 @@ interface User {
 
 interface AllClothes {
   id: number;
-  clothes_photo: any;
+  clothes_photo: string;
   promo_category: Array<{
     promo_category: string;
   }>;
   clothes_name: string;
   price: number;
-  size: string;
+  discount_price: number;
+  size: any;
   color: Array<{
+    id: number;
     color: string;
-    color_photo: Array<{
-      photo: string;
-      color_connect: number;
-    }>;
   }>;
   average_rating: number;
   created_date: string;
