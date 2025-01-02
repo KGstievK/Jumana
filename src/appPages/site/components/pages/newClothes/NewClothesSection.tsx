@@ -12,12 +12,10 @@ import { useGetAllClothesQuery } from "@/redux/api/category";
 
 const NewClothesSection = () => {
   const [state, setState] = useState(false);
-  const router = useRouter();
-
   const { data } = useGetAllClothesQuery();
   console.log("🚀 ~ NewClothesSection ~ data:", data);
 
-  // const filteredData= data.filter((el)=>el.)
+  // const filteredData = data.filter((el) => el.c);
 
   return (
     <div id={scss.Cards}>
@@ -43,7 +41,7 @@ const NewClothesSection = () => {
                   </div>
                 </div>
                 <Image
-                  src={item.clothes_photo}
+                  src={item.clothes_photo || null}
                   alt="photo"
                   width={500}
                   height={300}
