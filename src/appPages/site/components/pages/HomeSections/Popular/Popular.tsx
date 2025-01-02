@@ -9,13 +9,13 @@ import "swiper/scss/navigation";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
-import popular1 from '@/assets/images/SwiperImages/PopularImage1.svg'
-import popular2 from '@/assets/images/SwiperImages/PopularImage2.svg'
-import popular3 from '@/assets/images/SwiperImages/PopularImage3.svg'
-import popular4 from '@/assets/images/SwiperImages/PopularImage4.svg'
-import popular5 from '@/assets/images/SwiperImages/PopularImage5.svg'
-import popular6 from '@/assets/images/SwiperImages/PopularImage6.svg'
-import popular7 from '@/assets/images/SwiperImages/PopularImage7.svg'
+import popular1 from "@/assets/images/SwiperImages/PopularImage1.svg";
+import popular2 from "@/assets/images/SwiperImages/PopularImage2.svg";
+import popular3 from "@/assets/images/SwiperImages/PopularImage3.svg";
+import popular4 from "@/assets/images/SwiperImages/PopularImage4.svg";
+import popular5 from "@/assets/images/SwiperImages/PopularImage5.svg";
+import popular6 from "@/assets/images/SwiperImages/PopularImage6.svg";
+import popular7 from "@/assets/images/SwiperImages/PopularImage7.svg";
 
 import star from "@/assets/icons/Star.svg";
 import favorite from "@/assets/icons/Favorite.svg";
@@ -155,7 +155,6 @@ const Popular = () => {
                     }}
                   >
                     <p>
-                      {" "}
                       <Image src={star} alt="rating" /> {item.rating}
                     </p>
                     <button className="favorite">

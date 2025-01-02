@@ -2,7 +2,7 @@
 import scss from "./SignUpPage.module.scss";
 import { usePostRegistrationMutation } from "@/redux/api/auth";
 import { ConfigProvider } from "antd";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
 import Link from "next/link";
@@ -10,30 +10,24 @@ import Image from "next/image";
 import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
 
-interface RegisterType {
-  email: string;
-  userName: string;
-  password1: string;
-  password2: string;
-}
 
-const SignUpPage = () => {
+const SignUpPage: FC = () => {
   const [postRegisterMutation] = usePostRegistrationMutation();
 
-  const { register, watch, handleSubmit } = useForm<RegisterType>();
+  const { register, watch, handleSubmit } = useForm<AUTH.PostRegistrationRequest>();
 
   const [rememberMe, setRememberMe] = useState(false);
 
-  const onSubmit: SubmitHandler<RegisterType> = async (userData) => {
-    const userDataRest = {
-      userName: userData.userName,
-      email: userData.email,
-      password1: userData.password1,
-      password2: userData.password2,
-    };
+  const onSubmit: SubmitHandler<AUTH.PostRegistrationRequest> = async (userData) => {
+    // const userDataRest = {
+    //   userName: userData.userName,
+    //   // email: userData.email,
+    //   password: userData.password,
+    //   confirm_password: userData.confirm_password,
+    // };
 
     try {
-      const response = await postRegisterMutation(userDataRest);
+      const response = await postRegisterMutation(userData);
       if (response.data?.key) {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem(
@@ -51,7 +45,7 @@ const SignUpPage = () => {
     setRememberMe(e.target.checked);
   };
 
-  const password = watch("password1");
+  const password = watch("password");
   return (
     <section className={scss.RegistrationPage}>
       <Image src={logo} alt="LOGO" />
@@ -62,22 +56,22 @@ const SignUpPage = () => {
           {...register("userName", { required: true })}
           placeholder="Имя аккаунта"
         />  
-        <input
+        {/* <input
           type="text"
           {...register("email", { required: true })}
           placeholder="Email"
-        />
+        /> */}
         <input
           type="text"
-          {...register("password1", { required: true })}
+          {...register("password", { required: true })}
           placeholder="Пароль"
         />
         <input
           type="text"
-          {...register("password2", {
+          {...register("confirm_password", {
             required: true,
             validate: (value: string) =>
-              value === "password1" || "Пароли не совпадают",
+              value === "password" || "Пароли не совпадают",
           })}
           placeholder="Повторите пароль"
         />

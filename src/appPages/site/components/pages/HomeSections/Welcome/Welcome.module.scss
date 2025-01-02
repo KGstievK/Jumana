@@ -122,8 +122,11 @@
               }
               img {
                 position: absolute;
-                // top: 49%;
+                top: 49%;
                 left: 70px;
+                @media (max-width: 400px) {
+                  top: 29%;
+                }
               }
             }
             .image_wrapper {

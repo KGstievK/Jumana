@@ -27,8 +27,8 @@ namespace AUTH {
 	type PostRegistrationRequest = {
 		userName: string;
 		email: string;
-		password1: string;
-		password2: string;
+		password: string;
+		confirm_password: string;
 	};
 
 	type PostLogoutResponse = {
