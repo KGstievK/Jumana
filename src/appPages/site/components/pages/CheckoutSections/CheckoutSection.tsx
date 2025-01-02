@@ -23,7 +23,7 @@ const CheckoutSection = () => {
             {step === 1 && (
               <div className={scss.step}>
                 <h2> Личная информация</h2>
-                <form>
+                <form className={scss.stepOne}>
                   <label>
                     Имя
                     <input type="text" placeholder="Введите ваше имя" />
@@ -50,21 +50,40 @@ const CheckoutSection = () => {
             {step === 2 && (
               <div className={scss.step}>
                 <h2>2. Способ получения</h2>
-                <form>
-                  <label>
-                    <input type="radio" name="delivery" value="pickup" />{" "}
-                    Самовывоз
+                <form className={scss.deliveryForm}>
+                  <label className={scss.radioLabel}>
+                    <input type="radio" name="delivery" value="pickup" />
+                    <div className={scss.radioContent}>
+                      <p>Самовывоз</p>
+                      <p className={scss.deliveryDetail}>1-2 рабочих дней</p>
+                    </div>
                   </label>
-                  <label>
-                    <input type="radio" name="delivery" value="delivery" />{" "}
-                    Доставка
+                  <label className={scss.radioLabel}>
+                    <input type="radio" name="delivery" value="delivery" />
+                    <div className={scss.radioContent}>
+                      <p>Доставка</p>
+                      <div className={scss.sum}>
+                        <p>за час</p>
+                        <p>200с</p>
+                      </div>
+                    </div>
                   </label>
-                  <button type="button" onClick={handlePrevStep}>
-                    Назад
-                  </button>
-                  <button type="button" onClick={handleNextStep}>
-                    Далее
-                  </button>
+                  <div className={scss.buttonGroup}>
+                    <button
+                      type="button"
+                      onClick={handlePrevStep}
+                      className={scss.prevButton}
+                    >
+                      Назад
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNextStep}
+                      className={scss.nextButton}
+                    >
+                      Далее
+                    </button>
+                  </div>
                 </form>
               </div>
             )}
@@ -72,7 +91,7 @@ const CheckoutSection = () => {
             {step === 3 && (
               <div className={scss.step}>
                 <h2>3. Оплата</h2>
-                <form>
+                <form className={scss.stepOne}>
                   <label>
                     Номер карты:
                     <input type="text" placeholder="0000 0000 0000 0000" />

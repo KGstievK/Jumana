@@ -3,13 +3,13 @@ import scss from "./Welcome.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
-import { useNavigate } from "react-router-dom";
 import Image from "next/image";
 import arrow from "@/assets/icons/arrow.svg";
 import img1 from "@/assets/images/SwiperImages/1.svg";
 import img2 from "@/assets/images/SwiperImages/2.svg";
 import img3 from "@/assets/images/SwiperImages/3.svg";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Welcome = () => {
   const [tab, setTab] = useState(img1.src);
@@ -30,7 +30,7 @@ const Welcome = () => {
     });
   };
 
-  const navigate = useNavigate();
+  const navigate = useRouter();
   return (
     <section className={scss.Welcome}>
       <div className="container">
@@ -48,15 +48,19 @@ const Welcome = () => {
               <div className={scss.Swiper_Title}>
                 <h4>made in KYrgyzstan</h4>
                 <h1>Скромность, воплощённая в элегантности</h1>
-                <button onClick={() => navigate("/catalog")}>
+                <button onClick={() => navigate.push("/catalog")}>
                   Каталог
                   <Image src={arrow} alt="Valid src" />
                 </button>
               </div>
               <div className={scss.Swiper_Image}>
                 <div className={scss.Swiper_Image_tab}>
-                  <Image className={scss.image_wrapper} src={tab} alt="tab" width={420}
-                  height={630}
+                  <Image
+                    className={scss.image_wrapper}
+                    src={tab}
+                    alt="tab"
+                    width={420}
+                    height={630}
                   />
                   <Link href="/single">
                     Купить <Image src={arrow} alt="Valid src" />
