@@ -1,5 +1,129 @@
 .AboutUsSection {
+  background: #e6e1e0;
+
   .content {
-    
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    .first {
+      padding-block: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      grid-area: 10px;
+
+      p {
+        font-family: Inter;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 15.73px;
+        letter-spacing: 0.1em;
+        text-align: center;
+      }
+      h1 {
+        font-family: Playfair Display;
+        font-size: 40px;
+        font-weight: 500;
+        line-height: 53.32px;
+        text-align: center;
+        width: 750px;
+        height: 106px;
+      }
+    }
+    .second {
+      // background: #e6e1e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .title {
+        width: Hug (702px) px;
+        height: Hug (216px) px;
+        padding: 0px 70px;
+        gap: 36px;
+        h1 {
+          font-family: Playfair Display;
+          font-size: 27px;
+          font-weight: 500;
+          line-height: 35.99px;
+          letter-spacing: 0.04em;
+          text-align: center;
+        }
+        p {
+          width: 562px;
+          height: 144px;
+          gap: 0px;
+          opacity: 0px;
+
+          font-family: Inter;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 24.2px;
+          text-align: left;
+        }
+      }
+    }
+    .thirst {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .title {
+        width: Hug (702px) px;
+        height: Hug (216px) px;
+        padding: 0px 70px;
+        gap: 36px;
+        h1 {
+          font-family: Playfair Display;
+          font-size: 27px;
+          font-weight: 500;
+          line-height: 35.99px;
+          letter-spacing: 0.04em;
+          text-align: center;
+        }
+        p {
+          width: 562px;
+          height: 144px;
+          gap: 0px;
+          opacity: 0px;
+
+          font-family: Inter;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 24.2px;
+          text-align: left;
+        }
+      }
+    }
+    .fourth {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .title {
+        width: Hug (702px) px;
+        height: Hug (216px) px;
+        padding: 0px 70px;
+        gap: 36px;
+        h1 {
+          font-family: Playfair Display;
+          font-size: 27px;
+          font-weight: 500;
+          line-height: 35.99px;
+          letter-spacing: 0.04em;
+          text-align: center;
+        }
+        p {
+          width: 562px;
+          height: 144px;
+          gap: 0px;
+          opacity: 0px;
+
+          font-family: Inter;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 24.2px;
+          text-align: left;
+        }
+      }
+    }
   }
 }

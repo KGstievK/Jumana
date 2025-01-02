@@ -41,7 +41,7 @@ const NewClothesSection = () => {
                   </div>
                 </div>
                 <Image
-                  src={item.clothes_photo}
+                  src={item.clothes_photo || null}
                   alt="photo"
                   width={500}
                   height={300}
