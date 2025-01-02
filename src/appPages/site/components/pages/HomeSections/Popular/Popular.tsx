@@ -124,9 +124,13 @@ const Popular = () => {
                 disableOnInteraction: false,
               }}
               breakpoints={{
-                640: {
+                325: {
                   slidesPerView: 2,
-                  spaceBetween: 20,
+                  spaceBetween: 5,
+                },
+                400: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
                 },
                 768: {
                   slidesPerView: 4,
@@ -175,6 +179,13 @@ const Popular = () => {
               ))}
             </Swiper>
           </>
+          <div className={scss.navigate_mobile}>
+            <Link href="">
+              <button>
+                Посмотреть все <Image src={arrow} alt="arrow" />
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       "vermojctkdkrdsxvauwc.supabase.co",
       "13.60.252.249",
     ],
+   
   },
 };
 

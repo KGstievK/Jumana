@@ -15,6 +15,7 @@ const Cards = () => {
   const [state, setState] = useState(false);
   const router = useRouter();
   const { data } = useGetAllClothesQuery();
+  console.log("🚀 ~ Cards ~ data:", data);
 
   return (
     <div id={scss.Cards}>
@@ -91,9 +92,8 @@ const Cards = () => {
                 </div>
                 <h2>{item.clothes_name}</h2>
                 <div className={scss.price}>
-                  {/* <span>{item.price - (item.price * item.sale) / 100}com</span> */}
-                  {/* <del>{item.price}c</del> */}
-                  <span>{item.price}</span>
+                  <span>{item.discount_price}com</span>
+                  <del>{item.price}c</del>
                 </div>
               </div>
             </div>

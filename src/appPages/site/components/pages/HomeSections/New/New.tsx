@@ -1,9 +1,7 @@
 "use client";
 import scss from "./New.module.scss";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
 import "swiper/scss";
 import "swiper/scss/pagination";
 import "swiper/scss/navigation";
@@ -122,9 +120,13 @@ const New = () => {
                 disableOnInteraction: false,
               }}
               breakpoints={{
-                640: {
+                325: {
                   slidesPerView: 2,
-                  spaceBetween: 20,
+                  spaceBetween: 5,
+                },
+                400: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
                 },
                 768: {
                   slidesPerView: 4,
@@ -146,6 +148,7 @@ const New = () => {
                       background: `url(${item.image})`,
                       backgroundRepeat: "no-repeat",
                       backgroundPosition: "top",
+                      backgroundSize: 'cover'
                     }}
                   >
                     <p>
@@ -173,6 +176,13 @@ const New = () => {
               ))}
             </Swiper>
           </>
+          <div className={scss.navigate_mobile}>
+            <Link href="">
+              <button>
+                Посмотреть все <Image src={arrow} alt="arrow" />
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

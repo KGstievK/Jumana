@@ -8,6 +8,11 @@
   justify-content: center;
   background: url("../../../../../../assets/images/background.jpg") no-repeat
     center / cover;
+  @media (max-width: 400px) {
+    margin-top: 30px;
+    height: 430px;
+    padding: 0 20px;
+  }
   &::before {
     content: "";
     position: absolute;
@@ -31,7 +36,7 @@
       justify-content: center;
       z-index: 1;
       font-family: "inter", sans-serif;
-      font-size: calmp(18px, 2vw, 32px);
+      font-size: calmp(18px, 3vw, 32px);
       line-height: calmp(21px, 3vw, 38px);
       font-weight: 400;
       max-width: 928px;
@@ -57,6 +62,13 @@
       line-height: 18px;
       padding: 16px 57px;
       z-index: 1;
+      @media (max-width: 400px) {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 }
