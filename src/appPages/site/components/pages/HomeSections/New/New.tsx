@@ -100,7 +100,7 @@ const New = () => {
         <div className={scss.content}>
           <div className={scss.navigate_title}>
             <h1 className="title">Новинки</h1>
-            <Link href="">
+            <Link href="/new">
               <button>
                 Посмотреть все <Image src={arrow} alt="arrow" />
               </button>

@@ -9,7 +9,6 @@
       width: 702px;
       padding: 20px;
       border-radius: 10px;
-      // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       h2 {
         font-size: 24px;
         font-weight: 500;
@@ -18,7 +17,7 @@
         color: #a73539;
       }
 
-      form {
+      .stepOne {
         display: flex;
         flex-direction: column;
         gap: 25px;
@@ -46,22 +45,137 @@
         }
 
         button {
-            width: 100%;
-            padding: 16px;
-            gap: 12px;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 22px;
-            font-weight: 500;
-            text-align: center;
+          width: 100%;
+          padding: 16px;
+          gap: 12px;
+          border-radius: 8px;
+          color: #fff;
+          font-size: 22px;
+          font-weight: 500;
+          text-align: center;
           cursor: pointer;
           transition: background-color 0.3s;
 
-    
           &:nth-child(1) {
             background-color: #6c757d;
             &:hover {
               background-color: #5a6268;
+            }
+          }
+        }
+      }
+      .step {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        h2 {
+          font-size: 24px;
+          margin-bottom: 16px;
+          color: #333;
+        }
+
+        .deliveryForm {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          .radioLabel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid #a73539;
+            border-radius: 8px;
+            background: #fffaf5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            input[type="radio"] {
+              width: 16px;
+              height: 16px;
+              cursor: pointer;
+              background: #90312f;
+              color: #90312f;
+            }
+
+            .radioContent {
+              display: flex;
+              flex-direction: column;
+              width: 100%;
+
+              p {
+                font-size: 16px;
+                font-weight: 300;
+                line-height: 24px;
+
+                &.deliveryDetail {
+                  font-size: 14px;
+                  font-weight: 300;
+                  line-height: 16.94px;
+                  text-align: left;
+                  color: #505050;
+                }
+              }
+            }
+
+            &:hover {
+              background: #fbeae6;
+              border-color: #90312f;
+            }
+          }
+
+          .sum {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            p {
+              font-family: Inter;
+              font-size: 14px;
+              font-weight: 300;
+              line-height: 16.94px;
+              color: #505050;
+            }
+
+            p:last-child {
+              font-family: Inter;
+              font-size: 14px;
+              font-weight: 300;
+              line-height: 16.94px;
+              color: #505050;
+            }
+          }
+
+          .buttonGroup {
+            display: flex;
+            justify-content: space-between;
+
+            button {
+              padding: 10px 20px;
+              border: none;
+              border-radius: 8px;
+              font-size: 16px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+
+              &.prevButton {
+                background-color: #6c757d;
+                color: #fff;
+
+                &:hover {
+                  background-color: #5a6268;
+                }
+              }
+
+              &.nextButton {
+                background-color: #a73539;
+                color: #fff;
+
+                &:hover {
+                  background-color: #90312f;
+                }
+              }
             }
           }
         }

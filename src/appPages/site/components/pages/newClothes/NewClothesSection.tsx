@@ -65,6 +65,7 @@ const NewClothesSection = () => {
                         </div>
                       </div>
                     </div>
+
                   </div>
                 ))
               : null
