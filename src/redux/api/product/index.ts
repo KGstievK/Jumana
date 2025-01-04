@@ -38,6 +38,14 @@ const api = index.injectEndpoints({
         method: "GET",
       }),
     }),
+    addToBasket: build.mutation<PRODUCT.addToBasketRes, PRODUCT.addToBasketReq>({
+      query: (data) => ({
+        url: `/cart_item/`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["product"],
+    }),
   }),
 });
 
@@ -47,4 +55,9 @@ export const {
   usePatchProductMutation,
   useDeleteProductMutation,
   useGetBasketQuery,
+  useAddToBasketMutation, 
 } = api;
+
+
+
+
