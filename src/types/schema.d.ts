@@ -103,13 +103,11 @@ interface category {
     }>;
     clothes_name: string;
     price: number;
+    discount_price: number;
     size: Array<string>;
     color: Array<{
+      id: number;
       color: string;
-      color_photo: Array<{
-        photo: string;
-        color_connect: number;
-      }>;
     }>;
     average_rating: number;
     created_date: string;
