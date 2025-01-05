@@ -1,5 +1,5 @@
 "use client";
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode } from "react";
 import { SessionProvider as NextAuthProvider } from "next-auth/react";
 import { Session } from "next-auth";
 

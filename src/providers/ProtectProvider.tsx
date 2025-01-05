@@ -5,7 +5,6 @@ import {
   SessionProvider as NextAuthProvider,
   useSession,
 } from "next-auth/react";
-import { Session } from "next-auth";
 
 interface ProtectProviderProps {
   children: ReactNode;

@@ -7,6 +7,7 @@ import { FC } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
+
 const ProfileSection: FC = () => {
   // const { data, isLoading, error } = useGetMeQuery();
   const { data: session } = useSession();
