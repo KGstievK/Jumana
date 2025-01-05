@@ -1,9 +1,10 @@
 interface User {
-  _id?: number;
-  email: string;
-  addres: string;
-  userName: string;
-  phone: string;
+  username: string
+  first_name: string
+  last_name: string
+  address: string
+  index_pochta: string
+  number: string
 }
 
 interface AllClothes {

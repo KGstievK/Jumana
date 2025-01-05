@@ -5,41 +5,37 @@ import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
 import { ConfigProvider } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
+import { signIn } from "next-auth/react";
 
-interface LoginType {
-  username: string
-  email: string;
-  password: string;
-}
 
-const SignInPage = () => {
+const SignInPage: FC = () => {
   const [postLoginMutation] = usePostLoginMutation();
-  const { register, handleSubmit } = useForm<LoginType>();
+  const { register, handleSubmit } = useForm<AUTH.PostLoginRequest>();
   const [rememberMe, setRememberMe] = useState(false);	
 
   const handleRememberMeChange = (e: CheckboxChangeEvent) => {
     setRememberMe(e.target.checked);
   };
 
-  const onSubmit: SubmitHandler<LoginType> = async (userData) => {
+  const onSubmit: SubmitHandler<AUTH.PostLoginRequest> = async (userData) => {
     // const datalogin = {
-    // 	username: userData.email,
+    	// username: userData.email,
     	// password: userData.password1
     // }
     try {
       const response = await postLoginMutation(userData);
       // const responseToken = await refreshAccessToken(userData)
-      if (response.data?.key) {
+      if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
         // storage.setItem(
-        //   "key",
-        //   JSON.stringify(response.data.key)
+        //   "access",
+        //   JSON.stringify(response.data.access)
         // );
-        storage.setItem("key", JSON.stringify(response.data.key))
+        storage.setItem("access", JSON.stringify(response.data.access))
       }
 
       // window.location.reload();
@@ -58,11 +54,11 @@ const SignInPage = () => {
           placeholder="User Name"
           {...register("username", { required: true })}
         />
-        <input
+        {/* <input
           type="text"
           placeholder="Email"
           {...register("email", { required: true })}
-        />
+        /> */}
         <input
           type="password"
           placeholder="Password"
@@ -96,9 +92,9 @@ const SignInPage = () => {
         <div className={scss.line}></div>
       </div>
       <div className={scss.google}>
-        <Link href="">
+        <button className={scss.link} onClick={() => signIn('google')}>
           <Image src={google} alt="Google" />
-        </Link>
+        </button>
       </div>
       <div className={scss.nav}>
 				<p>У вас нет аккаунта?</p>

@@ -9,6 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
+import { signIn } from "next-auth/react";
 
 
 const SignUpPage: FC = () => {
@@ -28,11 +29,11 @@ const SignUpPage: FC = () => {
 
     try {
       const response = await postRegisterMutation(userData);
-      if (response.data?.key) {
+      if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem(
           "accessToken",
-          JSON.stringify(response.data.key)
+          JSON.stringify(response.data.access)
         );
         // window.location.reload();
       }
@@ -97,6 +98,16 @@ const SignUpPage: FC = () => {
         <Link href="/auth/sign-in" className={scss.link}>
           Войти
         </Link>
+      </div>
+      <div className={scss.orLine}>
+        <div className={scss.line}></div>
+        <p>или</p>
+        <div className={scss.line}></div>
+      </div>
+      <div className={scss.google}>
+        <button className={scss.Google_link} onClick={() => signIn('google')}>
+          <Image src={google} alt="Google" />
+        </button>
       </div>
     </section>
   );
