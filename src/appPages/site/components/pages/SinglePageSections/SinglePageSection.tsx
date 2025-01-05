@@ -15,7 +15,10 @@ interface SinglePageSectionProps {
 
 const SinglePageSection = ({ data }: SinglePageSectionProps) => {
 	const route = useRouter()
-	// console.log('🚀 ~ SinglePageSection ~ data:', data)
+
+	if (!data) {
+		return <div>Загрузка данных подождите...</div>
+	}
 
 	return (
 		<section className={scss.SinglePageSection}>
@@ -28,7 +31,12 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
 
 				<div className={scss.content}>
 					<div className={scss.images}>
-						<Image src={img} alt='photo' />
+						<Image
+							src={data.clothes_photo}
+							alt='photo'
+							width={505}
+							height={550}
+						/>
 						<div className={scss.image}>
 							<Image src={img} alt='photo' />
 							<Image src={img} alt='photo' />
