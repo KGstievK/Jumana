@@ -62,7 +62,7 @@ const Welcome = () => {
                     width={420}
                     height={630}
                   />
-                  <Link href="/single">
+                  <Link href="/catalog">
                     Купить <Image src={arrow} alt="Valid src" />
                   </Link>
                 </div>
