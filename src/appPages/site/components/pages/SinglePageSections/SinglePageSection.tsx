@@ -11,18 +11,6 @@ import { useGetClothesByIdQuery } from "@/redux/api/category";
 
 //! Это Карточка товаров
 
-// const data = {
-//   title: "JUMANA “24",
-//   price: 6000,
-//   sale: 20,
-//   colors: ["red", "white", "black"],
-//   textstyle: "Таффета",
-//   description:
-//     "Красивые платья оптом от производителя из Бишкека , КыргызстанКрасивые платья оптом от производителя из Бишкека , Кыргызстан",
-//   sales: ["xxs", "xs", "s", "m"],
-//   starts: 4.95,
-// };
-
 const SinglePageSection = () => {
   const route = useRouter();
   const { data } = useGetClothesByIdQuery();
