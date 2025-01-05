@@ -28,11 +28,11 @@ const ResetPasswordPage = () => {
 
     try {
       const response = await PatchResetPasswordMutation(userDataRest);
-      if (response.data?.message) {
+      if (response.data) {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem(
           "accessToken",
-          JSON.stringify(response.data.message)
+          JSON.stringify(response.data)
         );
         // window.location.reload();
       }

@@ -2,43 +2,38 @@
 import scss from "./SignUpPage.module.scss";
 import { usePostRegistrationMutation } from "@/redux/api/auth";
 import { ConfigProvider } from "antd";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
+import { signIn } from "next-auth/react";
 
-interface RegisterType {
-  email: string;
-  userName: string;
-  password1: string;
-  password2: string;
-}
 
-const SignUpPage = () => {
+const SignUpPage: FC = () => {
   const [postRegisterMutation] = usePostRegistrationMutation();
 
-  const { register, watch, handleSubmit } = useForm<RegisterType>();
+  const { register, watch, handleSubmit } = useForm<AUTH.PostRegistrationRequest>();
 
   const [rememberMe, setRememberMe] = useState(false);
 
-  const onSubmit: SubmitHandler<RegisterType> = async (userData) => {
-    const userDataRest = {
-      userName: userData.userName,
-      email: userData.email,
-      password1: userData.password1,
-      password2: userData.password2,
-    };
+  const onSubmit: SubmitHandler<AUTH.PostRegistrationRequest> = async (userData) => {
+    // const userDataRest = {
+    //   userName: userData.userName,
+    //   // email: userData.email,
+    //   password: userData.password,
+    //   confirm_password: userData.confirm_password,
+    // };
 
     try {
-      const response = await postRegisterMutation(userDataRest);
-      if (response.data?.key) {
+      const response = await postRegisterMutation(userData);
+      if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem(
           "accessToken",
-          JSON.stringify(response.data.key)
+          JSON.stringify(response.data.access)
         );
         // window.location.reload();
       }
@@ -51,7 +46,7 @@ const SignUpPage = () => {
     setRememberMe(e.target.checked);
   };
 
-  const password = watch("password1");
+  const password = watch("password");
   return (
     <section className={scss.RegistrationPage}>
       <Image src={logo} alt="LOGO" />
@@ -62,22 +57,22 @@ const SignUpPage = () => {
           {...register("userName", { required: true })}
           placeholder="Имя аккаунта"
         />  
-        <input
+        {/* <input
           type="text"
           {...register("email", { required: true })}
           placeholder="Email"
-        />
+        /> */}
         <input
           type="text"
-          {...register("password1", { required: true })}
+          {...register("password", { required: true })}
           placeholder="Пароль"
         />
         <input
           type="text"
-          {...register("password2", {
+          {...register("confirm_password", {
             required: true,
             validate: (value: string) =>
-              value === "password1" || "Пароли не совпадают",
+              value === "password" || "Пароли не совпадают",
           })}
           placeholder="Повторите пароль"
         />
@@ -103,6 +98,16 @@ const SignUpPage = () => {
         <Link href="/auth/sign-in" className={scss.link}>
           Войти
         </Link>
+      </div>
+      <div className={scss.orLine}>
+        <div className={scss.line}></div>
+        <p>или</p>
+        <div className={scss.line}></div>
+      </div>
+      <div className={scss.google}>
+        <button className={scss.Google_link} onClick={() => signIn('google')}>
+          <Image src={google} alt="Google" />
+        </button>
       </div>
     </section>
   );

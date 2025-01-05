@@ -26,9 +26,9 @@ const ForgotPage = () => {
 
     try {
       const response = await PostForgotPasswordMutation(userDataRest);
-      if (response.data?.message) {
+      if (response.data) {
         const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem("accessToken", JSON.stringify(response.data.message));
+        storage.setItem("accessToken", JSON.stringify(response.data));
         // window.location.reload();
       }
     } catch (e) {

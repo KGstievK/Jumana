@@ -33,7 +33,7 @@
               align-items: center;
               justify-content: space-between;
               font-family: "inter", sans-serif;
-              width: 100%;  
+              width: 100%;
               height: 56px;
               border-radius: 0;
               border: none;
@@ -46,6 +46,14 @@
               padding: 0 20px;
               img {
                 fill: #000;
+              }
+              &:hover {
+                background-color: var(--main-color);
+                transition: 0.3s;
+                color: #fff;
+                svg {
+                  fill: #fff;
+                }
               }
             }
             button.active {

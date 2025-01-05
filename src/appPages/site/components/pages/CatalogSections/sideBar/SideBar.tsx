@@ -3,10 +3,13 @@ import scss from "./sideBar.module.scss";
 import Image from "next/image";
 import arrow from "@/assets/icons/Vector (Stroke).svg";
 import { FC, useState } from "react";
+import Cards from "../cards/Cards";
 
 type SectionKeys = "type" | "price" | "size" | "color";
 
 const SideBar: FC = () => {
+  const [getValue, setGetValue] = useState("");
+
   const [openSections, setOpenSections] = useState<
     Record<SectionKeys, boolean>
   >({
@@ -35,7 +38,10 @@ const SideBar: FC = () => {
         </div>
         {openSections.type && (
           <div className={scss.filterContent}>
-            <label className={scss.checkboxContainer}>
+            <label
+              className={scss.checkboxContainer}
+              onChange={() => setGetValue("Платье")}
+            >
               <input type="checkbox" />
               <span className={scss.customCheckbox}></span>
               Платье

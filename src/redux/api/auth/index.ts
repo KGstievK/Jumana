@@ -3,15 +3,15 @@ import { api as index } from "..";
 const api = index.injectEndpoints({
   endpoints: (build) => ({
     getMe: build.query<AUTH.GetResponse, AUTH.GetRequest>({
-      query: () => ({
-        url: "/auth/user",
+      query: (id) => ({
+        url: `/profile/`,
         method: "GET",
       }),
       providesTags: ["auth"],
     }),
     postLogin: build.mutation<AUTH.PostLoginResponse, AUTH.PostLoginRequest>({
       query: (data) => ({
-        url: "/auth/login",
+        url: "/login/",
         method: "POST",
         body: data,
       }),
@@ -22,7 +22,7 @@ const api = index.injectEndpoints({
       AUTH.PostRegistrationRequest
     >({
       query: (data) => ({
-        url: "/auth/registration/",
+        url: "/register/",
         method: "POST",
         body: data,
       }),
@@ -31,7 +31,7 @@ const api = index.injectEndpoints({
     postLogout: build.mutation<AUTH.PostLogoutResponse, AUTH.PostLogoutRequest>(
       {
         query: () => ({
-          url: "/auth/logout",
+          url: "/logout",
           method: "POST",
         }),
         invalidatesTags: ["auth"],
@@ -42,7 +42,7 @@ const api = index.injectEndpoints({
       AUTH.PatchRefreshRequest
     >({
       query: () => ({
-        url: "/auth/refresh",
+        url: "/api/token/refresh",
         method: "PATCH",
       }),
       invalidatesTags: ["auth"],

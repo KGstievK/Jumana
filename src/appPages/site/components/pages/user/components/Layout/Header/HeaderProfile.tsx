@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import vector from '@/assets/icons/ProfileVector.svg'
 import vectorWite from '@/assets/icons/vectorWite.svg'
+import { signOut } from "next-auth/react";
 const HeaderProfile = () => {
   const pathname = usePathname();
   console.log(pathname);
@@ -12,7 +13,7 @@ const HeaderProfile = () => {
     { label: "Профиль", path: "/profile" },
     { label: "Мои покупки", path: "/profile/history" },
     { label: "Избранные", path: "/profile/favorite" },
-    { label: "Выйти", path: "/profile/logout" },
+    { label: "Выйти", path: '' },
   ];
 
   return (
@@ -23,7 +24,7 @@ const HeaderProfile = () => {
               {tabs.map((tab, idx) => (
                 <li key={idx}>
                   <Link href={tab.path}>
-                    <button
+                    <button onClick={() => {tab.label === 'Выйти' ? signOut() : ''}}
                       className={pathname === tab.path ? scss.active : ""}
                     >
                       {tab.label}
