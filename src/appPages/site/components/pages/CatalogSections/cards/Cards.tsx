@@ -36,7 +36,7 @@ const Cards = () => {
             <div
               key={idx}
               className={scss.card}
-              onClick={() => router.push(`/${item.id}`)} 
+              onClick={() => router.push(`/${item.id}`)}
             >
               <div className={scss.blockImg}>
                 <div className={scss.like}>
