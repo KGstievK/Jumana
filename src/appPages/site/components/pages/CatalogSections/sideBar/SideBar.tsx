@@ -8,7 +8,10 @@ import Cards from "../cards/Cards";
 type SectionKeys = "type" | "price" | "size" | "color";
 
 const SideBar: FC = () => {
-  const [getValue, setGetValue] = useState("");
+  const [category, setCategory] = useState("");
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
   const [openSections, setOpenSections] = useState<
     Record<SectionKeys, boolean>
@@ -26,9 +29,26 @@ const SideBar: FC = () => {
     }));
   };
 
+  const handleCategoryChange = (value: string) => {
+    setCategory((prev) => (prev === value ? "" : value));
+  };
+
+  const handleSizeChange = (size: string) => {
+    setSelectedSizes((prev) =>
+      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
+    );
+  };
+
+  const handleColorChange = (color: string) => {
+    setSelectedColors((prev) =>
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+    );
+  };
+
   return (
     <section className={scss.filter}>
       <div className={scss.filterContainer}>
+        {/* ВИД */}
         <div className={scss.filterSection}>
           <div
             className={scss.filterHeader}
@@ -39,49 +59,24 @@ const SideBar: FC = () => {
           </div>
           {openSections.type && (
             <div className={scss.filterContent}>
-              <label
-                className={scss.checkboxContainer}
-                onChange={() => setGetValue("Платья")}
-              >
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Платье
-              </label>
-              <label
-                className={scss.checkboxContainer}
-                onChange={() => setGetValue("Абайка")}
-              >
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Абайка
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Юбка
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Платок
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Блузка
-              </label>
-              <label
-                className={scss.checkboxContainer}
-                onChange={() => setGetValue("Рубашка")}
-              >
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Рубашки
-              </label>
+              {["Платья", "Абайка", "Юбка", "Платок", "Блузка", "Рубашка"].map(
+                (item) => (
+                  <label key={item} className={scss.checkboxContainer}>
+                    <input
+                      type="checkbox"
+                      checked={category === item}
+                      onChange={() => handleCategoryChange(item)}
+                    />
+                    <span className={scss.customCheckbox}></span>
+                    {item}
+                  </label>
+                )
+              )}
             </div>
           )}
         </div>
 
+        {/* ЦЕНА */}
         <div className={scss.filterSection}>
           <div
             className={scss.filterHeader}
@@ -92,13 +87,27 @@ const SideBar: FC = () => {
           </div>
           {openSections.price && (
             <div className={scss.filterContent}>
-              <input type="number" placeholder="min." />
-              <input type="number" placeholder="max." />
-              <input type="range" min="0" max="1000" />
+              <input
+                type="number"
+                placeholder="min."
+                value={priceRange.min}
+                onChange={(e) =>
+                  setPriceRange({ ...priceRange, min: +e.target.value })
+                }
+              />
+              <input
+                type="number"
+                placeholder="max."
+                value={priceRange.max}
+                onChange={(e) =>
+                  setPriceRange({ ...priceRange, max: +e.target.value })
+                }
+              />
             </div>
           )}
         </div>
 
+        {/* РАЗМЕР */}
         <div className={scss.filterSection}>
           <div
             className={scss.filterHeader}
@@ -109,41 +118,22 @@ const SideBar: FC = () => {
           </div>
           {openSections.size && (
             <div className={scss.filterContent}>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                XXS
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                XS
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>S
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>M
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>L
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>XL
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                XXL
-              </label>
+              {["XXS", "XS", "S", "M", "L", "XL", "XXL"].map((size) => (
+                <label key={size} className={scss.checkboxContainer}>
+                  <input
+                    type="checkbox"
+                    checked={selectedSizes.includes(size)}
+                    onChange={() => handleSizeChange(size)}
+                  />
+                  <span className={scss.customCheckbox}></span>
+                  {size}
+                </label>
+              ))}
             </div>
           )}
         </div>
 
+        {/* ЦВЕТ */}
         <div className={scss.filterSection}>
           <div
             className={scss.filterHeader}
@@ -154,36 +144,29 @@ const SideBar: FC = () => {
           </div>
           {openSections.color && (
             <div className={scss.filterContent}>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Чёрный
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Белый
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Айвори
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Зеленый
-              </label>
-              <label className={scss.checkboxContainer}>
-                <input type="checkbox" />
-                <span className={scss.customCheckbox}></span>
-                Бардовый
-              </label>
+              {["Чёрный", "Белый", "Айвори", "Зеленый", "Бардовый"].map(
+                (color) => (
+                  <label key={color} className={scss.checkboxContainer}>
+                    <input
+                      type="checkbox"
+                      checked={selectedColors.includes(color)}
+                      onChange={() => handleColorChange(color)}
+                    />
+                    <span className={scss.customCheckbox}></span>
+                    {color}
+                  </label>
+                )
+              )}
             </div>
           )}
         </div>
       </div>
-      <Cards value={getValue} />
+      <Cards
+        value={category}
+        priceRange={priceRange}
+        sizes={selectedSizes}
+        colors={selectedColors}
+      />
     </section>
   );
 };
