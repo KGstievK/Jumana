@@ -1,20 +1,16 @@
-"use client";
-import { FC, ReactNode, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import {
-  SessionProvider as NextAuthProvider,
-  useSession,
-} from "next-auth/react";
-import { Session } from "react-router-dom";
+'use client'
+import { useSession } from 'next-auth/react'
+import { usePathname, useRouter } from 'next/navigation'
+import { FC, ReactNode, useEffect } from 'react'
 
 interface ProtectProviderProps {
-  children: ReactNode;
+	children: ReactNode
 }
 
 const ProtectProvider: FC<ProtectProviderProps> = ({ children }) => {
-  const { status } = useSession();
-  const pathname = usePathname();
-  const router = useRouter();
+	const { status } = useSession()
+	const pathname = usePathname()
+	const router = useRouter()
 
   const handleNavigation = () => {
     switch (pathname) {
@@ -40,11 +36,11 @@ const ProtectProvider: FC<ProtectProviderProps> = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    handleNavigation();
-  }, [status, pathname, router]);
+	useEffect(() => {
+		handleNavigation()
+	}, [status, pathname, router])
 
-  return <>{children}</>;
-};
+	return <>{children}</>
+}
 
-export default ProtectProvider;
+export default ProtectProvider

@@ -1,10 +1,10 @@
 namespace ICATEGORY {
-  type getAllClothesRes = AllClothes[];
-  type getAllClothesReq = void;
+	type getAllClothesRes = AllClothes[]
+	type getAllClothesReq = void
 
-  type getClothesByIdRes = clothesById;
-  type getClothesBuIdReq = void;
+	export type getClothesByIdRes = clothesById
+	export type getClothesByIdReq = string
 
-  type getCategoryRes = category[];
-  type getCategoryReq = void;
+	type getCategoryRes = category[]
+	type getCategoryReq = void
 }
