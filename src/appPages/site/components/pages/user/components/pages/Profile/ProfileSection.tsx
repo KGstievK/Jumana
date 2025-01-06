@@ -10,8 +10,8 @@ import Image from "next/image";
 
 const ProfileSection: FC = () => {
   // const { data, isLoading, error } = useGetMeQuery();
-  const { data: session } = useSession();
-  // console.log("🚀 ~ useSession:", useSession())
+  const { data: session, status } = useSession();
+  console.log("🚀 ~ useSession:", useSession())
 
   // console.log(session);
   
@@ -32,13 +32,13 @@ const ProfileSection: FC = () => {
       <div className={scss.content}>
         <h1>Личные данные</h1>
         <p>Подтвердите свою личность</p>
-        <Image src={session?.user?.image} alt="avatar" width={70} height={70} />
+        {/* <Image src={session?.user?.image} alt="avatar" width={70} height={70} /> */}
         <form>
           <p>Имя и Фамилия</p>
           
           <input
             type="text"
-            placeholder={session?.user?.name}
+            // placeholder={session?.user?.name}
             // value={session?.user?.name}
           />
           {/* <p>{data?.username}</p> */}
@@ -57,7 +57,7 @@ const ProfileSection: FC = () => {
           <p>Email</p>
           <input
             type="text"
-            placeholder={session?.user?.email}
+            // placeholder={session?.user?.email}
             // value={data?.profile.email}
           />
           <button className={scss.submit}>Сохранить</button>

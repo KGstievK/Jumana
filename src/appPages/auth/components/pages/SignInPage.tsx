@@ -11,11 +11,10 @@ import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
 import { signIn } from "next-auth/react";
 
-
 const SignInPage: FC = () => {
   const [postLoginMutation] = usePostLoginMutation();
   const { register, handleSubmit } = useForm<AUTH.PostLoginRequest>();
-  const [rememberMe, setRememberMe] = useState(false);	
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleRememberMeChange = (e: CheckboxChangeEvent) => {
     setRememberMe(e.target.checked);
@@ -23,8 +22,8 @@ const SignInPage: FC = () => {
 
   const onSubmit: SubmitHandler<AUTH.PostLoginRequest> = async (userData) => {
     // const datalogin = {
-    	// username: userData.email,
-    	// password: userData.password1
+    // username: userData.email,
+    // password: userData.password1
     // }
     try {
       const response = await postLoginMutation(userData);
@@ -35,7 +34,7 @@ const SignInPage: FC = () => {
         //   "access",
         //   JSON.stringify(response.data.access)
         // );
-        storage.setItem("access", JSON.stringify(response.data.access))
+        storage.setItem("access", JSON.stringify(response.data.access));
       }
 
       // window.location.reload();
@@ -46,7 +45,9 @@ const SignInPage: FC = () => {
   };
   return (
     <section className={scss.LoginPage}>
-      <Image src={logo} alt="LOGO" />
+      <Link href="/">
+        <Image src={logo} alt="LOGO" />
+      </Link>
       <h1>Войти в аккаунт</h1>
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <input
@@ -92,12 +93,12 @@ const SignInPage: FC = () => {
         <div className={scss.line}></div>
       </div>
       <div className={scss.google}>
-        <button className={scss.link} onClick={() => signIn('google')}>
+        <button className={scss.link} onClick={() => signIn("google")}>
           <Image src={google} alt="Google" />
         </button>
       </div>
       <div className={scss.nav}>
-				<p>У вас нет аккаунта?</p>
+        <p>У вас нет аккаунта?</p>
         <Link href="/auth/sign-up" className={scss.link}>
           Зарегестрироваться
         </Link>

@@ -5,6 +5,7 @@ import {
   SessionProvider as NextAuthProvider,
   useSession,
 } from "next-auth/react";
+import { Session } from "react-router-dom";
 
 interface ProtectProviderProps {
   children: ReactNode;
@@ -31,7 +32,7 @@ const ProtectProvider: FC<ProtectProviderProps> = ({ children }) => {
       case "/profile/history":
       case "/cart":
         if (status === "unauthenticated") {
-          // router.push("/auth/sign-in");
+          router.push("/auth/sign-in");
         }
         break;
       default:

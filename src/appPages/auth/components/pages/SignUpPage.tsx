@@ -11,15 +11,17 @@ import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
 import { signIn } from "next-auth/react";
 
-
 const SignUpPage: FC = () => {
   const [postRegisterMutation] = usePostRegistrationMutation();
 
-  const { register, watch, handleSubmit } = useForm<AUTH.PostRegistrationRequest>();
+  const { register, watch, handleSubmit } =
+    useForm<AUTH.PostRegistrationRequest>();
 
   const [rememberMe, setRememberMe] = useState(false);
 
-  const onSubmit: SubmitHandler<AUTH.PostRegistrationRequest> = async (userData) => {
+  const onSubmit: SubmitHandler<AUTH.PostRegistrationRequest> = async (
+    userData
+  ) => {
     // const userDataRest = {
     //   userName: userData.userName,
     //   // email: userData.email,
@@ -31,10 +33,7 @@ const SignUpPage: FC = () => {
       const response = await postRegisterMutation(userData);
       if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem(
-          "accessToken",
-          JSON.stringify(response.data.access)
-        );
+        storage.setItem("accessToken", JSON.stringify(response.data.access));
         // window.location.reload();
       }
     } catch (e) {
@@ -49,14 +48,16 @@ const SignUpPage: FC = () => {
   const password = watch("password");
   return (
     <section className={scss.RegistrationPage}>
-      <Image src={logo} alt="LOGO" />
+      <Link href="/"  className="Logo">
+        <Image src={logo} alt="LOGO" />
+      </Link>
       <h1>Создать аккаунт</h1>
       <form action="">
         <input
           type="text"
           {...register("userName", { required: true })}
           placeholder="Имя аккаунта"
-        />  
+        />
         {/* <input
           type="text"
           {...register("email", { required: true })}
@@ -105,7 +106,7 @@ const SignUpPage: FC = () => {
         <div className={scss.line}></div>
       </div>
       <div className={scss.google}>
-        <button className={scss.Google_link} onClick={() => signIn('google')}>
+        <button className={scss.Google_link} onClick={() => signIn("google")}>
           <Image src={google} alt="Google" />
         </button>
       </div>
