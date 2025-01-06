@@ -1,3 +1,10 @@
+.filter {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  gap: 20px;
+}
 .filterContainer {
   width: 100%;
   max-width: clamp(200px, 20vw, 320px);

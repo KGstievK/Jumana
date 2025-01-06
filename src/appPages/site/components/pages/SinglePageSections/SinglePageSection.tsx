@@ -55,8 +55,6 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
             <h1>{data?.clothes_name}</h1>
 
             <div className={scss.price}>
-              {/* <del>{data.price}сом</del> */}
-              {/* <h4>{data.price - (data.price * data.sale) / 100}сом</h4> */}
               <h4>{data?.price}</h4>
             </div>
 
