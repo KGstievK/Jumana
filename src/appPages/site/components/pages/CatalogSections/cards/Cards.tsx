@@ -10,11 +10,15 @@ import { useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import SideBar from "../sideBar/SideBar";
 import scss from "./cards.module.scss";
+
 interface Iprops {
   value: string;
+  priceRange: { min: number; max: number };
+  sizes: string[];
+  colors: string[];
 }
 
-const Cards: FC<Iprops> = ({ value }) => {
+const Cards: FC<Iprops> = ({ value, priceRange, sizes, colors }) => {
   const router = useRouter();
   const [state, setState] = useState(false);
   const { data } = useGetAllCategoryQuery();
