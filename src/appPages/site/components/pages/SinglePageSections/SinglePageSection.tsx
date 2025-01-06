@@ -1,20 +1,24 @@
 "use client";
-import Image from "next/image";
-import scss from "./SinglePageSection.module.scss";
-import img from "@/assets/images/cardImage.png";
 import star from "@/assets//images//star.png";
-import Link from "next/link";
-import bagSvg from "@/assets/icons/bag-happy.svg";
 import backIcon from "@/assets/icons/backIcon.svg";
+import bagSvg from "@/assets/icons/bag-happy.svg";
+import img from "@/assets/images/cardImage.png";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useGetClothesByIdQuery } from "@/redux/api/category";
+import scss from "./SinglePageSection.module.scss";
 
 //! Это Карточка товаров
+interface SinglePageSectionProps {
+  data: SingleProductData;
+}
 
-const SinglePageSection = () => {
+const SinglePageSection = ({ data }: SinglePageSectionProps) => {
   const route = useRouter();
-  const { data } = useGetClothesByIdQuery();
-  console.log("🚀 ~ SinglePageSection ~ data:", data);
+
+  if (!data) {
+    return <div>Загрузка данных подождите...</div>;
+  }
 
   return (
     <section className={scss.SinglePageSection}>
@@ -27,7 +31,12 @@ const SinglePageSection = () => {
 
         <div className={scss.content}>
           <div className={scss.images}>
-            <Image src={img} alt="photo" />
+            <Image
+              src={data.clothes_photo}
+              alt="photo"
+              width={505}
+              height={550}
+            />
             <div className={scss.image}>
               <Image src={img} alt="photo" />
               <Image src={img} alt="photo" />
@@ -68,13 +77,9 @@ const SinglePageSection = () => {
             <div className={scss.sizes}>
               <h5>Размеры:</h5>
               <div className={scss.spans}>
-                <span>XXS</span>
-                <span>XS</span>
-                <span>S</span>
-                <span>M</span>
-                <span>L</span>
-                <span>XL</span>
-                <span>XXL</span>
+                {data?.size.map((el, index) => (
+                  <span key={index}>{el}</span>
+                ))}
               </div>
             </div>
 

@@ -1,36 +1,35 @@
-"use client";
-import Image from "next/image";
-import scss from "./cards.module.scss";
-import star from "@/assets/images/star.png";
-import cart from "@/assets/icons/bag-happyBlack.svg";
-import heart from "@/assets/icons/HeartStraight.svg";
-import heartRed from "@/assets/icons/red-heart-icon.svg";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import filterImg from "@/assets/icons/Filter.svg";
-import { useGetAllClothesQuery } from "@/redux/api/category";
-import SideBar from "../sideBar/SideBar";
+'use client'
+import cart from '@/assets/icons/bag-happyBlack.svg'
+import filterImg from '@/assets/icons/Filter.svg'
+import heart from '@/assets/icons/HeartStraight.svg'
+import heartRed from '@/assets/icons/red-heart-icon.svg'
+import star from '@/assets/images/star.png'
+import { useGetAllClothesQuery } from '@/redux/api/category'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import SideBar from '../sideBar/SideBar'
+import scss from './cards.module.scss'
 
 const Cards = () => {
-  const [state, setState] = useState(false);
-  const router = useRouter();
-  const { data } = useGetAllClothesQuery();
-  console.log("🚀 ~ Cards ~ data:", data);
+	const [state, setState] = useState(false)
+	const router = useRouter()
+	const { data } = useGetAllClothesQuery()
+	console.log('🚀 ~ Cards ~ data:', data)
 
-  return (
-    <div id={scss.Cards}>
-      <div className={scss.content}>
-        <div className={scss.header} onClick={() => <SideBar />}>
-          <Image
-            width={20}
-            height={30}
-            layout="intrinsic"
-            src={filterImg}
-            alt="photo"
-          />
-          <h4>ФИЛЬТР</h4>
-        </div>
-
+	return (
+		<div id={scss.Cards}>
+			<div className={scss.content}>
+				<div className={scss.header} onClick={() => <SideBar />}>
+					<Image
+						width={20}
+						height={30}
+						layout='intrinsic'
+						src={filterImg}
+						alt='photo'
+					/>
+					<h4>ФИЛЬТР</h4>
+				</div>
         <div className={scss.cards}>
           {data?.map((item, idx) => (
             <div
@@ -104,4 +103,5 @@ const Cards = () => {
   );
 };
 
-export default Cards;
+
+export default Cards

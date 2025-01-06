@@ -1,14 +1,24 @@
-import React from "react";
-import SinglePageSection from "./SinglePageSections/SinglePageSection";
+'use client'
 
-//! Это Карточка товаров
+import { useGetClothesByIdQuery } from '@/redux/api/category'
+import { useParams } from 'next/navigation'
+import SinglePageSection from './SinglePageSections/SinglePageSection'
 
 const SinglePage = () => {
-  return (
-    <div>
-      <SinglePageSection />
-    </div>
-  );
-};
+	const { single } = useParams<{ single: string }>()
+	console.log('id', single)
 
-export default SinglePage;
+	if (!single) {
+		return <div>Loading...</div>
+	}
+
+	const { data } = useGetClothesByIdQuery(single)
+	console.log(data)
+	return (
+		<div>
+			<SinglePageSection data={data} />
+		</div>
+	)
+}
+
+export default SinglePage
