@@ -37,11 +37,13 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
               width={505}
               height={550}
             />
-            <div className={scss.image}>
-              <Image src={img} alt="photo" />
-              <Image src={img} alt="photo" />
-              <Image src={img} alt="photo" />
-            </div>
+            {data.color.map((el, idx) => (
+              <div key={idx} className={scss.image}>
+                {el?.color_photo.map((title, index) =>
+                  title ? <Image key={index} src={title} alt="photo" /> : null
+                )}
+              </div>
+            ))}
           </div>
 
           <div className={scss.info}>
