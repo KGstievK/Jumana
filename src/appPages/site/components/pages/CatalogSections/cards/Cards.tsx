@@ -22,21 +22,51 @@ const Cards: FC<Iprops> = ({ value, priceRange, sizes, colors }) => {
   const router = useRouter();
   const [state, setState] = useState(false);
   const { data } = useGetAllCategoryQuery();
-  console.log("🚀 ~ data:", data);
-
   const [datas, setDatas] = useState(data);
+
+  console.log("🚀 ~ data:", datas);
 
   useEffect(() => {
     if (data) {
-      const filteredData = value
-        ? data.filter(
-            (el) => el.category_name.toLowerCase() === value.toLowerCase()
+      let filteredData = data;
+
+      // Фильтрация по категории
+      if (value) {
+        console.log("Фильтруем по категории:", value);
+        filteredData = filteredData.filter(
+          (el) => el.category_name.toLowerCase() === value.toLowerCase()
+        );
+        console.log("После фильтрации по категории:", filteredData);
+      }
+
+      // Фильтрация по цене
+      filteredData = filteredData.filter((el) =>
+        el.clothes_category.some(
+          (item) => item.price >= priceRange.min && item.price <= priceRange.max
+        )
+      );
+
+      // Фильтрация по размеру
+      if (sizes.length > 0) {
+        filteredData = filteredData.filter((el) =>
+          el.clothes_category.some((item) =>
+            item.size.some((s) => sizes.includes(s))
           )
-        : data;
+        );
+      }
+
+      // Фильтрация по цвету
+      if (colors.length > 0) {
+        filteredData = filteredData.filter((el) =>
+          el.clothes_category.some((item) =>
+            item.color.some((c) => colors.includes(c.color.toLowerCase()))
+          )
+        );
+      }
 
       setDatas(filteredData);
     }
-  }, [data, value]);
+  }, [data, value, priceRange, sizes, colors]);
 
   return (
     <div id={scss.Cards}>
