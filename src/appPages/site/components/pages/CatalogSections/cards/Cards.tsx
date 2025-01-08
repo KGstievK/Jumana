@@ -40,17 +40,19 @@ const Cards: FC<Iprops> = ({ value, priceRange, sizes, colors }) => {
       }
 
       // Фильтрация по цене
-      filteredData = filteredData.filter((el) =>
-        el.clothes_category.some(
-          (item) => item.price >= priceRange.min && item.price <= priceRange.max
-        )
-      );
+      // filteredData = filteredData.filter((el) =>
+      //   el.clothes_category.some(
+      //     (item) => item.price >= priceRange.min && item.price <= priceRange.max
+      //   )
+      // );
 
       // Фильтрация по размеру
       if (sizes.length > 0) {
         filteredData = filteredData.filter((el) =>
-          el.clothes_category.some((item) =>
-            item.size.some((s) => sizes.includes(s))
+          el.clothes_category.some(
+            (item) =>
+              Array.isArray(item.size) &&
+              item.size.some((s) => sizes.includes(s.toUpperCase()))
           )
         );
       }
