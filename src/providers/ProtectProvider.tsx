@@ -26,7 +26,7 @@ const ProtectProvider: FC<ProtectProviderProps> = ({ children }) => {
       case "/profile":
       case "/profile/favorite":
       case "/profile/history":
-      case "/cart":
+      // case "/cart":
         if (status === "unauthenticated") {
           router.push("/auth/sign-in");
         }

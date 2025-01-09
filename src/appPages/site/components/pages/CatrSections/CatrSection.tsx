@@ -4,12 +4,14 @@ import scss from "./CatrSection.module.scss";
 import img1 from "@/assets/image.png";
 import { useRouter } from "next/navigation";
 import logoBasket from "@/assets/images/basket.svg";
-import { useGetBasketQuery } from "@/redux/api/product";
+import { useGetBasketQuery, useGetCartItemQuery } from "@/redux/api/product";
 
 const CatrSection = () => {
   const { data } = useGetBasketQuery();
   console.log("🚀 ~ CatrSection ~ data:", data);
   const router = useRouter();
+  const { data: cartItem } = useGetCartItemQuery();
+  console.log("🚀 ~ CatrSection ~ cartItem:", cartItem)
 
   const handleRoute = () => {
     router.push("/catalog");
@@ -42,7 +44,7 @@ const CatrSection = () => {
                       </thead>
 
                       <tbody>
-                        {data.map((cartItem, index) => (
+                        {data.map((cartItem, index) =>
                           cartItem.items.map((item) => (
                             <tr key={index}>
                               <td>
@@ -74,7 +76,7 @@ const CatrSection = () => {
                               </td>
                             </tr>
                           ))
-                        ))}
+                        )}
                       </tbody>
                     </table>
                   </div>
@@ -83,18 +85,20 @@ const CatrSection = () => {
                 <div className={scss.block_right}>
                   <h2>Детали оплаты</h2>
                   <div className={scss.box}>
-                    {data.map((cartItem, index) => (
+                    {data.map((cartItem, index) =>
                       cartItem.items.map((item) => (
                         <div className={scss.box} key={index}>
                           <Image src={img1} alt="product" />
                           <div className={scss.text}>
                             <h3>{item.clothes.clothes_name}</h3>
                             <p>{item.clothes.color[0]?.color}</p>
-                            <p className={scss.quantity}>{item.quantity} x {item.clothes.price}c</p>
+                            <p className={scss.quantity}>
+                              {item.quantity} x {item.clothes.price}c
+                            </p>
                           </div>
                         </div>
                       ))
-                    ))}
+                    )}
                   </div>
                   <div className={scss.summary}>
                     <div className={scss.row}>
@@ -102,11 +106,13 @@ const CatrSection = () => {
                       <span>
                         {data.reduce((total, cartItem) => {
                           const cartTotal = cartItem.items.reduce(
-                            (sum, item) => sum + item.clothes.price * item.quantity,
+                            (sum, item) =>
+                              sum + item.clothes.price * item.quantity,
                             0
                           );
                           return total + cartTotal;
-                        }, 0)}c
+                        }, 0)}
+                        c
                       </span>
                     </div>
                     <div className={scss.row}>
@@ -122,11 +128,13 @@ const CatrSection = () => {
                       <span>
                         {data.reduce((total, cartItem) => {
                           const cartTotal = cartItem.items.reduce(
-                            (sum, item) => sum + item.clothes.price * item.quantity,
+                            (sum, item) =>
+                              sum + item.clothes.price * item.quantity,
                             0
                           );
                           return total + cartTotal;
-                        }, 0) - 600}c
+                        }, 0) - 600}
+                        c
                       </span>
                     </div>
                   </div>
