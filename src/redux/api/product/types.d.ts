@@ -2,13 +2,9 @@ namespace PRODUCT {
   export type getBasketRes = cart[];
   export type getBasketReq = void;
 
-  export type addToBasketRes = {
-    success: boolean;
-    message: string;
-  };
+  type getCartItemRes = cart_item;
+  type getCartItemReq = void;
 
-  export type addToBasketReq = {
-    clothes_id: number; // Eklenmek istenen ürün ID'si
-    quantity: number;   // Eklenmek istenen ürün miktarı
-  };
+  type addToBasketRes = cart_item;
+  type addToBasketReq = number;
 }

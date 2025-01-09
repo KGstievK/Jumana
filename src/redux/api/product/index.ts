@@ -38,14 +38,22 @@ const api = index.injectEndpoints({
         method: "GET",
       }),
     }),
-    addToBasket: build.mutation<PRODUCT.addToBasketRes, PRODUCT.addToBasketReq>({
-      query: (data) => ({
+    getCartItem: build.query<PRODUCT.getCartItemRes, PRODUCT.getCartItemReq>({
+      query: () => ({
         url: `/cart_item/`,
-        method: "POST",
-        body: data,
+        method: "GET",
       }),
-      invalidatesTags: ["product"],
     }),
+    addToBasket: build.mutation<PRODUCT.addToBasketRes, PRODUCT.addToBasketReq>(
+      {
+        query: (data) => ({
+          url: `/cart_item/`,
+          method: "POST",
+          body: data,
+        }),
+        invalidatesTags: ["product"],
+      }
+    ),
   }),
 });
 
@@ -55,9 +63,6 @@ export const {
   usePatchProductMutation,
   useDeleteProductMutation,
   useGetBasketQuery,
-  useAddToBasketMutation, 
+  useAddToBasketMutation,
+  useGetCartItemQuery,
 } = api;
-
-
-
-
