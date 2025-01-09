@@ -9,9 +9,9 @@ type SectionKeys = "type" | "price" | "size" | "color";
 
 const SideBar: FC = () => {
   const [category, setCategory] = useState("");
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
+  // const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedColor, setSelectedColor] = useState<string>("");
 
   const [openSections, setOpenSections] = useState<
     Record<SectionKeys, boolean>
@@ -40,9 +40,7 @@ const SideBar: FC = () => {
   };
 
   const handleColorChange = (color: string) => {
-    setSelectedColors((prev) =>
-      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
-    );
+    setSelectedColor((prev) => (prev === color ? "" : color));
   };
 
   return (
@@ -77,7 +75,7 @@ const SideBar: FC = () => {
         </div>
 
         {/* ЦЕНА */}
-        <div className={scss.filterSection}>
+        {/* <div className={scss.filterSection}>
           <div
             className={scss.filterHeader}
             onClick={() => toggleSection("price")}
@@ -105,7 +103,7 @@ const SideBar: FC = () => {
               />
             </div>
           )}
-        </div>
+        </div> */}
 
         {/* РАЗМЕР */}
         <div className={scss.filterSection}>
@@ -149,7 +147,7 @@ const SideBar: FC = () => {
                   <label key={color} className={scss.checkboxContainer}>
                     <input
                       type="checkbox"
-                      checked={selectedColors.includes(color)}
+                      checked={selectedColor.includes(color)}
                       onChange={() => handleColorChange(color)}
                     />
                     <span className={scss.customCheckbox}></span>
@@ -163,9 +161,9 @@ const SideBar: FC = () => {
       </div>
       <Cards
         value={category}
-        priceRange={priceRange}
+        // priceRange={priceRange}
         sizes={selectedSizes}
-        colors={selectedColors}
+        color={selectedColor}
       />
     </section>
   );

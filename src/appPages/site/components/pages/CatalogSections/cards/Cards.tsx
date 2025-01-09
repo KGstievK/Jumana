@@ -13,12 +13,13 @@ import scss from "./cards.module.scss";
 
 interface Iprops {
   value: string;
-  priceRange: { min: number; max: number };
   sizes: string[];
-  colors: string[];
+  color: string; // Строка вместо массива
 }
 
-const Cards: FC<Iprops> = ({ value, priceRange, sizes, colors }) => {
+const Cards: FC<Iprops> = ({ value, sizes, color }) => {
+  console.log("🚀 ~ colors:", color);
+
   const router = useRouter();
   const [state, setState] = useState(false);
   const { data } = useGetAllCategoryQuery();
@@ -58,17 +59,19 @@ const Cards: FC<Iprops> = ({ value, priceRange, sizes, colors }) => {
       }
 
       // Фильтрация по цвету
-      if (colors.length > 0) {
+      if (color) {
         filteredData = filteredData.filter((el) =>
           el.clothes_category.some((item) =>
-            item.color.some((c) => colors.includes(c.color.toLowerCase()))
+            item.color.some(
+              (c) => c.color.toLowerCase() === color.toLowerCase()
+            )
           )
         );
       }
 
       setDatas(filteredData);
     }
-  }, [data, value, priceRange, sizes, colors]);
+  }, [data, value, sizes, color]);
 
   return (
     <div id={scss.Cards}>
