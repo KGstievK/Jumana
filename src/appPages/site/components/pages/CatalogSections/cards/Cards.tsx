@@ -1,31 +1,36 @@
-"use client";
+import React, { FC, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useGetAllCategoryQuery } from "@/redux/api/category";
+import Image from "next/image";
+import SideBar from "../sideBar/SideBar";
+import scss from "./cards.module.scss";
 import cart from "@/assets/icons/bag-happyBlack.svg";
 import filterImg from "@/assets/icons/Filter.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
 import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
-import { useGetAllCategoryQuery } from "@/redux/api/category";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { FC, useEffect, useState } from "react";
-import SideBar from "../sideBar/SideBar";
-import scss from "./cards.module.scss";
 
 interface Iprops {
   value: string;
-  sizes: string[];
-  color: string; // Строка вместо массива
+  size: string;
+  color: string;
 }
 
-const Cards: FC<Iprops> = ({ value, sizes, color }) => {
-  console.log("🚀 ~ colors:", color);
-
+const Cards: FC<Iprops> = ({ value, size, color }) => {
   const router = useRouter();
-  const [state, setState] = useState(false);
   const { data } = useGetAllCategoryQuery();
   const [datas, setDatas] = useState(data);
+  const [likedItems, setLikedItems] = useState<number[]>([]);
 
-  console.log("🚀 ~ data:", datas);
+  const toggleLike = (id: number, e: React.MouseEvent) => {
+    e.stopPropagation(); // Остановить всплытие события
+    setLikedItems(
+      (prevLikedItems) =>
+        prevLikedItems.includes(id)
+          ? prevLikedItems.filter((itemId) => itemId !== id) // Удалить из избранного
+          : [...prevLikedItems, id] // Добавить в избранное
+    );
+  };
 
   useEffect(() => {
     if (data) {
@@ -33,27 +38,18 @@ const Cards: FC<Iprops> = ({ value, sizes, color }) => {
 
       // Фильтрация по категории
       if (value) {
-        console.log("Фильтруем по категории:", value);
         filteredData = filteredData.filter(
           (el) => el.category_name.toLowerCase() === value.toLowerCase()
         );
-        console.log("После фильтрации по категории:", filteredData);
       }
 
-      // Фильтрация по цене
-      // filteredData = filteredData.filter((el) =>
-      //   el.clothes_category.some(
-      //     (item) => item.price >= priceRange.min && item.price <= priceRange.max
-      //   )
-      // );
-
       // Фильтрация по размеру
-      if (sizes.length > 0) {
+      if (size) {
         filteredData = filteredData.filter((el) =>
           el.clothes_category.some(
             (item) =>
               Array.isArray(item.size) &&
-              item.size.some((s) => sizes.includes(s.toUpperCase()))
+              item.size.some((s) => s.toUpperCase() === size.toUpperCase())
           )
         );
       }
@@ -71,7 +67,7 @@ const Cards: FC<Iprops> = ({ value, sizes, color }) => {
 
       setDatas(filteredData);
     }
-  }, [data, value, sizes, color]);
+  }, [data, value, size, color]);
 
   return (
     <div id={scss.Cards}>
@@ -90,7 +86,7 @@ const Cards: FC<Iprops> = ({ value, sizes, color }) => {
           {datas?.map((el, idx) =>
             el.clothes_category.map((item) => (
               <div
-                key={idx}
+                key={item.id}
                 className={scss.card}
                 onClick={() => router.push(`/${item.id}`)}
               >
@@ -108,12 +104,12 @@ const Cards: FC<Iprops> = ({ value, sizes, color }) => {
                     </div>
                     <div
                       className={scss.heart}
-                      onClick={() => setState((prevState) => !prevState)}
+                      onClick={(e) => toggleLike(item.id, e)}
                     >
-                      {state ? (
+                      {likedItems.includes(item.id) ? (
                         <Image
-                          width={500}
-                          height={300}
+                          width={300}
+                          height={200}
                           layout="intrinsic"
                           src={heartRed}
                           alt="heart"
@@ -137,7 +133,10 @@ const Cards: FC<Iprops> = ({ value, sizes, color }) => {
                     alt="photo"
                     className={scss.mainImg}
                   />
-                  <div className={scss.cart}>
+                  <div
+                    className={scss.cart}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Image layout="intrinsic" src={cart} alt="cart" />
                   </div>
                 </div>
@@ -149,7 +148,7 @@ const Cards: FC<Iprops> = ({ value, sizes, color }) => {
                   <h2>{item.clothes_name}</h2>
                   <div className={scss.price}>
                     <span>
-                      {item.discount_price === 0 ? null : item.discount_price}
+                      {item.discount_price}
                       com
                     </span>
                     <del>{item.price}c</del>

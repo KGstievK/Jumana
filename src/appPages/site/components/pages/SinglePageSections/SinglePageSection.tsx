@@ -2,10 +2,9 @@
 import star from "@/assets//images//star.png";
 import backIcon from "@/assets/icons/backIcon.svg";
 import bagSvg from "@/assets/icons/bag-happy.svg";
-import img from "@/assets/images/cardImage.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
 
@@ -15,10 +14,10 @@ interface SinglePageSectionProps {
 }
 
 const SinglePageSection = ({ data }: SinglePageSectionProps) => {
+  console.log("🚀 ~ SinglePageSection ~ data:", data);
   const route = useRouter();
 
   const [addBasketMutation] = useAddToBasketMutation();
-  console.log("🚀 ~ SinglePageSection ~ addBasketMutation:", addBasketMutation)
 
   if (!data) {
     return <div>Загрузка данных подождите...</div>;
@@ -41,13 +40,13 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
               width={505}
               height={550}
             />
-            {data.color.map((el, idx) => (
+            {/* {data.color.map((el, idx) => (
               <div key={idx} className={scss.image}>
                 {el?.color_photo.map((title, index) =>
                   title ? <Image key={index} src={title} alt="photo" /> : null
                 )}
               </div>
-            ))}
+            ))} */}
           </div>
 
           <div className={scss.info}>

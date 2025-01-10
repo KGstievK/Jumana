@@ -91,30 +91,31 @@ interface cart_item {
 interface clothesById {
   clothes_name: string;
   clothes_photo: string;
-  category: Array<{
+  category: {
     category_name: string;
-  }>;
-  promo_category: Array<{
+  }[];
+  promo_category: {
     promo_category: string;
-    time: string;
-  }>;
+    time: string | null;
+  }[];
   quantities: number;
   active: boolean;
   price: number;
-  size: Array<string>;
+  size: string[];
   average_rating: number;
   made_in: string;
-  textile_clothes: Array<{
+  textile_clothes: {
     textile_name: string;
-  }>;
-  color: Array<{
+  }[];
+  color: {
+    id: number;
     color: string;
-    color_photo: Array<{
+    color_photo: {
       photo: string;
       color_connect: number;
-    }>;
-  }>;
-  clothes_review: Array<any>;
+    }[];
+  }[];
+  clothes_review: any[];
 }
 
 interface category {
