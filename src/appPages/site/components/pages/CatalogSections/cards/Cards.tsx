@@ -9,6 +9,9 @@ import filterImg from "@/assets/icons/Filter.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
 import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { toggleFavorite } from "@/redux/slices/FavoriteSlice";
 
 interface Iprops {
   value: string;
@@ -20,30 +23,28 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
   const [datas, setDatas] = useState(data);
-  const [likedItems, setLikedItems] = useState<number[]>([]);
 
-  const toggleLike = (id: number, e: React.MouseEvent) => {
-    e.stopPropagation(); // Остановить всплытие события
-    setLikedItems(
-      (prevLikedItems) =>
-        prevLikedItems.includes(id)
-          ? prevLikedItems.filter((itemId) => itemId !== id) // Удалить из избранного
-          : [...prevLikedItems, id] // Добавить в избранное
-    );
+  const dispatch = useDispatch();
+  const favorites = useSelector((state: RootState) => state.favorite.favorites);
+
+  const isFavorite = (itemId: number) =>
+    favorites.some((fav) => fav.id === itemId);
+
+  const toggleLike = (item: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch(toggleFavorite(item));
   };
 
   useEffect(() => {
     if (data) {
       let filteredData = data;
 
-      // Фильтрация по категории
       if (value) {
         filteredData = filteredData.filter(
           (el) => el.category_name.toLowerCase() === value.toLowerCase()
         );
       }
 
-      // Фильтрация по размеру
       if (size) {
         filteredData = filteredData.filter((el) =>
           el.clothes_category.some(
@@ -54,7 +55,6 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
         );
       }
 
-      // Фильтрация по цвету
       if (color) {
         filteredData = filteredData.filter((el) =>
           el.clothes_category.some((item) =>
@@ -104,12 +104,12 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
                     </div>
                     <div
                       className={scss.heart}
-                      onClick={(e) => toggleLike(item.id, e)}
+                      onClick={(e) => toggleLike(item, e)}
                     >
-                      {likedItems.includes(item.id) ? (
+                      {isFavorite(item.id) ? (
                         <Image
-                          width={300}
-                          height={200}
+                          width={500}
+                          height={300}
                           layout="intrinsic"
                           src={heartRed}
                           alt="heart"

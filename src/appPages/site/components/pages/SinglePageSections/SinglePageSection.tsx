@@ -4,7 +4,6 @@ import backIcon from "@/assets/icons/backIcon.svg";
 import bagSvg from "@/assets/icons/bag-happy.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
 
@@ -15,7 +14,6 @@ interface SinglePageSectionProps {
 
 const SinglePageSection = ({ data }: SinglePageSectionProps) => {
   console.log("🚀 ~ SinglePageSection ~ data:", data);
-  const route = useRouter();
 
   const [addBasketMutation] = useAddToBasketMutation();
 

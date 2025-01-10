@@ -34,6 +34,14 @@ const api = index.injectEndpoints({
       }),
       providesTags: ["category"],
     }),
+
+    postToFavorite: build.mutation({
+      query: () => ({
+        url: "/favorite_item/",
+        method: "POST",
+      }),
+      invalidatesTags: ["category"],
+    }),
   }),
 });
 
@@ -41,4 +49,5 @@ export const {
   useGetAllCategoryQuery,
   useGetAllClothesQuery,
   useGetClothesByIdQuery,
+  usePostToFavoriteMutation,
 } = api;
