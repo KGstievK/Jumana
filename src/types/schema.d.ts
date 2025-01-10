@@ -157,7 +157,7 @@ interface Review {
 interface Color {
   id: number;
   color: string;
-  color_photo: string[]; // Массив фотографий для цвета
+  color_photo: string[];
 }
 
 interface PromoCategory {

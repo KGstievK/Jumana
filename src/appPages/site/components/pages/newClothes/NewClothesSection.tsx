@@ -20,7 +20,7 @@ const NewClothesSection = () => {
     <div id={scss.Cards}>
       <div className="container">
         <div className={scss.content}>
-          {data?.map((item) => (
+          {/* {data?.map((item) => (
             <div key={item.id} className={scss.card}>
               <div className={scss.blockImg}>
                 <div className={scss.like}>
@@ -66,7 +66,7 @@ const NewClothesSection = () => {
                 </div>
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

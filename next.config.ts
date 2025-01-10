@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       "lh3.googleusercontent.com",
       "13.60.252.249",
       "51.20.4.116",
+      "51.20.4.116",
     ],
   },
 };
