@@ -10,7 +10,7 @@ type SectionKeys = "type" | "price" | "size" | "color";
 const SideBar: FC = () => {
   const [category, setCategory] = useState("");
   // const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
 
   const [openSections, setOpenSections] = useState<
@@ -34,11 +34,8 @@ const SideBar: FC = () => {
   };
 
   const handleSizeChange = (size: string) => {
-    setSelectedSizes((prev) =>
-      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
-    );
+    setSelectedSize((prev) => (prev === size ? "" : size));
   };
-
   const handleColorChange = (color: string) => {
     setSelectedColor((prev) => (prev === color ? "" : color));
   };
@@ -120,7 +117,7 @@ const SideBar: FC = () => {
                 <label key={size} className={scss.checkboxContainer}>
                   <input
                     type="checkbox"
-                    checked={selectedSizes.includes(size)}
+                    checked={selectedSize === size} // Проверка для одного выбранного размера
                     onChange={() => handleSizeChange(size)}
                   />
                   <span className={scss.customCheckbox}></span>
@@ -162,7 +159,7 @@ const SideBar: FC = () => {
       <Cards
         value={category}
         // priceRange={priceRange}
-        sizes={selectedSizes}
+        size={selectedSize}
         color={selectedColor}
       />
     </section>

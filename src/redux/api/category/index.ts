@@ -29,7 +29,7 @@ const api = index.injectEndpoints({
       ICATEGORY.getClothesByIdReq
     >({
       query: (id) => ({
-        url: `${id}`,
+        url: `/${id}/`,
         method: "GET",
       }),
       providesTags: ["category"],
