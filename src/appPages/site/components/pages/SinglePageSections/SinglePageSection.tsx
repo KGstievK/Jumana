@@ -6,14 +6,19 @@ import Image from "next/image";
 import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
+import { useGetClothesByIdQuery } from "@/redux/api/category";
+import { useParams } from "next/navigation";
 
 //! Это Карточка товаров
-interface SinglePageSectionProps {
-  data: SingleProductData;
-}
+// interface SinglePageSectionProps {
+//   data: SingleProductData;
+// }
 
-const SinglePageSection = ({ data }: SinglePageSectionProps) => {
-  console.log("🚀 ~ SinglePageSection ~ data:", data);
+const SinglePageSection = () => {
+  const id = useParams();
+  console.log("🚀 ~ id1234567890:", id.single);
+
+  const { data } = useGetClothesByIdQuery(Number(id.single));
 
   const [addBasketMutation] = useAddToBasketMutation();
 
@@ -41,7 +46,9 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
             {/* {data.color.map((el, idx) => (
               <div key={idx} className={scss.image}>
                 {el?.color_photo.map((title, index) =>
-                  title ? <Image key={index} src={title} alt="photo" /> : null
+                  title ? (
+                    <Image key={index} src={title.photo} alt="photo" />
+                  ) : null
                 )}
               </div>
             ))} */}
@@ -95,10 +102,10 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
                 </div>
                 <div className={scss.cart}>
                   <button
-                    onClick={() => {
-                      // route.push("/cart");
-                      addBasketMutation(data.id);
-                    }}
+                  // onClick={() => {
+                  // route.push("/cart");
+                  //   addBasketMutation(data);
+                  // }}
                   >
                     В корзинку
                   </button>
