@@ -35,18 +35,20 @@
       gap: 20px;
       img {
         border-radius: 8px;
-        width: 505px;
-        height: 550px;
+        width: 620px;
+        height: 600px;
         object-fit: cover;
       }
 
       .image {
         display: flex;
-        gap: 20px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
         img {
-          width: 155px;
+          width: 200px;
           object-fit: cover;
-          height: 100px;
+          height: 150px;
           border-radius: 4px;
         }
       }
@@ -177,6 +179,7 @@
         justify-content: center;
         flex-direction: column;
         gap: 16px;
+        margin-top: 68px;
 
         h3 {
           font-size: 20px;

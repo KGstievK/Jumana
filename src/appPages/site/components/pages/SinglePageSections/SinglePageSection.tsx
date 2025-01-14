@@ -10,15 +10,12 @@ import { useGetClothesByIdQuery } from "@/redux/api/category";
 import { useParams } from "next/navigation";
 
 //! Это Карточка товаров
-// interface SinglePageSectionProps {
-//   data: SingleProductData;
-// }
 
 const SinglePageSection = () => {
   const id = useParams();
-  console.log("🚀 ~ id1234567890:", id.single);
 
   const { data } = useGetClothesByIdQuery(Number(id.single));
+  console.log("🚀 ~ SinglePageSection ~ data:", data);
 
   const [addBasketMutation] = useAddToBasketMutation();
 
@@ -43,15 +40,18 @@ const SinglePageSection = () => {
               width={505}
               height={550}
             />
-            {/* {data.color.map((el, idx) => (
-              <div key={idx} className={scss.image}>
-                {el?.color_photo.map((title, index) =>
-                  title ? (
-                    <Image key={index} src={title.photo} alt="photo" />
-                  ) : null
-                )}
-              </div>
-            ))} */}
+            <div className={scss.image}>
+              {data.clothes_img.map((el, idx) => (
+                <div key={idx}>
+                  <Image
+                    src={el.photo}
+                    alt="photo"
+                    width={7000}
+                    height={7000}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className={scss.info}>
@@ -76,11 +76,7 @@ const SinglePageSection = () => {
               <h4>Таффета</h4>
             </div>
             <div className={scss.description}>
-              <p>
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-              </p>
+              <p>{data.clothes_description}</p>
             </div>
 
             <div className={scss.sizes}>
