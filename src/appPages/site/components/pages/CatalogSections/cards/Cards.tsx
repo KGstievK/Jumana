@@ -12,6 +12,7 @@ import star from "@/assets/images/star.png";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { toggleFavorite } from "@/redux/slices/FavoriteSlice";
+import ColorsClothes from "../../../ui/colors/Colors";
 
 interface Iprops {
   value: string;
@@ -58,7 +59,7 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
       if (color) {
         filteredData = filteredData.filter((el) =>
           el.clothes_category.some((item) =>
-            item.color.some(
+            item.clothes_img.some(
               (c) => c.color.toLowerCase() === color.toLowerCase()
             )
           )
@@ -125,14 +126,17 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
                       )}
                     </div>
                   </div>
-                  <Image
-                    width={500}
-                    height={300}
-                    layout="intrinsic"
-                    src={item.clothes_photo}
-                    alt="photo"
-                    className={scss.mainImg}
-                  />
+                  {item.clothes_img.slice(0, 1).map((el, index) => (
+                    <Image
+                      key={index}
+                      width={500}
+                      height={300}
+                      layout="intrinsic"
+                      src={el.photo}
+                      alt="photo"
+                      className={scss.mainImg}
+                    />
+                  ))}
                   <div
                     className={scss.cart}
                     onClick={(e) => e.stopPropagation()}
@@ -143,7 +147,9 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
                 <div className={scss.blockText}>
                   <div className={scss.productCategory}>
                     <h4>Product Category</h4>
-                    <div className={scss.colors}>❤️</div>
+                    <div className={scss.colors}>
+                      <ColorsClothes clothesImg={item.clothes_img} />
+                    </div>
                   </div>
                   <h2>{item.clothes_name}</h2>
                   <div className={scss.price}>
