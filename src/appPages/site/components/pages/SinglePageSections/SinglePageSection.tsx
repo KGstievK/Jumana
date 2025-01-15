@@ -8,46 +8,77 @@ import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
 import { useParams } from "next/navigation";
+import ColorsClothes from "../../ui/colors/Colors";
+import { FC, useState, useEffect } from "react";
 
 //! Это Карточка товаров
+interface IClothesImage {
+  photo: string;
+}
 
-const SinglePageSection = () => {
+interface IProps {
+  clothes_img: IClothesImage[];
+}
+
+const SinglePageSection: FC<IProps> = () => {
   const id = useParams();
-
   const { data } = useGetClothesByIdQuery(Number(id.single));
-  console.log("🚀 ~ SinglePageSection ~ data:", data);
+
+  const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    if (data && data.clothes_img.length > 0) {
+      setSelectedPhoto(data.clothes_img[0].photo);
+    }
+  }, [data]);
+
+  const handleThumbnailClick = (photo: string) => {
+    setSelectedPhoto(photo);
+  };
 
   const [addBasketMutation] = useAddToBasketMutation();
 
   if (!data) {
-    return <div>Загрузка данных подождите...</div>;
+    return <div>Загрузка данных, подождите...</div>;
   }
 
   return (
     <section className={scss.SinglePageSection}>
       <div className="container">
         <div className={scss.header}>
-          <Image src={backIcon} alt="icon " width={22} height={22} />
+          <Image src={backIcon} alt="icon" width={22} height={22} />
           <Link href="/">Главная</Link>/<Link href="category">Категории</Link>/
-          <Link href="/">Платья</Link>/ <Link href="">JUMANA “24</Link>
+          <Link href="/">Платья</Link>/<Link href="">{data.clothes_name}</Link>
         </div>
 
         <div className={scss.content}>
           <div className={scss.images}>
             <Image
-              src={data.clothes_photo}
-              alt="photo"
-              width={505}
-              height={550}
+              src={selectedPhoto || "/src/assets/image.png"}
+              alt="Selected photo"
+              width={8000}
+              height={6000}
+              layout="intrinsic"
+              className={scss.mainImg}
             />
-            <div className={scss.image}>
-              {data.clothes_img.map((el, idx) => (
-                <div key={idx}>
+            <div className={scss.thumbnails}>
+              {data.clothes_img.map((el, index) => (
+                <div
+                  key={index}
+                  className={`${scss.thumbnail} ${
+                    el.photo === selectedPhoto ? scss.activeThumbnail : ""
+                  }`}
+                  onClick={() => handleThumbnailClick(el.photo)}
+                >
                   <Image
                     src={el.photo}
-                    alt="photo"
-                    width={7000}
-                    height={7000}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={800}
+                    height={600}
+                    layout="intrinsic"
+                    className={scss.imgg}
                   />
                 </div>
               ))}
@@ -56,36 +87,35 @@ const SinglePageSection = () => {
 
           <div className={scss.info}>
             <div className={scss.headLine}>
-              <h3>Product Category</h3>
+              <h3>Категория товара</h3>
               <div className={scss.mark}>
                 <Image src={star} alt="star" width={24} height={24} />
-                <h6> {data?.average_rating}</h6>
+                <h6>{data?.average_rating}</h6>
               </div>
             </div>
             <h1>{data?.clothes_name}</h1>
 
             <div className={scss.price}>
-              <h4>{data?.price}</h4>
+              <del>{data.price} сом</del>
+              <h4>{Math.round(data?.discount_price)} сом</h4>
             </div>
 
             <div className={scss.colors}>
-              <h5>Цвета: </h5>
+              <h5>Цвета:</h5>
+              <ColorsClothes clothesImg={data?.clothes_img} />
             </div>
             <div className={scss.textile}>
               <h5>Ткань:</h5>
-              <h4>Таффета</h4>
+              <h4>
+                {data?.textile_clothes.map(
+                  (el) =>
+                    el.textile_name.charAt(0).toUpperCase() +
+                    el.textile_name.slice(1).toLowerCase()
+                )}
+              </h4>
             </div>
             <div className={scss.description}>
               <p>{data.clothes_description}</p>
-            </div>
-
-            <div className={scss.sizes}>
-              <h5>Размеры:</h5>
-              <div className={scss.spans}>
-                {data?.size.map((el, index) => (
-                  <span key={index}>{el}</span>
-                ))}
-              </div>
             </div>
 
             <div className={scss.quantity}>

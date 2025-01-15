@@ -1,6 +1,5 @@
 .SinglePageSection {
-  padding: 20px 0;
-
+  padding: 50px 0;
   .header {
     display: flex;
     align-items: start;
@@ -33,23 +32,36 @@
       justify-content: center;
       flex-direction: column;
       gap: 20px;
-      img {
+      .mainImg {
         border-radius: 8px;
-        width: 620px;
+        width: 800px;
         height: 600px;
         object-fit: cover;
       }
 
-      .image {
+      .thumbnails {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
-        img {
+
+        .thumbnail {
+          cursor: pointer;
           width: 200px;
-          object-fit: cover;
-          height: 150px;
-          border-radius: 4px;
+          height: 200px;
+          overflow: hidden;
+          border: 2px solid transparent;
+          border-radius: 8px;
+
+          &.activeThumbnail {
+            border-color: rgb(234, 30, 7);
+          }
+
+          img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+          }
         }
       }
     }
@@ -168,7 +180,7 @@
             padding: 12px 0;
             border-radius: 4px;
             color: white;
-            cursor: pointer;
+            cursor: default;
           }
         }
       }
@@ -179,7 +191,6 @@
         justify-content: center;
         flex-direction: column;
         gap: 16px;
-        margin-top: 68px;
 
         h3 {
           font-size: 20px;
