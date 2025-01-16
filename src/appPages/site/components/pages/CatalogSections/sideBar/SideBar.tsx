@@ -139,7 +139,7 @@ const SideBar: FC = () => {
           </div>
           {openSections.color && (
             <div className={scss.filterContent}>
-              {["Чёрный", "Белый", "Айвори", "Зеленый", "Бардовый"].map(
+              {["Черный", "Белый", "Айвори", "Зеленый", "Бордовый"].map(
                 (color) => (
                   <label key={color} className={scss.checkboxContainer}>
                     <input

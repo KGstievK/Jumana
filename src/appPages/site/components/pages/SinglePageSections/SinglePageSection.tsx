@@ -49,20 +49,20 @@ const SinglePageSection: FC<IProps> = () => {
       <div className="container">
         <div className={scss.header}>
           <Image src={backIcon} alt="icon" width={22} height={22} />
-          <Link href="/">Главная</Link>/<Link href="category">Категории</Link>/
-          <Link href="/">Платья</Link>/<Link href="">{data.clothes_name}</Link>
+          <Link href="/">Главная</Link>/<Link href="/catalog">Категории</Link>/
+          <Link href="">{data.clothes_name}</Link>
         </div>
 
         <div className={scss.content}>
           <div className={scss.images}>
-            <Image
-              src={selectedPhoto || "/src/assets/image.png"}
-              alt="Selected photo"
-              width={8000}
-              height={6000}
-              layout="intrinsic"
-              className={scss.mainImg}
-            />
+            <div className={scss.mainImg}>
+              <Image
+                src={selectedPhoto || "/src/assets/image.png"}
+                alt="Selected photo"
+                width={6000}
+                height={5000}
+              />
+            </div>
             <div className={scss.thumbnails}>
               {data.clothes_img.map((el, index) => (
                 <div
@@ -75,10 +75,8 @@ const SinglePageSection: FC<IProps> = () => {
                   <Image
                     src={el.photo}
                     alt={`Thumbnail ${index + 1}`}
-                    width={800}
-                    height={600}
-                    layout="intrinsic"
-                    className={scss.imgg}
+                    width={2500}
+                    height={2500}
                   />
                 </div>
               ))}

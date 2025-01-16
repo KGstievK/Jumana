@@ -9,10 +9,8 @@ interface IPropsColors {
   clothesImg: IClothesImg[];
 }
 const ColorsClothes: FC<IPropsColors> = ({ clothesImg }) => {
-  console.log("🚀 ~ clothesImg:", clothesImg);
-
   const getColor = (color: string) => {
-    switch (color) {
+    switch (color.toLowerCase()) {
       case "серый":
         return "gray";
       case "коричневый":

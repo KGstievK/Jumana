@@ -23,6 +23,7 @@ interface Iprops {
 const Cards: FC<Iprops> = ({ value, size, color }) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
+  console.log("🚀 ~ data:", data);
   const [datas, setDatas] = useState(data);
 
   const dispatch = useDispatch();
@@ -148,7 +149,9 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
                   <div className={scss.productCategory}>
                     <h4>Product Category</h4>
                     <div className={scss.colors}>
-                      <ColorsClothes clothesImg={item.clothes_img} />
+                      <ColorsClothes
+                        clothesImg={item.clothes_img.slice(0, 3)}
+                      />
                     </div>
                   </div>
                   <h2>{item.clothes_name}</h2>
