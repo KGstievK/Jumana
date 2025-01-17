@@ -20,6 +20,8 @@ interface IProps {
   clothes_img: IClothesImage[];
 }
 
+const sizes = ["xxs", "xs", "s", "M", "L", "XL", "XXL"];
+
 const SinglePageSection: FC<IProps> = () => {
   const id = useParams();
   const { data } = useGetClothesByIdQuery(Number(id.single));
@@ -114,6 +116,17 @@ const SinglePageSection: FC<IProps> = () => {
             </div>
             <div className={scss.description}>
               <p>{data.clothes_description}</p>
+            </div>
+
+            <div className={scss.sizes}>
+              <h5>Размеры:</h5>
+              <div className={scss.spans}>
+                {typeof data.size == "string" ? (
+                  <span>{data.size}</span>
+                ) : (
+                  data?.size?.map((el, index) => <span key={index}>{el}</span>)
+                )}
+              </div>
             </div>
 
             <div className={scss.quantity}>
