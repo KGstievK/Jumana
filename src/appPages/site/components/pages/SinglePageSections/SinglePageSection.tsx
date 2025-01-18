@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
+import { useRouter } from "next/navigation";
 
 //! Это Карточка товаров
 interface SinglePageSectionProps {
@@ -13,7 +14,10 @@ interface SinglePageSectionProps {
 }
 
 const SinglePageSection = ({ data }: SinglePageSectionProps) => {
+
+  const route = useRouter()
   console.log("🚀 ~ SinglePageSection ~ data:", data);
+  
 
   const [addBasketMutation] = useAddToBasketMutation();
 
@@ -21,6 +25,7 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
     return <div>Загрузка данных подождите...</div>;
   }
 
+  
   return (
     <section className={scss.SinglePageSection}>
       <div className="container">
@@ -96,7 +101,7 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
                 <div className={scss.cart}>
                   <button
                     onClick={() => {
-                      // route.push("/cart");
+                      route.push("/cart");
                       addBasketMutation(data.id);
                     }}
                   >
