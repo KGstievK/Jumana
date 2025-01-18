@@ -6,8 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
-import { useRouter } from "next/navigation";
-=======
 import { useGetClothesByIdQuery } from "@/redux/api/category";
 import { useParams } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
@@ -17,7 +15,6 @@ import { FC, useState, useEffect } from "react";
 interface IClothesImage {
   photo: string;
 }
-
 
 interface IProps {
   clothes_img: IClothesImage[];
@@ -49,7 +46,6 @@ const SinglePageSection: FC<IProps> = () => {
     return <div>Загрузка данных, подождите...</div>;
   }
 
-  
   return (
     <section className={scss.SinglePageSection}>
       <div className="container">
@@ -120,9 +116,7 @@ const SinglePageSection: FC<IProps> = () => {
             </div>
             <div className={scss.description}>
               <p>{data.clothes_description}</p>
-            </div>
-
-            <div className={scss.sizes}>
+            </div><div className={scss.sizes}>
               <h5>Размеры:</h5>
               <div className={scss.spans}>
                 {typeof data.size == "string" ? (
@@ -143,11 +137,10 @@ const SinglePageSection: FC<IProps> = () => {
                 </div>
                 <div className={scss.cart}>
                   <button
-                    onClick={() => {
-                      route.push("/cart");
-                      addBasketMutation(data.id);
-                    }}
-
+                  // onClick={() => {
+                  // route.push("/cart");
+                  //   addBasketMutation(data);
+                  // }}
                   >
                     В корзинку
                   </button>
