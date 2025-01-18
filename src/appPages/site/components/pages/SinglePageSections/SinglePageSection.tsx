@@ -7,22 +7,46 @@ import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
 import { useRouter } from "next/navigation";
+=======
+import { useGetClothesByIdQuery } from "@/redux/api/category";
+import { useParams } from "next/navigation";
+import ColorsClothes from "../../ui/colors/Colors";
+import { FC, useState, useEffect } from "react";
 
 //! Это Карточка товаров
-interface SinglePageSectionProps {
-  data: SingleProductData;
+interface IClothesImage {
+  photo: string;
 }
 
-const SinglePageSection = ({ data }: SinglePageSectionProps) => {
 
-  const route = useRouter()
-  console.log("🚀 ~ SinglePageSection ~ data:", data);
-  
+interface IProps {
+  clothes_img: IClothesImage[];
+}
+
+const sizes = ["xxs", "xs", "s", "M", "L", "XL", "XXL"];
+
+const SinglePageSection: FC<IProps> = () => {
+  const id = useParams();
+  const { data } = useGetClothesByIdQuery(Number(id.single));
+
+  const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    if (data && data.clothes_img.length > 0) {
+      setSelectedPhoto(data.clothes_img[0].photo);
+    }
+  }, [data]);
+
+  const handleThumbnailClick = (photo: string) => {
+    setSelectedPhoto(photo);
+  };
 
   const [addBasketMutation] = useAddToBasketMutation();
 
   if (!data) {
-    return <div>Загрузка данных подождите...</div>;
+    return <div>Загрузка данных, подождите...</div>;
   }
 
   
@@ -30,63 +54,82 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
     <section className={scss.SinglePageSection}>
       <div className="container">
         <div className={scss.header}>
-          <Image src={backIcon} alt="icon " width={22} height={22} />
-          <Link href="/">Главная</Link>/<Link href="category">Категории</Link>/
-          <Link href="/">Платья</Link>/ <Link href="">JUMANA “24</Link>
+          <Image src={backIcon} alt="icon" width={22} height={22} />
+          <Link href="/">Главная</Link>/<Link href="/catalog">Категории</Link>/
+          <Link href="">{data.clothes_name}</Link>
         </div>
 
         <div className={scss.content}>
           <div className={scss.images}>
-            <Image
-              src={data.clothes_photo}
-              alt="photo"
-              width={505}
-              height={550}
-            />
-            {/* {data.color.map((el, idx) => (
-              <div key={idx} className={scss.image}>
-                {el?.color_photo.map((title, index) =>
-                  title ? <Image key={index} src={title} alt="photo" /> : null
-                )}
-              </div>
-            ))} */}
+            <div className={scss.mainImg}>
+              <Image
+                src={selectedPhoto || "/src/assets/image.png"}
+                alt="Selected photo"
+                width={6000}
+                height={5000}
+              />
+            </div>
+            <div className={scss.thumbnails}>
+              {data.clothes_img.map((el, index) => (
+                <div
+                  key={index}
+                  className={`${scss.thumbnail} ${
+                    el.photo === selectedPhoto ? scss.activeThumbnail : ""
+                  }`}
+                  onClick={() => handleThumbnailClick(el.photo)}
+                >
+                  <Image
+                    src={el.photo}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={2500}
+                    height={2500}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className={scss.info}>
             <div className={scss.headLine}>
-              <h3>Product Category</h3>
+              <h3>Категория товара</h3>
               <div className={scss.mark}>
                 <Image src={star} alt="star" width={24} height={24} />
-                <h6> {data?.average_rating}</h6>
+                <h6>{data?.average_rating}</h6>
               </div>
             </div>
             <h1>{data?.clothes_name}</h1>
 
             <div className={scss.price}>
-              <h4>{data?.price}</h4>
+              <del>{data.price} сом</del>
+              <h4>{Math.round(data?.discount_price)} сом</h4>
             </div>
 
             <div className={scss.colors}>
-              <h5>Цвета: </h5>
+              <h5>Цвета:</h5>
+              <ColorsClothes clothesImg={data?.clothes_img} />
             </div>
             <div className={scss.textile}>
               <h5>Ткань:</h5>
-              <h4>Таффета</h4>
+              <h4>
+                {data?.textile_clothes.map(
+                  (el) =>
+                    el.textile_name.charAt(0).toUpperCase() +
+                    el.textile_name.slice(1).toLowerCase()
+                )}
+              </h4>
             </div>
             <div className={scss.description}>
-              <p>
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-              </p>
+              <p>{data.clothes_description}</p>
             </div>
 
             <div className={scss.sizes}>
               <h5>Размеры:</h5>
               <div className={scss.spans}>
-                {data?.size.map((el, index) => (
-                  <span key={index}>{el}</span>
-                ))}
+                {typeof data.size == "string" ? (
+                  <span>{data.size}</span>
+                ) : (
+                  data?.size?.map((el, index) => <span key={index}>{el}</span>)
+                )}
               </div>
             </div>
 
@@ -104,6 +147,7 @@ const SinglePageSection = ({ data }: SinglePageSectionProps) => {
                       route.push("/cart");
                       addBasketMutation(data.id);
                     }}
+
                   >
                     В корзинку
                   </button>

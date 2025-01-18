@@ -91,38 +91,35 @@ interface cart_item {
 interface clothesById {
   clothes_name: string;
   clothes_photo: string;
-  category: {
+  category: Array<{
     category_name: string;
-  }[];
-  promo_category: {
+  }>;
+  promo_category: Array<{
     promo_category: string;
-    time: string | null;
-  }[];
+    time: any;
+  }>;
   quantities: number;
   active: boolean;
   price: number;
-  size: string[];
+  discount_price: number;
+  size: Array<string>;
   average_rating: number;
   made_in: string;
-  textile_clothes: {
+  textile_clothes: Array<{
     textile_name: string;
-  }[];
-  color: {
-    id: number;
+  }>;
+  clothes_img: Array<{
+    photo: string;
     color: string;
-    color_photo: {
-      photo: string;
-      color_connect: number;
-    }[];
-  }[];
-  clothes_review: any[];
+  }>;
+  clothes_review: Array<any>;
+  clothes_description: string;
 }
 
 interface category {
   category_name: string;
   clothes_category: Array<{
     id: number;
-    clothes_photo: string;
     promo_category: Array<{
       promo_category: string;
     }>;
@@ -130,12 +127,12 @@ interface category {
     price: number;
     discount_price: number;
     size: Array<string>;
-    color: Array<{
-      id: number;
-      color: string;
-    }>;
     average_rating: number;
     created_date: string;
+    clothes_img: Array<{
+      photo: string;
+      color: string;
+    }>;
   }>;
 }
 //! data type
@@ -170,19 +167,30 @@ interface Textile {
 }
 
 interface SingleProductData {
-  id: number;
-  active: boolean;
-  average_rating: number;
-  category: Category[];
   clothes_name: string;
-  clothes_photo: string;
-  clothes_review: Review[];
-  color: Color[];
-  made_in: string;
-  price: number;
-  promo_category: PromoCategory[];
+  category: Array<{
+    category_name: string;
+  }>;
+  promo_category: Array<{
+    promo_category: string;
+    time: any;
+  }>;
   quantities: number;
-  size: string[];
-  textile_clothes: Textile[];
+  active: boolean;
+  price: number;
+  discount_price: number;
+  size: Array<string>;
+  average_rating: number;
+  made_in: string;
+  textile_clothes: Array<{
+    textile_name: string;
+  }>;
+  clothes_img: Array<{
+    photo: string;
+    color: string;
+  }>;
+  clothes_review: Array<any>;
+  clothes_description: string;
 }
+
 //! data type
