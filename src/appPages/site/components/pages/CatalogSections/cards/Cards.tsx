@@ -85,7 +85,7 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
           <h4>ФИЛЬТР</h4>
         </div>
         <div className={scss.cards}>
-          {datas?.map((el, idx) =>
+          {datas?.map((el) =>
             el.clothes_category.map((item) => (
               <div
                 key={item.id}
@@ -157,10 +157,10 @@ const Cards: FC<Iprops> = ({ value, size, color }) => {
                   <h2>{item.clothes_name}</h2>
                   <div className={scss.price}>
                     <span>
-                      {item.discount_price}
+                      {Math.round(item.discount_price)}
                       com
                     </span>
-                    <del>{item.price}c</del>
+                    <del>{Math.round(item.price)}c</del>
                   </div>
                 </div>
               </div>

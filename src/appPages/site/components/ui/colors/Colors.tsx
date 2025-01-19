@@ -1,5 +1,6 @@
 "use client";
 import { FC } from "react";
+import s from "./colors.module.scss";
 
 interface IClothesImg {
   photo: string;
@@ -51,18 +52,13 @@ const ColorsClothes: FC<IPropsColors> = ({ clothesImg }) => {
   };
 
   return (
-    <div style={{ display: "flex", gap: "10px" }}>
+    <div className={s.container}>
       {clothesImg.map((item, index) => (
         <div
           key={index}
-          style={{
-            width: "20px",
-            height: "20px",
-            borderRadius: "50%",
-            backgroundColor: getColor(item.color),
-            border: "1px solid black",
-          }}
-          title={item.color} // Показывает название цвета при наведении
+          className={s.circle}
+          style={{ backgroundColor: getColor(item.color) }}
+          title={item.color}
         ></div>
       ))}
     </div>

@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 0.3px solid rgba(78, 77, 77, 0.477);
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 5px;
+  }
+  .circle {
+    width: 13px;
+    height: 13px;
+  }
+}
