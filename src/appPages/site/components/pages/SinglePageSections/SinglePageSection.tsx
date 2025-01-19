@@ -50,7 +50,9 @@ const SinglePageSection: FC<IProps> = () => {
     <section className={scss.SinglePageSection}>
       <div className="container">
         <div className={scss.header}>
-          <Image src={backIcon} alt="icon" width={22} height={22} />
+          <Link href="/catalog">
+            <Image src={backIcon} alt="icon" width={22} height={22} />
+          </Link>
           <Link href="/">Главная</Link>/<Link href="/catalog">Категории</Link>/
           <Link href="">{data.clothes_name}</Link>
         </div>
