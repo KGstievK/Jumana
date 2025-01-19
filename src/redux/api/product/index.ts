@@ -34,20 +34,20 @@ const api = index.injectEndpoints({
     }),
     getBasket: build.query<PRODUCT.getBasketRes, PRODUCT.getBasketReq>({
       query: () => ({
-        url: `/cart-list`,
+        url: `/cart/`,
         method: "GET",
       }),
     }),
     getCartItem: build.query<PRODUCT.getCartItemRes, PRODUCT.getCartItemReq>({
-      query: () => ({
-        url: `/cart_item/`,
+      query: (id) => ({
+        url: `/cart_item/${id}/`,
         method: "GET",
       }),
     }),
     addToBasket: build.mutation<PRODUCT.addToBasketRes, PRODUCT.addToBasketReq>(
       {
         query: (data) => ({
-          url: `/cart_item/`,
+          url: `/cart_item/create/`,
           method: "POST",
           body: data,
         }),
