@@ -166,37 +166,6 @@
         width: 510px;
       }
 
-      .sizes {
-        display: flex;
-        align-items: start;
-        justify-content: start;
-        flex-direction: column;
-        gap: 10px;
-        h5 {
-          color: #a73539;
-          font-size: 20px;
-          font-weight: 500;
-        }
-
-        .spans {
-          display: flex;
-          align-items: start;
-          justify-content: start;
-          gap: 16px;
-          span {
-            text-align: center;
-            width: 69px;
-            font-size: 20px;
-            font-weight: 500;
-            background: #a73539;
-            padding: 12px 0;
-            border-radius: 4px;
-            color: white;
-            cursor: default;
-          }
-        }
-      }
-
       .quantity {
         display: flex;
         align-items: start;
@@ -260,6 +229,9 @@
         }
       }
     }
+  }
+  .tabBar {
+    display: none;
   }
 }
 
@@ -366,5 +338,8 @@
         }
       }
     }
+  }
+  .tabBar {
+    display: flex;
   }
 }

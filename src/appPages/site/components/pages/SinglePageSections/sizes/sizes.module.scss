@@ -1,0 +1,47 @@
+.sizes {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+  gap: 10px;
+
+  h5 {
+    color: #a73539;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .spans {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 16px;
+
+    .size {
+      text-align: center;
+      width: 69px;
+      font-size: 20px;
+      font-weight: 500;
+      padding: 12px 0;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &.available {
+        background: #a73539;
+        color: white;
+      }
+
+      &.unavailable {
+        background: #ccc;
+        color: black;
+        cursor: not-allowed;
+      }
+
+      &.selected {
+        background: #75011e;
+        color: white;
+        border: 2px solid #a73539;
+      }
+    }
+  }
+}
