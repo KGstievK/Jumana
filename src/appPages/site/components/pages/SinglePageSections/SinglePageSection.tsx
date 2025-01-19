@@ -7,7 +7,7 @@ import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
 import { FC, useState, useEffect } from "react";
 
@@ -22,9 +22,10 @@ interface IProps {
 
 const sizes = ["xxs", "xs", "s", "M", "L", "XL", "XXL"];
 
-const SinglePageSection: FC<IProps> = () => {
+const SinglePageSection: FC = () => {
   const id = useParams();
   const { data } = useGetClothesByIdQuery(Number(id.single));
+  console.log("🚀 ~ data:", data);
 
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>(
     undefined
@@ -39,8 +40,10 @@ const SinglePageSection: FC<IProps> = () => {
   const handleThumbnailClick = (photo: string) => {
     setSelectedPhoto(photo);
   };
-
+  const route = useRouter();
   const [addBasketMutation] = useAddToBasketMutation();
+
+ 
 
   if (!data) {
     return <div>Загрузка данных, подождите...</div>;
@@ -116,7 +119,8 @@ const SinglePageSection: FC<IProps> = () => {
             </div>
             <div className={scss.description}>
               <p>{data.clothes_description}</p>
-            </div><div className={scss.sizes}>
+            </div>
+            <div className={scss.sizes}>
               <h5>Размеры:</h5>
               <div className={scss.spans}>
                 {typeof data.size == "string" ? (
@@ -137,10 +141,10 @@ const SinglePageSection: FC<IProps> = () => {
                 </div>
                 <div className={scss.cart}>
                   <button
-                  // onClick={() => {
-                  // route.push("/cart");
-                  //   addBasketMutation(data);
-                  // }}
+                    onClick={() => {
+                      route.push("/cart");
+                      addBasketMutation(data);
+                    }}
                   >
                     В корзинку
                   </button>

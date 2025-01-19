@@ -56,39 +56,52 @@ interface cart {
   }>;
   total_price: string;
 }
-interface cart_item {
+interface get_cart_item {
   clothes: {
     id: number;
-    clothes_photo: string;
-    promo_category: [
-      {
-        promo_category: string;
-      }
-    ];
+    promo_category: Array<{
+      promo_category: string;
+    }>;
     clothes_name: string;
     price: number;
     discount_price: string;
     size: string;
-    color: [
-      {
-        id: number;
-        color: string;
-      }
-    ];
     average_rating: string;
     created_date: string;
+    clothes_img: Array<{
+      photo: string;
+      color: string;
+    }>;
   };
   clothes_id: number;
   quantity: number;
   size: string;
   color: {
-    id: number;
+    photo: string;
+    color: string;
+  };
+  color_id: number;
+}
+interface post_cart_item {
+  clothes: {
+    promo_category: Array<{
+      promo_category: string;
+    }>;
+    clothes_name: string;
+    price: number;
+    size: string;
+  };
+  clothes_id: number;
+  quantity: number;
+  size: string;
+  color: {
     color: string;
   };
   color_id: number;
 }
 
 interface clothesById {
+  id: number;
   clothes_name: string;
   clothes_photo: string;
   category: Array<{
