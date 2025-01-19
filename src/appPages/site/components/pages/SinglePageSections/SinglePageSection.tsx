@@ -7,7 +7,7 @@ import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
 import React, { FC, useState, useEffect } from "react";
 import Sizes from "./sizes/Sizes";
@@ -31,13 +31,14 @@ const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 const capitalize = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
-const SinglePageSection: FC<IProps> = () => {
+const SinglePageSection: FC = () => {
   const id = useParams();
   const { data } = useGetClothesByIdQuery(Number(id.single));
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [value, setValue] = useState<IObj>({ size: "", photo: "", color: "" });
   const [addBasketMutation] = useAddToBasketMutation();
+
 
   const updateValue = (key: keyof IObj, newValue: string) => {
     setValue((prev) => ({ ...prev, [key]: newValue }));
@@ -61,6 +62,7 @@ const SinglePageSection: FC<IProps> = () => {
     clothes_img,
     average_rating,
   } = data;
+
 
   return (
     <section className={scss.SinglePageSection}>
@@ -136,6 +138,7 @@ const SinglePageSection: FC<IProps> = () => {
             </div>
             <div className={scss.description}>
               <p>{clothes_description}</p>
+
             </div>
             <div className={scss.sizes}>
               <h5>Размеры:</h5>
@@ -159,6 +162,7 @@ const SinglePageSection: FC<IProps> = () => {
                 </div>
                 <div className={scss.cart}>
                   <button>В корзинку</button>
+
                   <Image src={bagSvg} alt="bag" width={24} height={24} />
                 </div>
               </div>
