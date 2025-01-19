@@ -118,9 +118,7 @@ const SinglePageSection: FC<IProps> = () => {
             </div>
             <div className={scss.description}>
               <p>{data.clothes_description}</p>
-            </div>
-
-            <div className={scss.sizes}>
+            </div><div className={scss.sizes}>
               <h5>Размеры:</h5>
               <div className={scss.spans}>
                 {typeof data.size == "string" ? (
