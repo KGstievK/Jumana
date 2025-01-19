@@ -6,10 +6,11 @@
 }
 
 .circle {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: 0.3px solid rgba(78, 77, 77, 0.477);
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {

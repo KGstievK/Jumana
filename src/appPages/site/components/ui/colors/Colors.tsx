@@ -8,8 +8,9 @@ interface IClothesImg {
 }
 interface IPropsColors {
   clothesImg: IClothesImg[];
+  onClick?: (color: string) => void; // Принимает параметр color типа string
 }
-const ColorsClothes: FC<IPropsColors> = ({ clothesImg }) => {
+const ColorsClothes: FC<IPropsColors> = ({ clothesImg, onClick }) => {
   const getColor = (color: string) => {
     switch (color.toLowerCase()) {
       case "серый":
@@ -59,6 +60,7 @@ const ColorsClothes: FC<IPropsColors> = ({ clothesImg }) => {
           className={s.circle}
           style={{ backgroundColor: getColor(item.color) }}
           title={item.color}
+          onClick={() => onClick && onClick(item.color)}
         ></div>
       ))}
     </div>
