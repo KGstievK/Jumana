@@ -5,6 +5,6 @@ namespace PRODUCT {
   type getCartItemRes = get_cart_item;
   type getCartItemReq = void;
 
-  type addToBasketRes = clothesById[];
-  type addToBasketReq = clothesById;
+  type addToBasketRes = post_cart_item[];
+  type addToBasketReq = post_cart_item;
 }
