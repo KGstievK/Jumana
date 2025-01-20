@@ -130,8 +130,8 @@ const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, 
                   {item.clothes_img.slice(0, 1).map((el, index) => (
                     <Image
                       key={index}
-                      width={500}
-                      height={300}
+                      width={5000}
+                      height={3000}
                       layout="intrinsic"
                       src={el.photo}
                       alt="photo"
