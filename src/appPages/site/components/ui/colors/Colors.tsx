@@ -1,16 +1,20 @@
 "use client";
-import { FC } from "react";
+
+import { FC, useState } from "react";
 import s from "./colors.module.scss";
 
 interface IClothesImg {
+  id?: number | null;
   photo: string;
   color: string;
 }
 interface IPropsColors {
   clothesImg: IClothesImg[];
-  onClick?: (color: string) => void; // Принимает параметр color типа string
+  onClick?: (item: IClothesImg) => void;
 }
 const ColorsClothes: FC<IPropsColors> = ({ clothesImg, onClick }) => {
+  const [selectedColor, setSelectedColor] = useState<IClothesImg | null>(null); // Состояние для выбранного цвета
+
   const getColor = (color: string) => {
     switch (color.toLowerCase()) {
       case "серый":
@@ -52,16 +56,23 @@ const ColorsClothes: FC<IPropsColors> = ({ clothesImg, onClick }) => {
     }
   };
 
+  const handleColorClick = (item: IClothesImg) => {
+    setSelectedColor(item); // Устанавливаем выбранный цвет в состояние
+    onClick?.(item); // Вызовем внешний onClick, если он передан
+  };
+
   return (
     <div className={s.container}>
-      {clothesImg.map((item, index) => (
+      {clothesImg.map((item) => (
         <div
-          key={index}
-          className={s.circle}
+          key={item.id ?? item.color} // Используем `item.id`, или `item.color`, если id null
+          className={`${s.circle} ${
+            selectedColor?.id === item.id ? s.selected : ""
+          }`} // Добавляем класс для выбранного цвета
           style={{ backgroundColor: getColor(item.color) }}
           title={item.color}
-          onClick={() => onClick && onClick(item.color)}
-        ></div>
+          onClick={() => handleColorClick(item)} // Обработчик нажатия
+        />
       ))}
     </div>
   );
