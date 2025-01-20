@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       "13.60.252.249",
       "51.20.4.116",
       "51.20.4.116",
+      '16.170.202.3'
     ],
     remotePatterns: [
       {

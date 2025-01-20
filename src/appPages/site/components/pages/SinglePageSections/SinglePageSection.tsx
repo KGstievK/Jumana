@@ -6,98 +6,152 @@ import Image from "next/image";
 import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
-import { useParams } from "next/navigation";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
+import { useParams, useRouter } from "next/navigation";
+import ColorsClothes from "../../ui/colors/Colors";
+import React, { FC, useState, useEffect } from "react";
+import Sizes from "./sizes/Sizes";
 
 //! Это Карточка товаров
-interface SinglePageSectionProps {
-  data: SingleProductData;
-  id: number;
+interface IClothesImage {
+  photo: string;
 }
 
-const SinglePageSection = () => {
-  const { single } = useParams<{ single: string }>();
-  console.log("id", single);
+interface IProps {
+  clothes_img: IClothesImage[];
+}
 
-  if (!single) {
-    return <div>Loading...</div>;
-  }
+interface IObj {
+  size: string;
+  photo: string;
+  color: string;
+}
+const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
-  const { data } = useGetClothesByIdQuery(Number(single));
-  console.log(data);
+const capitalize = (str: string): string =>
+  str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
-  console.log("🚀 ~ SinglePageSection ~ data:", data);
-
+const SinglePageSection: FC = () => {
+  const id = useParams();
+  const { data } = useGetClothesByIdQuery(Number(id.single));
+  const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [value, setValue] = useState<IObj>({ size: "", photo: "", color: "" });
   const [addBasketMutation] = useAddToBasketMutation();
 
-  if (!data) {
-    return <div>Загрузка данных подождите...</div>;
-  }
+
+  const updateValue = (key: keyof IObj, newValue: string) => {
+    setValue((prev) => ({ ...prev, [key]: newValue }));
+  };
+
+  useEffect(() => {
+    if (data?.clothes_img?.length) {
+      setSelectedPhoto(data.clothes_img[0].photo);
+    }
+  }, [data]);
+
+  if (!data) return <div>Загрузка данных...</div>;
+
+  const {
+    clothes_name,
+    clothes_description,
+    price,
+    discount_price,
+    size: availableSizes,
+    textile_clothes,
+    clothes_img,
+    average_rating,
+  } = data;
+
 
   return (
     <section className={scss.SinglePageSection}>
       <div className="container">
         <div className={scss.header}>
-          <Image src={backIcon} alt="icon " width={22} height={22} />
-          <Link href="/">Главная</Link>/<Link href="category">Категории</Link>/
-          <Link href="/">Платья</Link>/ <Link href="">JUMANA “24</Link>
+          <Link href="/catalog">
+            <Image src={backIcon} alt="icon" width={22} height={22} />
+          </Link>
+          <Link href="/">Главная</Link>/<Link href="/catalog">Категории</Link>/
+          <Link href="">{clothes_name}</Link>
         </div>
 
         <div className={scss.content}>
           <div className={scss.images}>
-            <Image
-              src={data.clothes_photo}
-              alt="photo"
-              width={505}
-              height={550}
-            />
-            {/* {data.color.map((el, idx) => (
-              <div key={idx} className={scss.image}>
-                {el?.color_photo.map((title, index) =>
-                  title ? <Image key={index} src={title} alt="photo" /> : null
-                )}
-              </div>
-            ))} */}
+            <div className={scss.mainImg}>
+              <Image
+                src={selectedPhoto || "/src/assets/image.png"}
+                alt="Selected photo"
+                width={6000}
+                height={5000}
+              />
+            </div>
+            <div className={scss.thumbnails}>
+              {clothes_img.map((el, index) => (
+                <div
+                  key={index}
+                  className={`${scss.thumbnail} ${
+                    el.photo === selectedPhoto ? scss.activeThumbnail : ""
+                  }`}
+                  onClick={() => {
+                    updateValue("photo", el.photo);
+                    setSelectedPhoto(el.photo);
+                  }}
+                >
+                  <Image
+                    src={el.photo}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={2500}
+                    height={2500}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className={scss.info}>
             <div className={scss.headLine}>
-              <h3>Product Category</h3>
+              <h3>Категория товара</h3>
               <div className={scss.mark}>
                 <Image src={star} alt="star" width={24} height={24} />
-                <h6> {data?.average_rating}</h6>
+                <h6>{average_rating}</h6>
               </div>
             </div>
-            <h1>{data?.clothes_name}</h1>
-
+            <h1>{clothes_name}</h1>
             <div className={scss.price}>
-              <h4>{data?.price}</h4>
+              <del>{price} сом</del>
+              <h4>{Math.round(discount_price)} сом</h4>
             </div>
-
             <div className={scss.colors}>
-              <h5>Цвета: </h5>
+              <h5>Цвета:</h5>
+              <ColorsClothes
+                clothesImg={clothes_img}
+                onClick={(color) => updateValue("color", color)}
+              />
             </div>
             <div className={scss.textile}>
               <h5>Ткань:</h5>
-              <h4>Таффета</h4>
+              <h4>
+                {textile_clothes
+                  .map((el) => capitalize(el.textile_name))
+                  .join(", ")}
+              </h4>
             </div>
             <div className={scss.description}>
-              <p>
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-                Красивые платья оптом от производителя из Бишкека , Кыргызстан
-              </p>
-            </div>
+              <p>{clothes_description}</p>
 
+            </div>
             <div className={scss.sizes}>
               <h5>Размеры:</h5>
-              <div className={scss.spans}>
-                {data?.size.map((el, index) => (
-                  <span key={index}>{el}</span>
-                ))}
-              </div>
+              <Sizes
+                sizes={sizes}
+                availableSizes={availableSizes}
+                selectedSize={selectedSize}
+                onClick={(size) => {
+                  updateValue("size", size);
+                  setSelectedSize(size);
+                }}
+              />
             </div>
-
             <div className={scss.quantity}>
               <h3>Количество:</h3>
               <div className={scss.groupOfBtn}>
@@ -107,14 +161,8 @@ const SinglePageSection = () => {
                   <button>+</button>
                 </div>
                 <div className={scss.cart}>
-                  <button
-                    onClick={() => {
-                      // route.push("/cart");
-                      addBasketMutation(data.id);
-                    }}
-                  >
-                    В корзинку
-                  </button>
+                  <button>В корзинку</button>
+
                   <Image src={bagSvg} alt="bag" width={24} height={24} />
                 </div>
               </div>

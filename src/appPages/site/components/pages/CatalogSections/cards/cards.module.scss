@@ -19,7 +19,7 @@
       display: flex;
       align-items: start;
       justify-content: start;
-      gap: 10px;
+      gap: 20px;
       flex-wrap: wrap;
       .card {
         max-width: clamp(150px, 20vw, 350px);
@@ -45,14 +45,14 @@
             padding: 15px;
             .star {
               display: flex;
-              align-items: center;
+              align-items: end;
               img {
                 width: 20px;
                 object-fit: cover;
               }
               h6 {
                 color: #fff;
-                font-size: 18px;
+                font-size: 20px;
                 font-weight: 400;
               }
             }
@@ -86,7 +86,7 @@
             justify-content: space-between;
             h4 {
               font-family: "Lato";
-              font-size: clamp(12px, 2vw, 18px);
+              font-size: 20ps;
               font-weight: 400;
               color: #757575;
             }
@@ -94,7 +94,7 @@
           h2 {
             color: #3e3e3e;
             font-family: "Playfair Display";
-            font-size: clamp(13px, 2vw, 20px);
+            font-size: 22px;
             font-weight: 400;
           }
           .price {
@@ -120,8 +120,9 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   #Cards {
+    padding-bottom: 10px;
     .content {
       display: flex;
       flex-direction: column;
@@ -136,12 +137,64 @@
 
       .cards {
         display: flex;
-        align-items: center;
+        align-items: start;
         justify-content: space-between;
         .card {
+          margin-bottom: 10px;
           .blockImg {
             .mainImg {
               height: 200px !important;
+            }
+            .like {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 10px;
+              .star {
+                display: flex;
+                align-items: end;
+                justify-content: center;
+                img {
+                  width: 18px;
+                }
+                h6 {
+                  color: #fff;
+                  font-size: 18px;
+                  font-weight: 400;
+                }
+              }
+
+              .heart {
+                img {
+                  width: 15px;
+                  height: 15px;
+                }
+              }
+            }
+
+            .cart {
+              img {
+                width: 18px;
+              }
+            }
+          }
+
+          .blockText {
+            .productCategory {
+              h4 {
+                font-size: 13px;
+              }
+            }
+            h2 {
+              font-size: 14px;
+            }
+            .price {
+              span {
+                font-size: 12px;
+              }
+              del {
+                font-size: 12px;
+              }
             }
           }
         }

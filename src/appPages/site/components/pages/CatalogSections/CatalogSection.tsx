@@ -12,11 +12,10 @@ const CatalogSection= () => {
       <div className="container">
         <div className={scss.header}>
           <Image src={backIcon} alt="icon " width={22} height={22} />
-          <Link href="/">Главная</Link>/<Link href="category">Категории</Link>
+          <Link href="/">Главная</Link>/<Link href="/catalog">Категории</Link>
         </div>
         <div className={scss.content}>
           <SideBar />
-          <Cards value={""} size={""} color={""}/>
         </div>
       </div>
     </section>

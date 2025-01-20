@@ -12,6 +12,7 @@ import star from "@/assets/images/star.png";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { toggleFavorite } from "@/redux/slices/FavoriteSlice";
+import ColorsClothes from "../../../ui/colors/Colors";
 
 interface Iprops {
   value: string;
@@ -22,6 +23,7 @@ interface Iprops {
 const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, color }) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
+  console.log("🚀 ~ data:", data);
   const [datas, setDatas] = useState(data);
 
   const dispatch = useDispatch();
@@ -58,7 +60,7 @@ const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, 
       if (color) {
         filteredData = filteredData.filter((el) =>
           el.clothes_category.some((item) =>
-            item.color.some(
+            item.clothes_img.some(
               (c) => c.color.toLowerCase() === color.toLowerCase()
             )
           )
@@ -83,7 +85,7 @@ const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, 
           <h4>ФИЛЬТР</h4>
         </div>
         <div className={scss.cards}>
-          {datas?.map((el, idx) =>
+          {datas?.map((el) =>
             el.clothes_category.map((item) => (
               <div
                 key={item.id}
@@ -125,14 +127,17 @@ const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, 
                       )}
                     </div>
                   </div>
-                  <Image
-                    width={500}
-                    height={300}
-                    layout="intrinsic"
-                    src={item.clothes_photo}
-                    alt="photo"
-                    className={scss.mainImg}
-                  />
+                  {item.clothes_img.slice(0, 1).map((el, index) => (
+                    <Image
+                      key={index}
+                      width={500}
+                      height={300}
+                      layout="intrinsic"
+                      src={el.photo}
+                      alt="photo"
+                      className={scss.mainImg}
+                    />
+                  ))}
                   <div
                     className={scss.cart}
                     onClick={(e) => e.stopPropagation()}
@@ -143,15 +148,19 @@ const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, 
                 <div className={scss.blockText}>
                   <div className={scss.productCategory}>
                     <h4>Product Category</h4>
-                    <div className={scss.colors}>❤️</div>
+                    <div className={scss.colors}>
+                      <ColorsClothes
+                        clothesImg={item.clothes_img.slice(0, 3)}
+                      />
+                    </div>
                   </div>
                   <h2>{item.clothes_name}</h2>
                   <div className={scss.price}>
                     <span>
-                      {item.discount_price}
+                      {Math.round(item.discount_price)}
                       com
                     </span>
-                    <del>{item.price}c</del>
+                    <del>{Math.round(item.price)}c</del>
                   </div>
                 </div>
               </div>
