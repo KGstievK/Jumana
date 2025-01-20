@@ -5,7 +5,6 @@ import Image from "next/image";
 import SideBar from "../sideBar/SideBar";
 import scss from "./cards.module.scss";
 import cart from "@/assets/icons/bag-happyBlack.svg";
-import filterImg from "@/assets/icons/Filter.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
 import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
@@ -13,13 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { toggleFavorite } from "@/redux/slices/FavoriteSlice";
 import ColorsClothes from "../../../ui/colors/Colors";
-import { useGetBasketQuery } from "@/redux/api/product";
-
-interface Iprops {
-  value: string;
-  size: string;
-  color: string;
-}
 
 const Cards: FC<{ value: string; size: string; color: string }> = ({
   value,
@@ -79,16 +71,6 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
   return (
     <div id={scss.Cards}>
       <div className={scss.content}>
-        <div className={scss.header} onClick={() => <SideBar />}>
-          <Image
-            width={20}
-            height={30}
-            layout="intrinsic"
-            src={filterImg}
-            alt="photo"
-          />
-          <h4>ФИЛЬТР</h4>
-        </div>
         <div className={scss.cards}>
           {datas?.map((el) =>
             el.clothes_category.map((item) => (
