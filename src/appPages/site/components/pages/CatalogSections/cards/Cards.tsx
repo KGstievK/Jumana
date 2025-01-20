@@ -19,7 +19,7 @@ interface Iprops {
   color: string;
 }
 
-const Cards: FC<Iprops> = ({ value, size, color }) => {
+const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, color }) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
   const [datas, setDatas] = useState(data);

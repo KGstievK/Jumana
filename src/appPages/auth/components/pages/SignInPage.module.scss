@@ -8,12 +8,14 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+  @media (max-width: 400px) {
+    align-items: center;
+    border: none;
+  }
   a.Logo {
     align-self: center;
     margin-bottom: 25px;
-    img {
-  
-    }
+   
   }
   h1 {
     font-family: "inter", sans-serif;
@@ -21,6 +23,10 @@
     margin-bottom: 15px;
     text-align: start;
     align-self: start;
+    @media (max-width: 400px) {
+      align-self: center;
+      border: none;
+    }
   }
   form {
     width: 425px;
@@ -29,7 +35,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    @media (max-width: 400px) {
+      width: 400px;
+      padding: 20px;
+    }
+    @media (max-width: 390px) {
+      width: 390px;
+    }
+    @media (max-width: 375px) {
+      width: 375px;
+    }
+    @media (max-width: 350px) {
+      width: 350px;
+    }
+    @media (max-width: 320px) {
+      width: 320px;
+    }
     input {
       width: 100%;
       font-family: "inter", sans-serif;
@@ -115,9 +136,11 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
+    padding: 0 20px;
     .line {
       width: 100%;
       border-bottom: 2px solid #95959599;
+      // margin: 20px;
     }
     p {
       font-size: 14px;

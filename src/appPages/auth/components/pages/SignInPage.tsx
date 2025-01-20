@@ -11,8 +11,14 @@ import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
 import { signIn } from "next-auth/react";
 
+interface LoginProps {
+  username: string
+  password: string
+}
+
 const SignInPage: FC = () => {
   const [postLoginMutation] = usePostLoginMutation();
+  // console.log("🚀 ~ postLoginMutation:", postLoginMutation)
   const { register, handleSubmit } = useForm<AUTH.PostLoginRequest>();
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -20,24 +26,25 @@ const SignInPage: FC = () => {
     setRememberMe(e.target.checked);
   };
 
-  const onSubmit: SubmitHandler<AUTH.PostLoginRequest> = async (userData) => {
-    // const datalogin = {
-    // username: userData.email,
-    // password: userData.password1
-    // }
+  const onSubmit: SubmitHandler<LoginProps> = async (userData) => {
+    const datalogin = {
+    username: userData.username,
+    password: userData.password
+    }
     try {
-      const response = await postLoginMutation(userData);
+      const response = await postLoginMutation(datalogin);
+      console.log("🚀 ~ constonSubmit:SubmitHandler<LoginProps>= ~ response:", response)
       // const responseToken = await refreshAccessToken(userData)
       if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
-        // storage.setItem(
-        //   "access",
-        //   JSON.stringify(response.data.access)
-        // );
-        storage.setItem("access", JSON.stringify(response.data.access));
+        storage.setItem(
+          "accessToken",
+          JSON.stringify(response.data.access)
+        );
+        storage.setItem("accessToken", JSON.stringify(response.data.access));
       }
 
-      // window.location.reload();
+      window.location.reload();
       console.log(response.data);
     } catch (e) {
       console.error("An error occurred:", e);
@@ -55,11 +62,6 @@ const SignInPage: FC = () => {
           placeholder="User Name"
           {...register("username", { required: true })}
         />
-        {/* <input
-          type="text"
-          placeholder="Email"
-          {...register("email", { required: true })}
-        /> */}
         <input
           type="password"
           placeholder="Password"
@@ -69,8 +71,8 @@ const SignInPage: FC = () => {
           <ConfigProvider
             theme={{
               token: {
-                colorPrimary: "transparent", // Основной цвет
-                colorBorder: "#000", // Цвет границы
+                colorPrimary: "transparent",
+                colorBorder: "#000",
               },
             }}
           >

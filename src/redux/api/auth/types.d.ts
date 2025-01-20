@@ -1,14 +1,31 @@
 namespace AUTH {
   type GetResponse = {
     // profile: User
+    _id?: number;
+    // image?: string;
     username: string;
     first_name: string;
     last_name: string;
     address: string;
     index_pochta: string;
     number: string;
-  };
+  }[];
   type GetRequest = void;
+
+  type PutMeResponse = {
+    access: string;
+    refresh: string;
+  }
+  type PutMeRequest = {
+    id: number
+    token: string;
+    username: string;
+    first_name?: string;
+    last_name?: string;
+    address?: string;
+    index_pochta?: string;
+    number: string;
+  }
 
   type PostLoginResponse = {
     // accessToken: string;
@@ -20,8 +37,8 @@ namespace AUTH {
   };
 
   type PostLoginRequest = {
-    username: string;
     // email: string;
+    username: string;
     password: string;
   };
 
@@ -29,34 +46,34 @@ namespace AUTH {
     // key: string
     access: string;
     refresh: string;
-    // message: string;
+    message: string;
     // accessToken: string;
     // accessTokenExpiration: number;
     // refreshToken: string
   };
   type PostRegistrationRequest = {
-    userName: string;
-    // email: string;
+    username: string;
+    email: string;
     password: string;
     confirm_password: string;
   };
 
   type PostLogoutResponse = {
-    // message: string;
-  };
+    message: string;
+  }[];
   type PostLogoutRequest = void;
 
   type PatchRefreshResponse = {
     access: string;
     refresh: string;
-    // accessToken: string;
-    // accessTokenExpiration: number;
+    accessToken: string;
+    accessTokenExpiration: number;
     // key: string
   };
   type PatchRefreshRequest = void;
 
   type PostForgotPasswordResponse = {
-    // message: string;
+    message: string;
   };
   type PostForgotPasswordRequest = {
     email: string;
@@ -64,7 +81,7 @@ namespace AUTH {
   };
 
   type PatchResetPasswordResponse = {
-    // message: string;
+    message: string;
   };
   type PatchResetPasswordRequest = {
     // token: string;

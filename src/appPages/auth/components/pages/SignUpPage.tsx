@@ -11,6 +11,13 @@ import logo from "@/assets/icons/logo.svg";
 import google from "@/assets/icons/google.svg";
 import { signIn } from "next-auth/react";
 
+interface SignUpPrors {
+  username: string;
+  email: string
+  password: string;
+  confirm_password: string;
+}
+
 const SignUpPage: FC = () => {
   const [postRegisterMutation] = usePostRegistrationMutation();
 
@@ -19,18 +26,18 @@ const SignUpPage: FC = () => {
 
   const [rememberMe, setRememberMe] = useState(false);
 
-  const onSubmit: SubmitHandler<AUTH.PostRegistrationRequest> = async (
-    userData
-  ) => {
-    // const userDataRest = {
-    //   userName: userData.userName,
-    //   // email: userData.email,
-    //   password: userData.password,
-    //   confirm_password: userData.confirm_password,
-    // };
+  const onSubmit: SubmitHandler<SignUpPrors> = async (userData) => {
+    const userDataRest = {
+      username: userData.username,
+      email: userData.email,
+      password: userData.password,
+      confirm_password: userData.confirm_password,
+    };
 
     try {
-      const response = await postRegisterMutation(userData);
+      const response = await postRegisterMutation(userDataRest);
+      console.log("🚀 ~ constonSubmit:SubmitHandler<SignUpPrors>= ~ response:", response)
+      
       if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem("accessToken", JSON.stringify(response.data.access));
@@ -45,24 +52,23 @@ const SignUpPage: FC = () => {
     setRememberMe(e.target.checked);
   };
 
-  const password = watch("password");
   return (
     <section className={scss.RegistrationPage}>
-      <Link href="/"  className="Logo">
+      <Link href="/" className="Logo">
         <Image src={logo} alt="LOGO" />
       </Link>
       <h1>Создать аккаунт</h1>
-      <form action="">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
-          {...register("userName", { required: true })}
+          {...register("username", { required: true })}
           placeholder="Имя аккаунта"
         />
-        {/* <input
+        <input
           type="text"
           {...register("email", { required: true })}
-          placeholder="Email"
-        /> */}
+          placeholder="E-mail"
+        />
         <input
           type="text"
           {...register("password", { required: true })}
@@ -70,18 +76,14 @@ const SignUpPage: FC = () => {
         />
         <input
           type="text"
-          {...register("confirm_password", {
-            required: true,
-            validate: (value: string) =>
-              value === "password" || "Пароли не совпадают",
-          })}
+          {...register("confirm_password", { required: true })}
           placeholder="Повторите пароль"
         />
         <ConfigProvider
           theme={{
             token: {
-              colorPrimary: "transparent", // Основной цвет
-              colorBorder: "#000", // Цвет границы
+              colorPrimary: "transparent", 
+              colorBorder: "#000",
             },
           }}
         >

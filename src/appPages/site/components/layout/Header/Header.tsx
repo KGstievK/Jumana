@@ -6,7 +6,6 @@ import logo from "@/assets/icons/logo.svg";
 import profile from "@/assets/icons/Profile.svg";
 import cart from "@/assets/icons/cart.svg";
 import Search from "@/appPages/site/components/ui/Search/Search";
-import BurgeMenu from "../../ui/BurgeMenu/BurgeMenu";
 
 
 const Header = () => {
@@ -72,6 +71,7 @@ const Header = () => {
             </Link>
           </div>
           <div className={scss.burgerMenu}>
+            
           </div>
         </div>
       </div>

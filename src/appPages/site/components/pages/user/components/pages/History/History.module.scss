@@ -1,12 +1,29 @@
 .History {
   width: 100%;
   margin-left: 50px;
+  @media (max-width: 400px) {
+    margin-left: 0;
+  }
+  p {
+    font-family: 'inter', sans-serif;
+    font-size: 16px;
+    line-height: 15px;
+    font-weight: 500;
+    color: var(--main-color);
+    span {
+      color: #00000080;
+      margin: 0 15px;
+      font-weight: 700;
+      font-size: 20px;
+    }
+  }
   .content {
     width: 100%;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     gap: 20px;
+    margin-top: 25px;
     h1 {
       font-family: 'inter', sans-serif;
     }

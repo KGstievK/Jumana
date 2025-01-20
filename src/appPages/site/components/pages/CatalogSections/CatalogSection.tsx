@@ -2,11 +2,11 @@
 import backIcon from "@/assets/icons/backIcon.svg";
 import Image from "next/image";
 import Link from "next/link";
-import Cards from "./cards/Cards";
 import scss from "./CatalogSection.module.scss";
 import SideBar from "./sideBar/SideBar";
+import Cards from "./cards/Cards";
 
-const CatalogSection = () => {
+const CatalogSection= () => {
   return (
     <section className={scss.CatalogSection}>
       <div className="container">
@@ -16,7 +16,7 @@ const CatalogSection = () => {
         </div>
         <div className={scss.content}>
           <SideBar />
-          {/* <Cards /> */}
+          <Cards value={""} size={""} color={""}/>
         </div>
       </div>
     </section>

@@ -6,13 +6,26 @@ import Image from "next/image";
 import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
+import { useParams } from "next/navigation";
+import { useGetClothesByIdQuery } from "@/redux/api/category";
 
 //! Это Карточка товаров
 interface SinglePageSectionProps {
   data: SingleProductData;
+  id: number;
 }
 
-const SinglePageSection = ({ data }: SinglePageSectionProps) => {
+const SinglePageSection = () => {
+  const { single } = useParams<{ single: string }>();
+  console.log("id", single);
+
+  if (!single) {
+    return <div>Loading...</div>;
+  }
+
+  const { data } = useGetClothesByIdQuery(Number(single));
+  console.log(data);
+
   console.log("🚀 ~ SinglePageSection ~ data:", data);
 
   const [addBasketMutation] = useAddToBasketMutation();

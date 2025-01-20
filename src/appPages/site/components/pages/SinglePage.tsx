@@ -12,11 +12,11 @@ const SinglePage = () => {
 		return <div>Loading...</div>
 	}
 
-	const { data } = useGetClothesByIdQuery(single)
-	console.log(data)
+	// const { data } = useGetClothesByIdQuery(single)
+	// console.log(data)
 	return (
 		<div>
-			<SinglePageSection data={data} />
+			<SinglePageSection />
 		</div>
 	)
 }

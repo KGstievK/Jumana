@@ -1,5 +1,8 @@
 interface User {
+  _id?: number;
+  // image: string;
   username: string;
+  email: string;
   first_name: string;
   last_name: string;
   address: string;
@@ -89,6 +92,7 @@ interface cart_item {
 }
 
 interface clothesById {
+  id: number;
   clothes_name: string;
   clothes_photo: string;
   category: {
