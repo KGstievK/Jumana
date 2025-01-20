@@ -45,3 +45,17 @@
     }
   }
 }
+
+@media (max-width: 750px) {
+  .sizes {
+    .spans {
+      gap: 5px;
+
+      .size {
+        padding: 5px;
+        font-size: 15px;
+        width: 40px;
+      }
+    }
+  }
+}

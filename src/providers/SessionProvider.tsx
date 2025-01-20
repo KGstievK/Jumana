@@ -8,16 +8,12 @@ interface SessionProviderProps {
   children: ReactNode;
 }
 
-export const SessionProvider: FC<SessionProviderProps> = ({
-  children,
-}) => {
+export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
+  const { status, data } = useGetMeQuery();
+  console.log("🚀 ~ data:", data);
 
-const { status, data } = useGetMeQuery()
-  console.log("🚀 ~ data:", data)
-  console.log("🚀 ~ status:", status)
-
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname();
+  const router = useRouter();
 
   const handleNavigation = () => {
     switch (pathname) {
@@ -25,7 +21,7 @@ const { status, data } = useGetMeQuery()
       case "/auth/sign-up":
       case "/auth/reset-password":
       case "/auth/forgot":
-        if (data) {
+        if (status === "fulfilled") {
           router.push("/");
         }
         break;
@@ -34,7 +30,7 @@ const { status, data } = useGetMeQuery()
       case "/profile/favorite":
       case "/profile/history":
       case "/cart":
-        if (!data) {
+        if (status === "rejected") {
           router.push("/auth/sign-in");
         }
         break;
@@ -44,8 +40,8 @@ const { status, data } = useGetMeQuery()
   };
 
   useEffect(() => {
-    handleNavigation()
-  }, [status, pathname, router])
+    handleNavigation();
+  }, [status, pathname, router]);
 
-  return  children // <NextAuthProvider>{children}</NextAuthProvider>;
+  return children; // <NextAuthProvider>{children}</NextAuthProvider>;
 };

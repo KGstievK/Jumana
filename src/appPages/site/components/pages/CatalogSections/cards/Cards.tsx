@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { toggleFavorite } from "@/redux/slices/FavoriteSlice";
 import ColorsClothes from "../../../ui/colors/Colors";
+import { useGetBasketQuery } from "@/redux/api/product";
 
 interface Iprops {
   value: string;
@@ -20,7 +21,11 @@ interface Iprops {
   color: string;
 }
 
-const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, color }) => {
+const Cards: FC<{ value: string; size: string; color: string }> = ({
+  value,
+  size,
+  color,
+}) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
   console.log("🚀 ~ data:", data);
