@@ -7,23 +7,23 @@ interface User {
   number: string;
 }
 
-interface AllClothes {
-  id: number;
-  clothes_photo: string;
-  promo_category: Array<{
-    promo_category: string;
-  }>;
-  clothes_name: string;
-  price: number;
-  discount_price: number;
-  size: any;
-  color: Array<{
-    id: number;
-    color: string;
-  }>;
-  average_rating: number;
-  created_date: string;
-}
+// interface AllClothes {
+//   id: number;
+//   clothes_photo: string;
+//   promo_category: Array<{
+//     promo_category: string;
+//   }>;
+//   clothes_name: string;
+//   price: number;
+//   discount_price: number;
+//   size: any;
+//   color: Array<{
+//     id: number;
+//     color: string;
+//   }>;
+//   average_rating: number;
+//   created_date: string;
+// }
 
 interface cart {
   id: number;
@@ -82,21 +82,11 @@ interface get_cart_item {
   };
   color_id: number;
 }
+
 interface post_cart_item {
-  clothes: {
-    promo_category: Array<{
-      promo_category: string;
-    }>;
-    clothes_name: string;
-    price: number;
-    size: string;
-  };
   clothes_id: number;
   quantity: number;
   size: string;
-  color: {
-    color: string;
-  };
   color_id: number;
 }
 
@@ -122,6 +112,7 @@ interface clothesById {
     textile_name: string;
   }>;
   clothes_img: Array<{
+    id: number;
     photo: string;
     color: string;
   }>;
@@ -201,6 +192,7 @@ interface SingleProductData {
   clothes_img: Array<{
     photo: string;
     color: string;
+    id: number;
   }>;
   clothes_review: Array<any>;
   clothes_description: string;
