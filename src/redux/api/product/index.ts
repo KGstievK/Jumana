@@ -34,7 +34,7 @@ const api = index.injectEndpoints({
     }),
     getBasket: build.query<PRODUCT.getBasketRes, PRODUCT.getBasketReq>({
       query: () => ({
-        url: `/cart/`,
+        url: `/cart_item/check/`,
         method: "GET",
       }),
     }),
