@@ -18,7 +18,6 @@ namespace AUTH {
   }
   type PutMeRequest = {
     id: number
-    token: string;
     username: string;
     first_name?: string;
     last_name?: string;
@@ -66,11 +65,13 @@ namespace AUTH {
   type PatchRefreshResponse = {
     access: string;
     refresh: string;
-    accessToken: string;
-    accessTokenExpiration: number;
+    // accessToken: string;
+    // accessTokenExpiration: number;
     // key: string
   };
-  type PatchRefreshRequest = void;
+  type PatchRefreshRequest = {
+    refresh: string
+  };
 
   type PostForgotPasswordResponse = {
     message: string;

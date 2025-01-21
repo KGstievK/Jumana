@@ -26,6 +26,11 @@ const SignUpPage: FC = () => {
 
   const [rememberMe, setRememberMe] = useState(false);
 
+  
+  const handleRememberMeChange = (e: CheckboxChangeEvent) => {
+    setRememberMe(e.target.checked);
+  };
+
   const onSubmit: SubmitHandler<SignUpPrors> = async (userData) => {
     const userDataRest = {
       username: userData.username,
@@ -48,10 +53,6 @@ const SignUpPage: FC = () => {
     }
   };
 
-  const handleRememberMeChange = (e: CheckboxChangeEvent) => {
-    setRememberMe(e.target.checked);
-  };
-
   return (
     <section className={scss.RegistrationPage}>
       <Link href="/" className="Logo">
@@ -70,12 +71,12 @@ const SignUpPage: FC = () => {
           placeholder="E-mail"
         />
         <input
-          type="text"
+          type="password"
           {...register("password", { required: true })}
           placeholder="Пароль"
         />
         <input
-          type="text"
+          type="password"
           {...register("confirm_password", { required: true })}
           placeholder="Повторите пароль"
         />

@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import scss from "./Popular.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -21,82 +22,89 @@ import star from "@/assets/icons/Star.svg";
 import favorite from "@/assets/icons/Favorite.svg";
 import cart from "@/assets/icons/cartProduct.svg";
 import arrow from "@/assets/icons/arrow.svg";
+import { useGetAllClothesQuery } from "@/redux/api/category";
 
 const Popular = () => {
-  const newArr = [
-    {
-      _id: 1,
-      image: popular1.src,
-      category: "Product Category",
-      nameProduct: "JUMANA “22",
-      price: "1200сом",
-      discount: "1500сом",
-      rating: "4.95",
-    },
-    {
-      _id: 2,
-      image: popular2.src,
-      category: "Product Category",
-      nameProduct: "JUMANA “22",
-      price: "1200сом",
-      discount: "1500сом",
-      rating: "4.95",
-    },
-    {
-      _id: 3,
-      image: popular3.src,
-      category: "Product Category",
-      nameProduct: "JUMANA “22",
-      price: "1200сом",
-      discount: "1500сом",
-      rating: "4.95",
-    },
-    {
-      _id: 4,
-      image: popular4.src,
-      category: "Product Category",
-      nameProduct: "JUMANA “22",
-      price: "1200сом",
-      discount: "1500сом",
-      rating: "4.95",
-    },
-    {
-      _id: 5,
-      image: popular5.src,
-      category: "Product Category",
-      nameProduct: "JUMANA “22",
-      price: "1200сом",
-      discount: "1500сом",
-      rating: "4.95",
-    },
-    {
-      _id: 6,
-      image: popular6.src,
-      category: "Product Category",
-      nameProduct: "JUMANA “22",
-      price: "1200сом",
-      discount: "1500сом",
-      rating: "4.95",
-    },
-    {
-      _id: 7,
-      image: popular7.src,
-      category: "Product Category",
-      nameProduct: "JUMANA “22",
-      price: "1200сом",
-      discount: "1500сом",
-      rating: "4.95",
-    },
-    {
-      _id: 8,
-      image: popular4.src,
-      category: "Product Category",
-      nameProduct: "JUMANA “22",
-      price: "1200сом",
-      discount: "1500сом",
-      rating: "4.95",
-    },
-  ];
+  const { data } = useGetAllClothesQuery();
+  const newArrivals = data?.filter((item) =>
+    item.promo_category.some(
+      (category) => category.promo_category.toLowerCase() === "популярные"
+    )
+  );
+  // const newArr = [
+  //   {
+  //     _id: 1,
+  //     image: popular1.src,
+  //     category: "Product Category",
+  //     nameProduct: "JUMANA “22",
+  //     price: "1200сом",
+  //     discount: "1500сом",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     _id: 2,
+  //     image: popular2.src,
+  //     category: "Product Category",
+  //     nameProduct: "JUMANA “22",
+  //     price: "1200сом",
+  //     discount: "1500сом",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     _id: 3,
+  //     image: popular3.src,
+  //     category: "Product Category",
+  //     nameProduct: "JUMANA “22",
+  //     price: "1200сом",
+  //     discount: "1500сом",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     _id: 4,
+  //     image: popular4.src,
+  //     category: "Product Category",
+  //     nameProduct: "JUMANA “22",
+  //     price: "1200сом",
+  //     discount: "1500сом",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     _id: 5,
+  //     image: popular5.src,
+  //     category: "Product Category",
+  //     nameProduct: "JUMANA “22",
+  //     price: "1200сом",
+  //     discount: "1500сом",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     _id: 6,
+  //     image: popular6.src,
+  //     category: "Product Category",
+  //     nameProduct: "JUMANA “22",
+  //     price: "1200сом",
+  //     discount: "1500сом",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     _id: 7,
+  //     image: popular7.src,
+  //     category: "Product Category",
+  //     nameProduct: "JUMANA “22",
+  //     price: "1200сом",
+  //     discount: "1500сом",
+  //     rating: "4.95",
+  //   },
+  //   {
+  //     _id: 8,
+  //     image: popular4.src,
+  //     category: "Product Category",
+  //     nameProduct: "JUMANA “22",
+  //     price: "1200сом",
+  //     discount: "1500сом",
+  //     rating: "4.95",
+  //   },
+  // ];
 
   return (
     <section className={scss.Popular}>
@@ -144,18 +152,18 @@ const Popular = () => {
               modules={[Autoplay, Pagination, Navigation]}
               className={scss.mySwiper}
             >
-              {newArr.map((item) => (
-                <SwiperSlide key={item._id} className={scss.mySwiper_slide}>
+              {newArrivals?.map((item) => (
+                <SwiperSlide key={item.id} className={scss.mySwiper_slide}>
                   <div
                     className={scss.ProductNew}
                     style={{
-                      background: `url(${item.image})`,
+                      background: `url(${item.clothes_img[0].photo})`,
                       backgroundRepeat: "no-repeat",
                       backgroundPosition: "top",
                     }}
                   >
                     <p>
-                      <Image src={star} alt="rating" /> {item.rating}
+                      <Image src={star} alt="rating" /> {item.average_rating}
                     </p>
                     <button className="favorite">
                       <Image src={favorite} alt="favorite" />
@@ -165,12 +173,12 @@ const Popular = () => {
                     </button>
                   </div>
                   <div className={scss.Product_info}>
-                    <p>{item.category}</p>
-                    <h2>{item.nameProduct}</h2>
+                    {/* <p>{item.category}</p> */}
+                    <h2>{item.clothes_name}</h2>
                     <div className={scss.price}>
                       <p>{item.price}</p>
                       <p>
-                        <s>{item.discount}</s>
+                        <s>{item.discount_price}</s>
                       </p>
                     </div>
                   </div>
@@ -179,7 +187,7 @@ const Popular = () => {
             </Swiper>
           </>
           <div className={scss.navigate_mobile}>
-            <Link href="">
+            <Link href="/catalog">
               <button>
                 Посмотреть все <Image src={arrow} alt="arrow" />
               </button>

@@ -1,7 +1,7 @@
 "use client";
 import { FC, ReactNode, useEffect } from "react";
 // import { SessionProvider as NextAuthProvider } from "next-auth/react";
-import { useGetMeQuery } from "@/redux/api/auth";
+import { useGetMeQuery, usePatchRefreshTokenMutation } from "@/redux/api/auth";
 import { usePathname, useRouter } from "next/navigation";
 
 interface SessionProviderProps {
@@ -11,8 +11,26 @@ interface SessionProviderProps {
 export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
   const { status, data } = useGetMeQuery();
 
+
+const { status, data } = useGetMeQuery()
+const [refreshTokenMutation] = usePatchRefreshTokenMutation()
+
+
   const pathname = usePathname();
   const router = useRouter();
+
+  const handleRefreshToken = async () => {
+    const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
+    const { accessTokenExpiration, refresh } = localStorageData;
+  
+    if (accessTokenExpiration < new Date().getTime()) {
+     const { data, error } = await refreshTokenMutation({ refresh });
+     console.log(data);
+     console.log(error);
+    } else {
+     console.log('Токен живой!');
+    }
+   };
 
   const handleNavigation = () => {
     switch (pathname) {
@@ -37,6 +55,10 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
         break;
     }
   };
+
+  useEffect(() => {
+    handleRefreshToken();
+   }, []);
 
   useEffect(() => {
     handleNavigation();

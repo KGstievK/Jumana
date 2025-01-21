@@ -9,10 +9,6 @@ import "swiper/scss/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 
-import newImg1 from "@/assets/images/SwiperImages/new1.svg";
-import newImg2 from "@/assets/images/SwiperImages/new2.svg";
-import newImg3 from "@/assets/images/SwiperImages/new3.svg";
-import newImg4 from "@/assets/images/SwiperImages/new4.svg";
 import star from "@/assets/icons/Star.svg";
 import favorite from "@/assets/icons/Favorite.svg";
 import cart from "@/assets/icons/cartProduct.svg";
@@ -24,84 +20,10 @@ const New = () => {
   const { data } = useGetAllClothesQuery();
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
-      (category) => category.promo_category === "новинки"
+      (category) => category.promo_category.toLowerCase() === "новинка"
     )
   );
 
-  // const newArr = [
-  //   {
-  //     _id: 1,
-  //     image: newImg1.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 2,
-  //     image: newImg2.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 3,
-  //     image: newImg3.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 4,
-  //     image: newImg4.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 5,
-  //     image: newImg1.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 6,
-  //     image: newImg2.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 7,
-  //     image: newImg3.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 8,
-  //     image: newImg4.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  // ];
   return (
     <section className={scss.New}>
       <div className="container">
