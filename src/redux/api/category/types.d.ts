@@ -8,7 +8,28 @@ namespace ICATEGORY {
   type getCategoryRes = category[];
   type getCategoryReq = void;
 
-  type postToFavoreRes = PostToFavorite[];
+  type postToFavoreRes = {
+    id: number;
+    clothes: {
+      id: number;
+      promo_category: Array<{
+        promo_category: string;
+      }>;
+      clothes_name: string;
+      price: number;
+      discount_price: string;
+      size: string;
+      average_rating: string;
+      created_date: string;
+      clothes_img: Array<{
+        id: number;
+        photo: string;
+        color: string;
+      }>;
+    };
+    clothes_id: number;
+    favorite_user: number;
+  };
   type postToFavoreReq = PostToFavorite;
 
   type getToFavoreRes = GetFavorites[];
