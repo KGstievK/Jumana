@@ -29,55 +29,55 @@ interface AllClothes {
 }
 
 interface cart {
-  id: number
+  id: number;
   clothes: {
-    clothes_name: string
+    clothes_name: string;
     clothes_img: Array<{
-      id: number
-      photo: string
-      color: string
-    }>
-  }
-  size: string
-  color: number
-  quantity: number
-  price_clothes: string
-  total_price: string
-  color_id: number
-  clothes_id: number
+      id: number;
+      photo: string;
+      color: string;
+    }>;
+  };
+  size: string;
+  color: number;
+  quantity: number;
+  price_clothes: string;
+  total_price: string;
+  color_id: number;
+  clothes_id: number;
 }
 interface get_cart_item {
-  id: number
+  id: number;
   clothes: {
-    clothes_name: string
+    clothes_name: string;
     clothes_img: Array<{
-      id: number
-      photo: string
-      color: string
-    }>
-  }
-  clothes_id: number
-  quantity: number
-  size: string
+      id: number;
+      photo: string;
+      color: string;
+    }>;
+  };
+  clothes_id: number;
+  quantity: number;
+  size: string;
   color: {
-    id: number
-    photo: string
-    color: string
-  }
-  color_id: number
+    id: number;
+    photo: string;
+    color: string;
+  };
+  color_id: number;
 }
 
 interface post_cart_item {
   clothes: {
-    clothes_name: string
-  }
-  clothes_id: number
-  quantity: number
-  size: string
+    clothes_name: string;
+  };
+  clothes_id: number;
+  quantity: number;
+  size: string;
   color: {
-    color: string
-  }
-  color_id: number
+    color: string;
+  };
+  color_id: number;
 }
 
 interface clothesById {
@@ -191,7 +191,7 @@ interface SingleProductData {
 //! data type
 
 interface PostToFavorite {
-  clothes?: {
+  clothes: {
     promo_category: Array<{
       promo_category: string;
     }>;

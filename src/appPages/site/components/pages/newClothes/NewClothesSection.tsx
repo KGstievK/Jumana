@@ -5,9 +5,10 @@ import arrow from "@/assets/icons/Icon.svg";
 import star from "@/assets/images/star.png";
 import cart from "@/assets/icons/bag-happyBlack.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
-import redHeart from "@/assets/icons/red-heart-icon.svg";
+import heartRed from "@/assets/icons/red-heart-icon.svg";
 import { useState } from "react";
 import {
+  useDeleteFavoriteMutation,
   useGetAllClothesQuery,
   useGetToFavoriteQuery,
   usePostToFavoriteMutation,
@@ -19,7 +20,6 @@ import backIcon from "@/assets/icons/backIcon.svg";
 
 const NewClothesSection = () => {
   const router = useRouter();
-  const [postToFavorite] = usePostToFavoriteMutation();
 
   const [state, setState] = useState(false);
   const { data } = useGetAllClothesQuery();
@@ -29,7 +29,28 @@ const NewClothesSection = () => {
     )
   );
 
-  console.log(newArrivals);
+  const [likedItems, setLikedItems] = useState<any[]>([]);
+  const { data: resData } = useGetToFavoriteQuery();
+
+  const [postToFavorite] = usePostToFavoriteMutation();
+  const [deleteFavorite] = useDeleteFavoriteMutation();
+
+  const toggleLike = async (item: any) => {
+    console.log("🚀 ~ toggleLike ~ item:", item);
+    try {
+      const isLiked = resData?.some((likedItem) => likedItem.id === item.id);
+
+      if (isLiked) {
+        // Удаляем из избранного
+        await deleteFavorite(item.id);
+      } else {
+        // Добавляем в избранное
+        await postToFavorite(item);
+      }
+    } catch (error) {
+      console.error("Ошибка при обновлении избранного:", error);
+    }
+  };
 
   return (
     <div id={scss.Cards}>
@@ -50,25 +71,21 @@ const NewClothesSection = () => {
                   </div>
                   <div
                     className={scss.heart}
-                    onClick={() =>
-                      postToFavorite({
-                        clothes: {
-                          promo_category: item.promo_category,
-                          clothes_name: item.clothes_name,
-                          price: item.price,
-                          size: item.size.join(", "),
-                        },
-                        clothes_id: item.id,
-                        favorite_user: item.id,
-                      })
-                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleLike(item);
+                    }}
                   >
-                    <Image src={heart} alt="heart" width={300} height={300} />
-                    {state ? (
-                      <Image src={redHeart} alt="heart" />
-                    ) : (
-                      <Image src={heart} alt="heart" width={300} height={300} />
-                    )}
+                    <Image
+                      width={24}
+                      height={24}
+                      src={
+                        likedItems.some((likedItem) => likedItem.id === item.id)
+                          ? heartRed
+                          : heart
+                      }
+                      alt="heart"
+                    />
                   </div>
                 </div>
 

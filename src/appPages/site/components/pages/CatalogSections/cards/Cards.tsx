@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import {
   useDeleteFavoriteMutation,
   useGetAllCategoryQuery,
+  useGetToFavoriteQuery,
   usePostToFavoriteMutation,
 } from "@/redux/api/category";
 import Image from "next/image";
@@ -14,6 +15,22 @@ import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
 import ColorsClothes from "../../../ui/colors/Colors";
 
+// interface IProps {
+//   id: number;
+//   promo_category: Array<{
+//     promo_category: string;
+//   }>;
+//   clothes_name: string;
+//   price: number;
+//   discount_price: number;
+//   size: Array<string>;
+//   average_rating: number;
+//   created_date: string;
+//   clothes_img: Array<{
+//     photo: string;
+//     color: string;
+//   }>;
+// }
 const Cards: FC<{ value: string; size: string; color: string }> = ({
   value,
   size,
@@ -22,29 +39,44 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
   const [datas, setDatas] = useState(data);
-  const [likedItems, setLikedItems] = useState<any[]>([]);
-
+  const [likedItems, setLikedItems] = useState<any[]>([]); // Локальное состояние для отслеживания избранных товаров
   const [postToFavorite] = usePostToFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
-  const toggleLike = async (item: any) => {
+  const toggleLike = async (item: PostToFavorite) => {
+    console.log("🚀 ~ toggleLike ~ item:", item);
+
+    const isLiked = likedItems.includes(item.clothes_id); // Проверяем, есть ли товар в избранном
+
+    const requestBody = {
+      clothes: {
+        promo_category: item.clothes.promo_category,
+        clothes_name: item.clothes.clothes_name,
+        price: item.clothes.price,
+        size: item.clothes.size, // Берем первый размер, если он существует
+      },
+      clothes_id: item.clothes_id, // Используем id как clothes_id
+      favorite_user: item.favorite_user, // Пример ID пользователя, его можно передавать динамически
+    };
+    console.log("🚀 ~ toggleLike ~ requestBody:", requestBody);
+
     try {
-      // Проверяем, есть ли товар уже в избранном
-      if (likedItems.some((likedItem) => likedItem.id === item.id)) {
-        // Если есть, удаляем из избранного
-        await deleteFavorite(item); // Отправляем объект
-        setLikedItems(
-          (prev) => prev.filter((likedItem) => likedItem.id !== item.id) // Убираем из массива
-        );
+      if (isLiked) {
+        // Удаляем товар из избранного
+        await deleteFavorite(item.clothes_id);
+        // Обновляем локальное состояние, чтобы отразить удаление
+        setLikedItems((prev) => prev.filter((id) => id !== item.clothes_id)); // Обновляем состояние
       } else {
-        // Если нет, добавляем в избранное
-        await postToFavorite(item); // Отправляем объект
-        setLikedItems((prev) => [...prev, item]); // Добавляем объект в массив
+        // Добавляем товар в избранное
+        await postToFavorite(requestBody);
+        // Обновляем локальное состояние, чтобы отразить добавление
+        setLikedItems((prev) => [...prev, item.clothes_id]); // Обновляем состояние
       }
     } catch (error) {
       console.error("Ошибка при обновлении избранного:", error);
     }
   };
+
   useEffect(() => {
     if (data) {
       let filteredData = data;
@@ -106,16 +138,14 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                       className={scss.heart}
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleLike(item); // Передаём объект,
+                        toggleLike(item);
                       }}
                     >
                       <Image
                         width={24}
                         height={24}
                         src={
-                          likedItems.some(
-                            (likedItem) => likedItem.id === item.id
-                          )
+                          likedItems.includes(item.id) // Проверяем по локальному состоянию
                             ? heartRed
                             : heart
                         }
