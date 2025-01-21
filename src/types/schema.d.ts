@@ -10,23 +10,23 @@ interface User {
   number: string;
 }
 
-// interface AllClothes {
-//   id: number;
-//   clothes_photo: string;
-//   promo_category: Array<{
-//     promo_category: string;
-//   }>;
-//   clothes_name: string;
-//   price: number;
-//   discount_price: number;
-//   size: any;
-//   color: Array<{
-//     id: number;
-//     color: string;
-//   }>;
-//   average_rating: number;
-//   created_date: string;
-// }
+interface AllClothes {
+  id: number;
+  promo_category: Array<{
+    promo_category: string;
+  }>;
+  clothes_name: string;
+  price: number;
+  discount_price: number;
+  size: Array<string>;
+  average_rating: number;
+  created_date: string;
+  clothes_img: Array<{
+    id: number;
+    photo: string;
+    color: string;
+  }>;
+}
 
 interface cart {
   id: number

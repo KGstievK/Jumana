@@ -35,6 +35,14 @@ const api = index.injectEndpoints({
       providesTags: ["category"],
     }),
 
+    getToFavorite: build.query({
+      query: () => ({
+        url: "/favorite/",
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
+
     postToFavorite: build.mutation({
       query: () => ({
         url: "/favorite_item/",

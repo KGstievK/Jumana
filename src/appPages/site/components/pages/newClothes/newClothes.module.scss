@@ -1,13 +1,39 @@
 #Cards {
-  padding: 50px 0;
+  padding-bottom: 50px;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+
+    a {
+      color: #a73539;
+      font-size: clamp(12px, 2vw, 15px);
+      font-weight: 500;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    img {
+      display: none;
+    }
+  }
+
+  .title {
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 62.4px;
+    color: #a73539;
+    margin-bottom: 20px;
+  }
   .content {
     display: flex;
     align-items: start;
-    justify-content: center;
-    gap: 15px;
+    justify-content: start;
     flex-wrap: wrap;
+    gap: 20px;
     .card {
-      max-width: 340px;
+      max-width: 300px;
       width: 100%;
       background: #fff;
       .blockImg {
@@ -17,7 +43,7 @@
           width: 100%;
           object-fit: cover;
           border-radius: 5px;
-          height: 440px !important;
+          height: 380px !important;
         }
         .like {
           position: absolute;
@@ -71,6 +97,7 @@
         justify-content: start;
         flex-direction: column;
         gap: 10px;
+
         .productCategory {
           display: flex;
           align-items: center;
@@ -79,11 +106,12 @@
 
           h4 {
             font-family: "Lato";
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 400;
             color: #757575;
           }
         }
+
         h2 {
           color: #3e3e3e;
           font-family: "Playfair Display";
