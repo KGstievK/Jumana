@@ -10,14 +10,15 @@ const nextConfig: NextConfig = {
       "13.60.252.249",
       "51.20.4.116",
       "51.20.4.116",
-      '16.170.202.3'
+      "16.170.202.3",
+      "13.60.217.224",
     ],
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '16.171.227.181',
-        port: '',
-        pathname: '/media/**', 
+        protocol: "http",
+        hostname: "16.171.227.181",
+        port: "",
+        pathname: "/media/**",
       },
     ],
   },

@@ -16,7 +16,7 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-
+        padding: 20px 0 50px 0;
         .table {
           table {
             width: 702px;
@@ -48,27 +48,23 @@
                   .product {
                     display: flex;
                     justify-content: start;
-                    gap: 20px;
+                    gap: 30px;
                     .title {
                       display: flex;
                       flex-direction: column;
                       h3 {
-                        font-family: Avenir Next;
-                        font-size: 15px;
+                        font-size: 20px;
                         font-weight: 500;
                         line-height: 20.49px;
                         text-align: left;
-                        text-underline-position: from-font;
-                        text-decoration-skip-ink: none;
                       }
                       p {
                         font-family: Avenir Next;
-                        font-size: 15px;
+                        font-size: 17px;
                         font-weight: 400;
                         line-height: 20.49px;
                         text-align: left;
-                        text-underline-position: from-font;
-                        text-decoration-skip-ink: none;
+
                         color: #6d6d6d;
                       }
                     }
