@@ -5,9 +5,13 @@ import arrow from "@/assets/icons/Icon.svg";
 import star from "@/assets/images/star.png";
 import cart from "@/assets/icons/bag-happyBlack.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
-import heartRed from "@/assets/icons/red-heart-icon.svg";
+import redHeart from "@/assets/icons/red-heart-icon.svg";
 import { useState } from "react";
-import { useGetAllClothesQuery } from "@/redux/api/category";
+import {
+  useGetAllClothesQuery,
+  useGetToFavoriteQuery,
+  usePostToFavoriteMutation,
+} from "@/redux/api/category";
 import ColorsClothes from "../../ui/colors/Colors";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -15,14 +19,17 @@ import backIcon from "@/assets/icons/backIcon.svg";
 
 const NewClothesSection = () => {
   const router = useRouter();
+  const [postToFavorite] = usePostToFavoriteMutation();
 
   const [state, setState] = useState(false);
   const { data } = useGetAllClothesQuery();
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
-      (category) => category.promo_category === "новинки"
+      (category) => category.promo_category.toLowerCase() === "новинка"
     )
   );
+
+  console.log(newArrivals);
 
   return (
     <div id={scss.Cards}>
@@ -43,12 +50,24 @@ const NewClothesSection = () => {
                   </div>
                   <div
                     className={scss.heart}
-                    onClick={() => setState((prevState) => !prevState)}
+                    onClick={() =>
+                      postToFavorite({
+                        clothes: {
+                          promo_category: item.promo_category,
+                          clothes_name: item.clothes_name,
+                          price: item.price,
+                          size: item.size.join(", "),
+                        },
+                        clothes_id: item.id,
+                        favorite_user: item.id,
+                      })
+                    }
                   >
+                    <Image src={heart} alt="heart" width={300} height={300} />
                     {state ? (
-                      <Image src={heartRed} alt="heart" />
+                      <Image src={redHeart} alt="heart" />
                     ) : (
-                      <Image src={heart} alt="heart" />
+                      <Image src={heart} alt="heart" width={300} height={300} />
                     )}
                   </div>
                 </div>
