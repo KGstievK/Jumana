@@ -7,13 +7,24 @@ import {
 const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
   prepareHeaders: (headers) => {
-    let token = JSON.parse(String(localStorage.getItem("accessToken")));
+    let token = localStorage.getItem("accessToken")
+      ? JSON.parse(String(localStorage.getItem("accessToken")))
+      : null;
+
     if (!token) {
-      token = JSON.parse(String(sessionStorage.getItem("accessToken")));
+      token = sessionStorage.getItem("accessToken")
+        ? JSON.parse(String(sessionStorage.getItem("accessToken")))
+        : null;
+
     }
+
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
+
+    // Устанавливаем Content-Type для запросов с JSON-данными
+    headers.set("Content-Type", "application/json");
+
     return headers;
   },
 });

@@ -13,7 +13,7 @@ import ColorsClothes from "../../ui/colors/Colors";
 const Favorite = () => {
   const router = useRouter();
   const { data } = useGetToFavoriteQuery();
-  console.log("🚀 ~ NewClothesSection ~ resData:", data);
+  console.log("🚀 ~ Favorite ~ data:", data);
 
   const [deleteFavorite] = useDeleteFavoriteMutation();
 

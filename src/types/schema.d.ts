@@ -66,10 +66,7 @@ interface cart {
   color: number;
   quantity: number;
   price_clothes: string;
-  total_price: number;
-  color_id: number;
-  clothes_id: number;
-  just_price: string;
+
 }
 interface get_cart_item {
   id: number;
@@ -91,6 +88,7 @@ interface get_cart_item {
   };
   color_id: number;
   just_price: string;
+
 }
 
 interface post_cart_item {
@@ -107,6 +105,7 @@ interface post_cart_item {
 }
 interface patch_cart_item {
   quantity: number;
+
 }
 
 interface clothesById {
@@ -220,7 +219,7 @@ interface SingleProductData {
 //! data type
 
 interface PostToFavorite {
-  clothes?: {
+  clothes: {
     promo_category: Array<{
       promo_category: string;
     }>;
