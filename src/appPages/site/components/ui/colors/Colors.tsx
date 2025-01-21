@@ -13,65 +13,67 @@ interface IPropsColors {
   onClick?: (item: IClothesImg) => void;
 }
 const ColorsClothes: FC<IPropsColors> = ({ clothesImg, onClick }) => {
-  const [selectedColor, setSelectedColor] = useState<IClothesImg | null>(null); // Состояние для выбранного цвета
+  const [selectedColor, setSelectedColor] = useState<IClothesImg | null>(null);
 
   const getColor = (color: string) => {
-    switch (color.toLowerCase()) {
-      case "серый":
-        return "gray";
-      case "коричневый":
-        return "brown";
-      case "синий":
-        return "blue";
-      case "зеленый":
-        return "green";
-      case "красный":
-        return "red";
-      case "желтый":
-        return "yellow";
-      case "оранжевый":
-        return "orange";
-      case "черный":
-        return "black";
-      case "белый":
-        return "white";
-      case "фиолетовый":
-        return "purple";
-      case "розовый":
-        return "pink";
-      case "голубой":
-        return "lightblue";
-      case "бирюзовый":
-        return "turquoise";
-      case "бежевый":
-        return "beige";
-      case "золотой":
-        return "gold";
-      case "серебряный":
-        return "silver";
-      case "бордовый":
-        return "maroon";
-      default:
-        return "transparent";
-    }
+    const colorMap: Record<string, string> = {
+      серый: "gray",
+      коричневый: "brown",
+      синий: "blue",
+      зеленый: "green",
+      красный: "red",
+      желтый: "yellow",
+      оранжевый: "orange",
+      черный: "black",
+      белый: "white",
+      фиолетовый: "purple",
+      розовый: "pink",
+      голубой: "lightblue",
+      бирюзовый: "turquoise",
+      бежевый: "beige",
+      золотой: "gold",
+      серебряный: "silver",
+      бордовый: "maroon",
+
+      // Добавляем английские названия
+      gray: "gray",
+      brown: "brown",
+      blue: "blue",
+      green: "green",
+      red: "red",
+      yellow: "yellow",
+      orange: "orange",
+      black: "black",
+      white: "white",
+      purple: "purple",
+      pink: "pink",
+      lightblue: "lightblue",
+      turquoise: "turquoise",
+      beige: "beige",
+      gold: "gold",
+      silver: "silver",
+      maroon: "maroon",
+    };
+
+    return colorMap[color.toLowerCase()] || "transparent";
   };
 
   const handleColorClick = (item: IClothesImg) => {
-    setSelectedColor(item); // Устанавливаем выбранный цвет в состояние
-    onClick?.(item); // Вызовем внешний onClick, если он передан
+    setSelectedColor(item);
+    onClick?.(item);
   };
 
   return (
     <div className={s.container}>
       {clothesImg.map((item) => (
         <div
-          key={item.id ?? item.color} // Используем `item.id`, или `item.color`, если id null
+          key={item.id ?? item.color}
           className={`${s.circle} ${
             selectedColor?.id === item.id ? s.selected : ""
-          }`} // Добавляем класс для выбранного цвета
+          }`}
           style={{ backgroundColor: getColor(item.color) }}
           title={item.color}
-          onClick={() => handleColorClick(item)} // Обработчик нажатия
+          onClick={() => handleColorClick(item)}
         />
       ))}
     </div>

@@ -60,7 +60,6 @@ const SideBar: FC = () => {
           <h4>ФИЛЬТР</h4>
         </div>
 
-        {/* Отображаем SideBar, если состояние открыто */}
         <div
           className={`${scss.filterContainer} ${
             isSideBarOpen ? scss.open : ""

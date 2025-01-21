@@ -76,7 +76,7 @@
             justify-content: space-between;
             h4 {
               font-family: "Lato";
-              font-size: 20ps;
+              font-size: 20px;
               font-weight: 400;
               color: #757575;
             }
@@ -179,6 +179,87 @@
               }
               del {
                 font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  #Cards {
+    padding-bottom: 10px;
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      gap: 10px;
+
+      .cards {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 5px;
+        .card {
+          margin-bottom: 10px;
+          width: 135px;
+          .blockImg {
+            width: 100%;
+            .mainImg {
+              width: 100%;
+            }
+            .like {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 10px;
+              .star {
+                display: flex;
+                align-items: end;
+                justify-content: center;
+                img {
+                  width: 18px;
+                }
+                h6 {
+                  color: #fff;
+                  font-size: 18px;
+                  font-weight: 400;
+                }
+              }
+
+              .heart {
+                img {
+                  width: 15px;
+                  height: 15px;
+                }
+              }
+            }
+
+            .cart {
+              img {
+                width: 18px;
+              }
+            }
+          }
+
+          .blockText {
+            .productCategory {
+              h4 {
+                font-size: 10px;
+              }
+            }
+            h2 {
+              font-size: 12px;
+            }
+            .price {
+              span {
+                font-size: 10px;
+              }
+              del {
+                font-size: 10px;
               }
             }
           }

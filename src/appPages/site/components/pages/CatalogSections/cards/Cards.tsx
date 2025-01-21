@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGetAllCategoryQuery } from "@/redux/api/category";
 import Image from "next/image";
-import SideBar from "../sideBar/SideBar";
 import scss from "./cards.module.scss";
 import cart from "@/assets/icons/bag-happyBlack.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
@@ -83,8 +82,8 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                   <div className={scss.like}>
                     <div className={scss.star}>
                       <Image
-                        width={500}
-                        height={300}
+                        width={5000}
+                        height={3000}
                         layout="intrinsic"
                         src={star}
                         alt="photo"
@@ -97,8 +96,8 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                     >
                       {isFavorite(item.id) ? (
                         <Image
-                          width={500}
-                          height={300}
+                          width={5000}
+                          height={3000}
                           layout="intrinsic"
                           src={heartRed}
                           alt="heart"

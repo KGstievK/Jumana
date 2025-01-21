@@ -123,6 +123,9 @@
 @media (max-width: 750px) {
   .filter {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     .header {
       display: flex;
       align-items: start;
