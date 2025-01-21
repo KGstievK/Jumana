@@ -8,14 +8,13 @@ interface SessionProviderProps {
   children: ReactNode;
 }
 
-export const SessionProvider: FC<SessionProviderProps> = ({
-  children,
-}) => {
+export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
+  const { status, data } = useGetMeQuery();
+
 
 const { status, data } = useGetMeQuery()
 const [refreshTokenMutation] = usePatchRefreshTokenMutation()
-  console.log("🚀 ~ data:", data)
-  console.log("🚀 ~ status:", status)
+
 
   const pathname = usePathname();
   const router = useRouter();

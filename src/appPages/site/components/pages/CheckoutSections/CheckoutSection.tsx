@@ -1,10 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import scss from "./CheckoutSection.module.scss";
 import img1 from "@/assets/image.png";
 import Image from "next/image";
+import { useGetCartQuery } from "@/redux/api/product";
 
 const CheckoutSection = () => {
+  const { data: cart } = useGetCartQuery();
+  console.log("🚀 ~ CheckoutSection ~ data:", cart);
+  const [basketData, setBasketData] = useState(
+    cart && Array.isArray(cart) && cart[0]?.cart_items ? cart[0].cart_items : []
+  );
+
+  useEffect(() => {
+    if (cart && Array.isArray(cart) && cart[0]?.cart_items) {
+      setBasketData(cart[0].cart_items);
+    }
+  }, [cart]);
+  const prod = cart && Array.isArray(cart) && cart[0]?.total_price;
+
   const [step, setStep] = useState(1);
 
   const handleNextStep = () => {
@@ -112,44 +126,55 @@ const CheckoutSection = () => {
               </div>
             )}
           </div>
-          <div className={scss.block_right}>
-            <h2>Детали оплаты</h2>
-            <div className={scss.box}>
-              <Image src={img1} alt="product" />
-              <div className={scss.text}>
-                <h3>JUMANA-21</h3>
-                <p>Черный</p>
-                <p className={scss.quantity}>2 x 1400c</p>
+          {cart ? (
+            <>
+              <div className={scss.block_right}>
+                <h2>Детали оплаты</h2>
+                {basketData.map((item: cart, index: number) => {
+                  const selectedImage = item.clothes.clothes_img.find(
+                    (img) => img.id === item.color
+                  );
+
+                  return (
+                    <div key={index} className={scss.box}>
+                      <Image
+                        width={150}
+                        height={150}
+                        src={selectedImage?.photo || "photo"}
+                        alt="product"
+                      />
+                      <div className={scss.text}>
+                        <h3>{item.clothes.clothes_name}</h3>
+                        <p>{selectedImage?.color}</p>
+                        <p className={scss.quantity}>
+                          {item.quantity} x {item.just_price}c
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                <div className={scss.summary}>
+                  <div className={scss.row}>
+                    <span>Итог</span>
+                    <span>{prod} сом</span>
+                  </div>
+
+                  <div className={scss.row}>
+                    <span>Скидка</span>
+                    <span>0</span>
+                  </div>
+                  <div className={scss.total_row}>
+                    <span>Итого к оплате:</span>
+                    <span>{prod} сом</span>
+                  </div>
+                </div>
+                <button>Продолжить</button>
               </div>
-            </div>
-            <div className={scss.box}>
-              <Image src={img1} alt="product" />
-              <div className={scss.text}>
-                <h3>JUMANA-21</h3>
-                <p>Черный</p>
-                <p className={scss.quantity}>2 x 1400c</p>
-              </div>
-            </div>
-            <div className={scss.summary}>
-              <div className={scss.row}>
-                <span>Итог</span>
-                <span>4800с</span>
-              </div>
-              <div className={scss.row}>
-                <span>Доставка</span>
-                <span>Бесплатно</span>
-              </div>
-              <div className={scss.row}>
-                <span>Скидка</span>
-                <span>-600с</span>
-              </div>
-              <div className={scss.total_row}>
-                <span>Итого к оплате:</span>
-                <span>4400с</span>
-              </div>
-            </div>
-            <button>Продолжить</button>
-          </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </section>
