@@ -10,7 +10,6 @@ interface SessionProviderProps {
 
 export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
   const { status, data } = useGetMeQuery();
-  console.log("🚀 ~ data:", data);
 
   const pathname = usePathname();
   const router = useRouter();

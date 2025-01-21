@@ -32,6 +32,12 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+    getCart: build.query<PRODUCT.getAllCartRes, PRODUCT.getAllCartReq>({
+      query: () => ({
+        url: `/cart/`,
+        method: "GET",
+      }),
+    }),
     getBasket: build.query<PRODUCT.getBasketRes, PRODUCT.getBasketReq>({
       query: () => ({
         url: `/cart_item/check/`,
@@ -54,6 +60,24 @@ const api = index.injectEndpoints({
         invalidatesTags: ["product"],
       }
     ),
+    updateBasket: build.mutation<PRODUCT.editBasketRes, PRODUCT.editBasketReq>({
+      query: ({ id, updateBasket }) => ({
+        url: `/cart_item/${id}/`,
+        method: "PATCH",
+        body: updateBasket,
+      }),
+      invalidatesTags: ["product"],
+    }),
+    deleteBasket: build.mutation<
+      PRODUCT.deleteBasketRes,
+      PRODUCT.deleteBasketReq
+    >({
+      query: (id) => ({
+        url: `/cart_item/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["product"],
+    }),
   }),
 });
 
@@ -65,4 +89,7 @@ export const {
   useGetBasketQuery,
   useAddToBasketMutation,
   useGetCartItemQuery,
+  useDeleteBasketMutation,
+  useUpdateBasketMutation,
+  useGetCartQuery,
 } = api;
