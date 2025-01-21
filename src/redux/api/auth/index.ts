@@ -10,14 +10,6 @@
         }),
         providesTags: ["auth"],
       }),
-      putMe: build.mutation<AUTH.PutMeResponse, AUTH.PutMeRequest>({
-        query: ({ id, ...data }) => ({
-          url: `/profile/${id}/`,
-          method: "PUT",
-          body: data,
-        }),
-        invalidatesTags: ["auth"],
-      }),
       postLogin: build.mutation<AUTH.PostLoginResponse, AUTH.PostLoginRequest>({
         query: (data) => ({
           url: "/login/",
@@ -27,8 +19,8 @@
         invalidatesTags: ["auth"],
       }),
       postRegistration: build.mutation<
-        AUTH.PostRegistrationResponse,
-        AUTH.PostRegistrationRequest
+      AUTH.PostRegistrationResponse,
+      AUTH.PostRegistrationRequest
       >({
         query: (data) => ({
           url: "/register/",
@@ -46,13 +38,21 @@
           invalidatesTags: ["auth"],
         }
       ),
+      // putMe: build.mutation<AUTH.PutMeResponse, AUTH.PutMeRequest>({
+      //   query: ({ id, }) => ({
+      //     url: `/profile/${id}/`,
+      //     method: "PUT",
+      //   }),
+      //   invalidatesTags: ["auth"],
+      // }),
       patchRefreshToken: build.mutation<
         AUTH.PatchRefreshResponse,
         AUTH.PatchRefreshRequest
       >({
-        query: () => ({
+        query: (data) => ({
           url: "/api/token/refresh",
-          method: "PATCH",
+          method: "POST",
+          body: data
         }),
         invalidatesTags: ["auth"],
       }),
@@ -82,7 +82,7 @@
   });
   export const {
     useGetMeQuery,
-    usePutMeMutation,
+    // usePutMeMutation,
     usePostLoginMutation,
     usePostRegistrationMutation,
     usePostLogoutMutation,

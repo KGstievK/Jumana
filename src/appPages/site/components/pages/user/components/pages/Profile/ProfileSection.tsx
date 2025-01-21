@@ -1,11 +1,13 @@
 "use client";
 import scss from "./ProfileSection.module.scss";
-import { FC } from "react";
-import { useGetMeQuery, usePutMeMutation } from "@/redux/api/auth";
+import { FC, useState } from "react";
+import { useGetMeQuery } from "@/redux/api/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
+import { CheckboxChangeEvent } from "antd";
 
 interface PutMeProps {
+  id: number;
   username: string;
   first_name?: string;
   last_name?: string;
@@ -17,23 +19,19 @@ interface PutMeProps {
 const ProfileSection: FC = () => {
   const { data: response } = useGetMeQuery();
 
-  const [putMe] = usePutMeMutation();
-
-  const searchParams = useSearchParams();
-	const token = searchParams.get('accessToken') || '';
-	console.log("🚀 ~ token:", token)
+  // const [putMe] = usePutMeMutation();
 
   const { register, handleSubmit } = useForm<AUTH.PutMeRequest>();
 
+  const [rememberMe, setRememberMe] = useState(false);  
+
+  const handleRememberMeChange = (e: CheckboxChangeEvent) => {
+    setRememberMe(e.target.checked);
+  };
+
   const onSubmit: SubmitHandler<PutMeProps> = async (userData) => {
-    if (!response || response.length === 0) {
-      console.error("User data is missing");
-      return;
-    }
-  
     const dataUser = {
-      id: response[0]._id!, // Передаем ID пользователя
-      token: token!,
+      id: userData.id,
       username: userData.username,
       first_name: userData.first_name,
       last_name: userData.last_name,
@@ -41,19 +39,21 @@ const ProfileSection: FC = () => {
       index_pochta: userData.index_pochta,
       number: userData.number,
     };
-  
-    try {
-      const { data: response, error } = await putMe(dataUser);
-      if (error) {
-        console.error("Error occurred:", error);
-      }
-      console.log("Response:", response);
-    } catch (e) {
-      console.error("An error occurred:", e);
-    }
+
+    // try {
+      // const { data: responser, error } = await putMe(dataUser);
+
+      // if (responser?.access) {
+    //     const storage = rememberMe ? localStorage : sessionStorage;
+    //     storage.setItem("accessToken", JSON.stringify(responser?.access));
+    //     storage.setItem("accessToken", JSON.stringify(responser?.access));
+    //   }
+
+    //   console.log("Response:", responser);
+    // } catch (e) {
+    //   console.error("An error occurred:", e);
+    // }
   };
-  
-  
 
   return (
     <section className={scss.ProfileSection}>
@@ -93,7 +93,9 @@ const ProfileSection: FC = () => {
                 placeholder={`${el.username! ? el.username : "Ваш никнейм"}`}
                 {...register("username", { required: true })}
               />
-              <button className={scss.submit} type="submit">Сохранить</button>
+              <button className={scss.submit} type="submit">
+                Сохранить
+              </button>
             </form>
           ))}
         </div>
