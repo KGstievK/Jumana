@@ -7,4 +7,13 @@ namespace ICATEGORY {
 
   type getCategoryRes = category[];
   type getCategoryReq = void;
+
+  type postToFavoreRes = PostToFavorite[];
+  type postToFavoreReq = PostToFavorite;
+
+  type getToFavoreRes = GetFavorites[];
+  type getToFavoreReq = void;
+
+  type deleteFavoreRes = GetFavorites[];
+  type deleteFavoreReq = number;
 }

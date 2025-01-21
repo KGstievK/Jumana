@@ -5,14 +5,34 @@
   justify-content: start;
   gap: 20px;
   padding-bottom: 100px;
+
+  .header {
+    display: none;
+    align-items: start;
+    justify-content: start;
+    gap: 10px;
+    margin-bottom: 10px;
+    h4 {
+      font-size: 12px;
+      font-weight: 500;
+      color: #1d1f22;
+    }
+  }
 }
+
 .filterContainer {
   width: 100%;
-  max-width: clamp(200px, 20vw, 320px);
+  max-width: 320px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
+}
+
+.filterContainer.open {
+  transform: translateX(0);
+  display: block;
+  width: 320px;
 }
 
 .filterSection {
@@ -100,8 +120,36 @@
   }
 }
 
-@media (max-width: 800px) {
-  .filterContainer {
+@media (max-width: 750px) {
+  .filter {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    .header {
+      display: flex;
+      align-items: start;
+      justify-content: start;
+    }
+  }
+
+  .filterContainer.open {
     display: none;
+  }
+
+  .blockFilter {
+    width: 100%;
+  }
+
+  .filterContainer {
+    width: 100%;
+  }
+
+  .filterContainer.open {
+    width: 100%;
+  }
+
+  .filterSection {
+    width: 100%;
   }
 }

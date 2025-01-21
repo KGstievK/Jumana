@@ -5,22 +5,42 @@ import arrow from "@/assets/icons/Icon.svg";
 import star from "@/assets/images/star.png";
 import cart from "@/assets/icons/bag-happyBlack.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
-import heartRed from "@/assets/icons/red-heart-icon.svg";
+import redHeart from "@/assets/icons/red-heart-icon.svg";
 import { useState } from "react";
 import {
-  useGetAllCategoryQuery,
   useGetAllClothesQuery,
+  useGetToFavoriteQuery,
+  usePostToFavoriteMutation,
 } from "@/redux/api/category";
+import ColorsClothes from "../../ui/colors/Colors";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import backIcon from "@/assets/icons/backIcon.svg";
 
 const NewClothesSection = () => {
+  const router = useRouter();
+  const [postToFavorite] = usePostToFavoriteMutation();
+
   const [state, setState] = useState(false);
   const { data } = useGetAllClothesQuery();
-  console.log("🚀 ~ NewClothesSection ~ data:", data);
+  const newArrivals = data?.filter((item) =>
+    item.promo_category.some(
+      (category) => category.promo_category.toLowerCase() === "новинка"
+    )
+  );
+
+  console.log(newArrivals);
+
   return (
     <div id={scss.Cards}>
       <div className="container">
+        <div className={scss.header}>
+          <Image src={backIcon} alt="icon " width={22} height={22} />
+          <Link href="/">Главная</Link>/<Link href="/new">Новинки</Link>
+        </div>
+        <h1 className={scss.title}>Новинки</h1>
         <div className={scss.content}>
-          {/* {data?.map((item) => (
+          {newArrivals?.map((item) => (
             <div key={item.id} className={scss.card}>
               <div className={scss.blockImg}>
                 <div className={scss.like}>
@@ -30,22 +50,36 @@ const NewClothesSection = () => {
                   </div>
                   <div
                     className={scss.heart}
-                    onClick={() => setState((prevState) => !prevState)}
+                    onClick={() =>
+                      postToFavorite({
+                        clothes: {
+                          promo_category: item.promo_category,
+                          clothes_name: item.clothes_name,
+                          price: item.price,
+                          size: item.size.join(", "),
+                        },
+                        clothes_id: item.id,
+                        favorite_user: item.id,
+                      })
+                    }
                   >
+                    <Image src={heart} alt="heart" width={300} height={300} />
                     {state ? (
-                      <Image src={heartRed} alt="heart" />
+                      <Image src={redHeart} alt="heart" />
                     ) : (
-                      <Image src={heart} alt="heart" />
+                      <Image src={heart} alt="heart" width={300} height={300} />
                     )}
                   </div>
                 </div>
+
                 <Image
-                  src={item.clothes_photo}
+                  src={item.clothes_img[0].photo}
                   alt="photo"
                   width={500}
                   height={300}
                   className={scss.mainImg}
                 />
+
                 <div className={scss.cart}>
                   <Image src={cart} alt="cart" />
                 </div>
@@ -53,20 +87,25 @@ const NewClothesSection = () => {
               <div className={scss.blockText}>
                 <div className={scss.productCategory}>
                   <h4>Product Category</h4>
-                  <div className={scss.colors}>❤️❤️❤️</div>
+                  <div className={scss.colors}>
+                    <ColorsClothes clothesImg={item.clothes_img.slice(0, 3)} />
+                  </div>
                 </div>
                 <h2>{item.clothes_name}</h2>
                 <div className={scss.price}>
                   <span>{item.discount_price}com</span>
                   <del>{item.price}c</del>
-                  <div className={scss.cart} onClick={() => "/single"}>
+                  <div
+                    className={scss.cart}
+                    onClick={() => router.push(`/${item.id}`)}
+                  >
                     <button>Подробнее</button>
                     <Image src={arrow} alt="bag" width={24} height={24} />
                   </div>
                 </div>
               </div>
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
     </div>

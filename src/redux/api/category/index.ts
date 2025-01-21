@@ -35,10 +35,37 @@ const api = index.injectEndpoints({
       providesTags: ["category"],
     }),
 
-    postToFavorite: build.mutation({
+    getToFavorite: build.query<
+      ICATEGORY.getToFavoreRes,
+      ICATEGORY.getToFavoreReq
+    >({
       query: () => ({
-        url: "/favorite_item/",
+        url: "/favorite_item/list/",
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
+
+    postToFavorite: build.mutation<
+      ICATEGORY.postToFavoreRes,
+      ICATEGORY.postToFavoreReq
+    >({
+      query: (data) => ({
+        url: "/favorite_item/create/",
         method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["category"],
+    }),
+
+    deleteFavorite: build.mutation<
+      ICATEGORY.deleteFavoreRes,
+      ICATEGORY.deleteFavoreReq
+    >({
+      query: (id) => ({
+        url: `/favorite_item/delete/${id}/`,
+        method: "DELETE",
+        body: id,
       }),
       invalidatesTags: ["category"],
     }),
@@ -50,4 +77,6 @@ export const {
   useGetAllClothesQuery,
   useGetClothesByIdQuery,
   usePostToFavoriteMutation,
+  useGetToFavoriteQuery,
+  useDeleteFavoriteMutation,
 } = api;

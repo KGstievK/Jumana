@@ -1,42 +1,50 @@
 import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useGetAllCategoryQuery } from "@/redux/api/category";
+import {
+  useDeleteFavoriteMutation,
+  useGetAllCategoryQuery,
+  usePostToFavoriteMutation,
+} from "@/redux/api/category";
 import Image from "next/image";
 import SideBar from "../sideBar/SideBar";
 import scss from "./cards.module.scss";
 import cart from "@/assets/icons/bag-happyBlack.svg";
-import filterImg from "@/assets/icons/Filter.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
 import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { toggleFavorite } from "@/redux/slices/FavoriteSlice";
 import ColorsClothes from "../../../ui/colors/Colors";
 
-interface Iprops {
-  value: string;
-  size: string;
-  color: string;
-}
-
-const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, color }) => {
+const Cards: FC<{ value: string; size: string; color: string }> = ({
+  value,
+  size,
+  color,
+}) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
-  console.log("🚀 ~ data:", data);
   const [datas, setDatas] = useState(data);
+  const [likedItems, setLikedItems] = useState<any[]>([]);
 
-  const dispatch = useDispatch();
-  const favorites = useSelector((state: RootState) => state.favorite.favorites);
+  const [postToFavorite] = usePostToFavoriteMutation();
+  const [deleteFavorite] = useDeleteFavoriteMutation();
 
-  const isFavorite = (itemId: number) =>
-    favorites.some((fav) => fav.id === itemId);
-
-  const toggleLike = (item: any, e: React.MouseEvent) => {
-    e.stopPropagation();
-    dispatch(toggleFavorite(item));
+  const toggleLike = async (item: any) => {
+    try {
+      // Проверяем, есть ли товар уже в избранном
+      if (likedItems.some((likedItem) => likedItem.id === item.id)) {
+        // Если есть, удаляем из избранного
+        await deleteFavorite(item); // Отправляем объект
+        setLikedItems(
+          (prev) => prev.filter((likedItem) => likedItem.id !== item.id) // Убираем из массива
+        );
+      } else {
+        // Если нет, добавляем в избранное
+        await postToFavorite(item); // Отправляем объект
+        setLikedItems((prev) => [...prev, item]); // Добавляем объект в массив
+      }
+    } catch (error) {
+      console.error("Ошибка при обновлении избранного:", error);
+    }
   };
-
   useEffect(() => {
     if (data) {
       let filteredData = data;
@@ -74,16 +82,6 @@ const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, 
   return (
     <div id={scss.Cards}>
       <div className={scss.content}>
-        <div className={scss.header} onClick={() => <SideBar />}>
-          <Image
-            width={20}
-            height={30}
-            layout="intrinsic"
-            src={filterImg}
-            alt="photo"
-          />
-          <h4>ФИЛЬТР</h4>
-        </div>
         <div className={scss.cards}>
           {datas?.map((el) =>
             el.clothes_category.map((item) => (
@@ -99,32 +97,30 @@ const Cards: FC<{value: string, size: string, color: string}> = ({ value, size, 
                         width={500}
                         height={300}
                         layout="intrinsic"
-                        src={star}
                         alt="photo"
+                        src={star}
                       />
                       <h6>{item.average_rating}</h6>
                     </div>
                     <div
                       className={scss.heart}
-                      onClick={(e) => toggleLike(item, e)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLike(item); // Передаём объект,
+                      }}
                     >
-                      {isFavorite(item.id) ? (
-                        <Image
-                          width={500}
-                          height={300}
-                          layout="intrinsic"
-                          src={heartRed}
-                          alt="heart"
-                        />
-                      ) : (
-                        <Image
-                          width={500}
-                          height={300}
-                          layout="intrinsic"
-                          src={heart}
-                          alt="heart"
-                        />
-                      )}
+                      <Image
+                        width={24}
+                        height={24}
+                        src={
+                          likedItems.some(
+                            (likedItem) => likedItem.id === item.id
+                          )
+                            ? heartRed
+                            : heart
+                        }
+                        alt="heart"
+                      />
                     </div>
                   </div>
                   {item.clothes_img.slice(0, 1).map((el, index) => (

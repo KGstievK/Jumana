@@ -17,8 +17,8 @@ const [refreshTokenMutation] = usePatchRefreshTokenMutation()
   console.log("🚀 ~ data:", data)
   console.log("🚀 ~ status:", status)
 
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname();
+  const router = useRouter();
 
   const handleRefreshToken = async () => {
     const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
@@ -39,7 +39,7 @@ const [refreshTokenMutation] = usePatchRefreshTokenMutation()
       case "/auth/sign-up":
       case "/auth/reset-password":
       case "/auth/forgot":
-        if (data) {
+        if (status === "fulfilled") {
           router.push("/");
         }
         break;
@@ -48,7 +48,7 @@ const [refreshTokenMutation] = usePatchRefreshTokenMutation()
       case "/profile/favorite":
       case "/profile/history":
       case "/cart":
-        if (!data) {
+        if (status === "rejected") {
           router.push("/auth/sign-in");
         }
         break;
@@ -58,8 +58,12 @@ const [refreshTokenMutation] = usePatchRefreshTokenMutation()
   };
 
   useEffect(() => {
-    handleNavigation()
-  }, [status, pathname, router])
+    handleRefreshToken();
+   }, []);
 
-  return  children // <NextAuthProvider>{children}</NextAuthProvider>;
+  useEffect(() => {
+    handleNavigation();
+  }, [status, pathname, router]);
+
+  return children; // <NextAuthProvider>{children}</NextAuthProvider>;
 };
