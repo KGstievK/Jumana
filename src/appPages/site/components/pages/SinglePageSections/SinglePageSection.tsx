@@ -1,5 +1,6 @@
 "use client";
-import star from "@/assets//images//star.png";
+
+import star from "@/assets/images/star.png";
 import backIcon from "@/assets/icons/backIcon.svg";
 import bagSvg from "@/assets/icons/bag-happy.svg";
 import Image from "next/image";
@@ -7,22 +8,10 @@ import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
 import { useAddToBasketMutation } from "@/redux/api/product";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
 import React, { FC, useState, useEffect } from "react";
 import Sizes from "./sizes/Sizes";
-
-//! Это Карточка товаров
-
-interface IObj {
-  size: string;
-  color: {
-    id: number | null;
-    photo: string;
-    color: string;
-  };
-  id: number | null;
-}
 
 const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
@@ -34,19 +23,25 @@ const SinglePageSection: FC = () => {
   const { data } = useGetClothesByIdQuery(Number(id.single));
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [value, setValue] = useState<IObj>({
+  const [value, setValue] = useState<post_cart_item>({
+    clothes: {
+      clothes_name: "",
+    },
+    clothes_id: 0,
+    quantity: 1,
     size: "",
-    id: null,
     color: {
-      id: null,
-      photo: "",
       color: "",
     },
+    color_id: 0,
   });
+  console.log("🚀 ~ value:", value)
+
   const [count, setCounter] = useState<number>(1);
   const [addBasketMutation] = useAddToBasketMutation();
+  const router = useRouter();
 
-  const updateValue = (key: keyof IObj, newValue: any) => {
+  const updateValue = (key: keyof post_cart_item, newValue: any) => {
     setValue((prev) => ({ ...prev, [key]: newValue }));
   };
 
@@ -56,7 +51,7 @@ const SinglePageSection: FC = () => {
     }
 
     if (data?.id) {
-      setValue((prev) => ({ ...prev, id: data.id }));
+      setValue((prev) => ({ ...prev, clothes_id: data.id }));
     }
   }, [data]);
 
@@ -66,10 +61,12 @@ const SinglePageSection: FC = () => {
     setCounter((prevCount) =>
       prevCount < data.quantities ? prevCount + 1 : prevCount
     );
+    updateValue("quantity", count + 1);
   };
 
   const decrementCount = () => {
     setCounter((prevCount) => (prevCount > 1 ? prevCount - 1 : prevCount));
+    updateValue("quantity", count - 1);
   };
 
   const {
@@ -113,10 +110,9 @@ const SinglePageSection: FC = () => {
                   }`}
                   onClick={() => {
                     updateValue("color", {
-                      id: el.id,
-                      photo: el.photo,
                       color: el.color,
                     });
+                    updateValue("color_id", el.id);
                     setSelectedPhoto(el.photo);
                   }}
                 >
@@ -148,16 +144,10 @@ const SinglePageSection: FC = () => {
               <h5>Цвета:</h5>
               <ColorsClothes
                 clothesImg={clothes_img}
-                onClick={(item) =>
-                  setValue((prev) => ({
-                    ...prev,
-                    color: {
-                      id: item.id ?? null,
-                      photo: item.photo,
-                      color: item.color,
-                    },
-                  }))
-                }
+                onClick={(item) => {
+                  updateValue("color", { color: item.color });
+                  updateValue("color_id", item.id);
+                }}
               />
             </div>
             <div className={scss.textile}>
@@ -195,26 +185,19 @@ const SinglePageSection: FC = () => {
                 <div className={scss.cart}>
                   <button
                     onClick={() => {
-                      if (!value.size || !value.color.id || !value.id) {
+                      if (!value.size || !value.color_id || !value.clothes_id) {
                         alert("Выберите размер и цвет товара!");
                         return;
                       }
 
                       const payload = {
-                        clothes_id: value.id,
+                        ...value,
                         quantity: count,
-                        size: value.size,
-                        color_id: value.color.id,
                       };
 
                       console.log("Отправляем данные:", payload);
-
-                      addBasketMutation(payload)
-                        .then(() => alert("Товар добавлен в корзину!"))
-                        .catch((error) => {
-                          console.error("Ошибка добавления в корзину:", error);
-                          alert("Произошла ошибка при добавлении товара.");
-                        });
+                      addBasketMutation(payload);
+                      router.push("/cart");
                     }}
                   >
                     В корзинку

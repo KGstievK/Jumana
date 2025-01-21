@@ -29,68 +29,55 @@ interface AllClothes {
 }
 
 interface cart {
-  id: number;
-  user: {
-    first_name: string;
-    last_name: string;
-  };
-  items: Array<{
-    clothes: {
-      id: number;
-      clothes_photo: string;
-      promo_category: Array<{
-        promo_category: string;
-      }>;
-      clothes_name: string;
-      price: number;
-      size: string;
-      color: Array<{
-        color: string;
-        color_photo: Array<{
-          photo: string;
-          color_connect: number;
-        }>;
-      }>;
-      average_rating: string;
-      created_date: string;
-    };
-    clothes_id: number;
-    quantity: number;
-  }>;
-  total_price: string;
+  id: number
+  clothes: {
+    clothes_name: string
+    clothes_img: Array<{
+      id: number
+      photo: string
+      color: string
+    }>
+  }
+  size: string
+  color: number
+  quantity: number
+  price_clothes: string
+  total_price: string
+  color_id: number
+  clothes_id: number
 }
 interface get_cart_item {
+  id: number
   clothes: {
-    id: number;
-    promo_category: Array<{
-      promo_category: string;
-    }>;
-    clothes_name: string;
-    price: number;
-    discount_price: string;
-    size: string;
-    average_rating: string;
-    created_date: string;
+    clothes_name: string
     clothes_img: Array<{
-      photo: string;
-      color: string;
-    }>;
-  };
-  clothes_id: number;
-  quantity: number;
-  size: string;
+      id: number
+      photo: string
+      color: string
+    }>
+  }
+  clothes_id: number
+  quantity: number
+  size: string
   color: {
-    photo: string;
-    color: string;
-  };
-  color_id: number;
+    id: number
+    photo: string
+    color: string
+  }
+  color_id: number
 }
 
 interface post_cart_item {
-  clothes_id: number;
-  quantity: number;
-  size: string;
-  color_id: number;
+  clothes: {
+    clothes_name: string
+  }
+  clothes_id: number
+  quantity: number
+  size: string
+  color: {
+    color: string
+  }
+  color_id: number
 }
 
 interface clothesById {

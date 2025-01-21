@@ -1,24 +1,22 @@
 "use client";
 import Image from "next/image";
 import scss from "./CatrSection.module.scss";
-import img1 from "@/assets/image.png";
-import { useRouter } from "next/navigation";
-import logoBasket from "@/assets/images/basket.svg";
-import { useGetBasketQuery, useGetCartItemQuery } from "@/redux/api/product";
+import { useParams, useRouter } from "next/navigation";
+import { useGetBasketQuery } from "@/redux/api/product";
+import { useState } from "react";
 
 const CatrSection = () => {
   const { data } = useGetBasketQuery();
+  const { id } = useParams();
+  console.log("🚀 ~ CatrSection ~ id:", id);
   console.log("🚀 ~ CatrSection ~ data:", data);
   const router = useRouter();
-  const { data: cartItem } = useGetCartItemQuery();
-  console.log("🚀 ~ CatrSection ~ cartItem:", cartItem)
 
   const handleRoute = () => {
     router.push("/catalog");
   };
 
   const goToCheckout = () => {
-    // Buton tıklaması ile yönlendirme
     router.push("/cart/checkout");
   };
 
@@ -28,7 +26,7 @@ const CatrSection = () => {
         <div className={scss.content}>
           <h1>Корзина</h1>
 
-          {data && data.length > 0 ? (
+          {data ? (
             <>
               <div className={scss.block}>
                 <div className={scss.block_left}>
@@ -44,25 +42,32 @@ const CatrSection = () => {
                       </thead>
 
                       <tbody>
-                        {data.map((cartItem, index) =>
-                          cartItem.items.map((item) => (
+                        {data?.map((item, index) => {
+                          const selectedImage = item.clothes.clothes_img.find(
+                            (img) => img.id === item.color
+                          );
+
+                          return (
                             <tr key={index}>
                               <td>
                                 <div className={scss.product}>
                                   <Image
                                     width={100}
                                     height={100}
-                                    src={img1}
+                                    src={
+                                      selectedImage?.photo ||
+                                      "/fallback-image.png"
+                                    }
                                     alt="product"
                                   />
                                   <div className={scss.title}>
                                     <h3>{item.clothes.clothes_name}</h3>
-                                    <p>{item.clothes.color[0]?.color}</p>
+                                    <p>{selectedImage?.color}</p>
                                   </div>
                                 </div>
                               </td>
                               <td>
-                                <h2>{item.clothes.price}c</h2>
+                                <h2>{item.price_clothes}c</h2>
                               </td>
                               <td>
                                 <div className={scss.plus_minus}>
@@ -72,11 +77,11 @@ const CatrSection = () => {
                                 </div>
                               </td>
                               <td>
-                                <h2>{item.clothes.price * item.quantity}c</h2>
+                                <h2>{item.total_price}c</h2>
                               </td>
                             </tr>
-                          ))
-                        )}
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -85,35 +90,12 @@ const CatrSection = () => {
                 <div className={scss.block_right}>
                   <h2>Детали оплаты</h2>
                   <div className={scss.box}>
-                    {data.map((cartItem, index) =>
-                      cartItem.items.map((item) => (
-                        <div className={scss.box} key={index}>
-                          <Image src={img1} alt="product" />
-                          <div className={scss.text}>
-                            <h3>{item.clothes.clothes_name}</h3>
-                            <p>{item.clothes.color[0]?.color}</p>
-                            <p className={scss.quantity}>
-                              {item.quantity} x {item.clothes.price}c
-                            </p>
-                          </div>
-                        </div>
-                      ))
-                    )}
+                    {/* Ödeme detaylarını burada ekleyebilirsiniz */}
                   </div>
                   <div className={scss.summary}>
                     <div className={scss.row}>
                       <span>Итог</span>
-                      <span>
-                        {data.reduce((total, cartItem) => {
-                          const cartTotal = cartItem.items.reduce(
-                            (sum, item) =>
-                              sum + item.clothes.price * item.quantity,
-                            0
-                          );
-                          return total + cartTotal;
-                        }, 0)}
-                        c
-                      </span>
+                      <span>c</span>
                     </div>
                     <div className={scss.row}>
                       <span>Доставка</span>
@@ -125,17 +107,7 @@ const CatrSection = () => {
                     </div>
                     <div className={scss.total_row}>
                       <span>Итого к оплате:</span>
-                      <span>
-                        {data.reduce((total, cartItem) => {
-                          const cartTotal = cartItem.items.reduce(
-                            (sum, item) =>
-                              sum + item.clothes.price * item.quantity,
-                            0
-                          );
-                          return total + cartTotal;
-                        }, 0) - 600}
-                        c
-                      </span>
+                      <span>c</span>
                     </div>
                   </div>
                   <button onClick={goToCheckout}>Оформить заказ</button>
@@ -145,7 +117,6 @@ const CatrSection = () => {
           ) : (
             <>
               <div className={scss.basket}>
-                <Image src={logoBasket} alt="basket" />
                 <div className={scss.basketBlock}>
                   <h3>Ваша корзина пуста</h3>
                   <p>
