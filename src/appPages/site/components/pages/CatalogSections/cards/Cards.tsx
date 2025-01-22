@@ -15,22 +15,40 @@ import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
 import ColorsClothes from "../../../ui/colors/Colors";
 
-// interface IProps {
-//   id: number;
-//   promo_category: Array<{
-//     promo_category: string;
-//   }>;
-//   clothes_name: string;
-//   price: number;
-//   discount_price: number;
-//   size: Array<string>;
-//   average_rating: number;
-//   created_date: string;
-//   clothes_img: Array<{
-//     photo: string;
-//     color: string;
-//   }>;
-// }
+// Типы для данных
+interface PromoCategory {
+  promo_category: string;
+}
+
+interface ClothesImg {
+  id: number;
+  photo: string;
+  color: string;
+}
+interface ClothesCategoryItem {
+  id: number;
+  promo_category: PromoCategory[];
+  clothes_name: string;
+  price: number;
+  discount_price: number; // Ожидаем число
+  size: string[];
+  average_rating: string;
+  created_date: string;
+  clothes_img: ClothesImg[];
+}
+
+interface PostToFavorite {
+  id: number;
+  clothes: {
+    promo_category: PromoCategory[];
+    clothes_name: string;
+    price: number;
+    size: string;
+  };
+  clothes_id: number;
+  favorite_user: number;
+}
+
 const Cards: FC<{ value: string; size: string; color: string }> = ({
   value,
   size,
@@ -38,45 +56,39 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
 }) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
+  console.log("🚀 ~ data:", data);
   const [datas, setDatas] = useState(data);
   const [likedItems, setLikedItems] = useState<any[]>([]); // Локальное состояние для отслеживания избранных товаров
   const [postToFavorite] = usePostToFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
-  const toggleLike = async (item: PostToFavorite) => {
-    console.log("🚀 ~ toggleLike ~ item:", item);
+  const toggleLike = async (clothesItem: ClothesCategoryItem) => {
+    const isLiked = likedItems.includes(clothesItem.id);
 
-    const isLiked = likedItems.includes(item.clothes_id); // Проверяем, есть ли товар в избранном
-
-    const requestBody = {
+    const requestBody: PostToFavorite = {
       clothes: {
-        promo_category: item.clothes.promo_category,
-        clothes_name: item.clothes.clothes_name,
-        price: item.clothes.price,
-        size: item.clothes.size, // Берем первый размер, если он существует
+        promo_category: clothesItem.promo_category,
+        clothes_name: clothesItem.clothes_name,
+        price: clothesItem.price,
+        size: clothesItem.size.join(", "), // Если size - массив, можно объединить его в строку
       },
-      clothes_id: item.clothes_id, // Используем id как clothes_id
-      favorite_user: item.favorite_user, // Пример ID пользователя, его можно передавать динамически
+      clothes_id: clothesItem.id,
+      favorite_user: 0,
+      id: 0,
     };
-    console.log("🚀 ~ toggleLike ~ requestBody:", requestBody);
 
     try {
       if (isLiked) {
-        // Удаляем товар из избранного
-        await deleteFavorite(item.clothes_id);
-        // Обновляем локальное состояние, чтобы отразить удаление
-        setLikedItems((prev) => prev.filter((id) => id !== item.clothes_id)); // Обновляем состояние
+        await deleteFavorite(clothesItem.id);
+        setLikedItems((prev) => prev.filter((id) => id !== clothesItem.id));
       } else {
-        // Добавляем товар в избранное
         await postToFavorite(requestBody);
-        // Обновляем локальное состояние, чтобы отразить добавление
-        setLikedItems((prev) => [...prev, item.clothes_id]); // Обновляем состояние
+        setLikedItems((prev) => [...prev, clothesItem.id]);
       }
     } catch (error) {
       console.error("Ошибка при обновлении избранного:", error);
     }
   };
-
   useEffect(() => {
     if (data) {
       let filteredData = data;
@@ -183,10 +195,10 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                   <h2>{item.clothes_name}</h2>
                   <div className={scss.price}>
                     <span>
-                      {Math.round(item.discount_price)}
-                      com
-                    </span>
-                    <del>{Math.round(item.price)}c</del>
+                      {Math.round(item.discount_price).toString()} com
+                    </span>{" "}
+                    {/* Преобразуем в строку */}
+                    <del>{Math.round(item.price)} c</del>
                   </div>
                 </div>
               </div>

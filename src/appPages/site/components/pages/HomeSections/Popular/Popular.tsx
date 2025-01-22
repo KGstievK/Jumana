@@ -10,14 +10,6 @@ import "swiper/scss/navigation";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
-import popular1 from "@/assets/images/SwiperImages/PopularImage1.svg";
-import popular2 from "@/assets/images/SwiperImages/PopularImage2.svg";
-import popular3 from "@/assets/images/SwiperImages/PopularImage3.svg";
-import popular4 from "@/assets/images/SwiperImages/PopularImage4.svg";
-import popular5 from "@/assets/images/SwiperImages/PopularImage5.svg";
-import popular6 from "@/assets/images/SwiperImages/PopularImage6.svg";
-import popular7 from "@/assets/images/SwiperImages/PopularImage7.svg";
-
 import star from "@/assets/icons/Star.svg";
 import favorite from "@/assets/icons/Favorite.svg";
 import cart from "@/assets/icons/cartProduct.svg";
@@ -31,80 +23,6 @@ const Popular = () => {
       (category) => category.promo_category.toLowerCase() === "популярные"
     )
   );
-  // const newArr = [
-  //   {
-  //     _id: 1,
-  //     image: popular1.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 2,
-  //     image: popular2.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 3,
-  //     image: popular3.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 4,
-  //     image: popular4.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 5,
-  //     image: popular5.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 6,
-  //     image: popular6.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 7,
-  //     image: popular7.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  //   {
-  //     _id: 8,
-  //     image: popular4.src,
-  //     category: "Product Category",
-  //     nameProduct: "JUMANA “22",
-  //     price: "1200сом",
-  //     discount: "1500сом",
-  //     rating: "4.95",
-  //   },
-  // ];
 
   return (
     <section className={scss.Popular}>
@@ -112,7 +30,7 @@ const Popular = () => {
         <div className={scss.content}>
           <div className={scss.navigate_title}>
             <h1 className="title">Популярные товары</h1>
-            <Link href="">
+            <Link href="/popular">
               <button>
                 Посмотреть все <Image src={arrow} alt="arrow" />
               </button>
@@ -187,7 +105,7 @@ const Popular = () => {
             </Swiper>
           </>
           <div className={scss.navigate_mobile}>
-            <Link href="/catalog">
+            <Link href="/popular">
               <button>
                 Посмотреть все <Image src={arrow} alt="arrow" />
               </button>

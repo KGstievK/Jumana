@@ -12,8 +12,8 @@ import google from "@/assets/icons/google.svg";
 import { signIn } from "next-auth/react";
 
 interface LoginProps {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
 const SignInPage: FC = () => {
@@ -28,23 +28,22 @@ const SignInPage: FC = () => {
 
   const onSubmit: SubmitHandler<LoginProps> = async (userData) => {
     const datalogin = {
-    username: userData.username,
-    password: userData.password
-    }
+      username: userData.username,
+      password: userData.password,
+    };
     try {
       const response = await postLoginMutation(datalogin);
-      console.log("🚀 ~ constonSubmit:SubmitHandler<LoginProps>= ~ response:", response)
-      // const responseToken = await refreshAccessToken(userData)
+      console.log(
+        "🚀 ~ constonSubmit:SubmitHandler<LoginProps>= ~ response:",
+        response
+      );
       if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem(
-          "accessToken",
-          JSON.stringify(response.data.access)
-        );
+        storage.setItem("accessToken", JSON.stringify(response.data.access));
         storage.setItem("accessToken", JSON.stringify(response.data.access));
       }
 
-      // window.location.reload();
+      window.location.reload();
       console.log(response.data);
     } catch (e) {
       console.error("An error occurred:", e);
