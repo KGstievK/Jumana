@@ -2,18 +2,63 @@
   position: fixed;
   bottom: 0;
   z-index: 100;
-  background: #ffff;
+  background: #fff;
   width: 100%;
+  border-top: 1px solid #e0e0e0;
+  display: none;
+  padding: 10px 0;
 
   .content {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+
     .block {
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      span {
-        color: maroon;
+
+      a {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: gray;
+        text-align: center;
+        width: 64px;
+        height: 30px;
+        border-radius: 16px 0px 0px 0px;
+        border-radius: 16px;
+        padding: 5px;
+
+        .active {
+          color: maroon;
+          background: #a735391a;
+          width: 64px;
+          height: 30px;
+          border-radius: 16px 0px 0px 0px;
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 5px;
+        }
+
+        svg {
+          align-self: center;
+          font-size: 24px;
+        }
+
+        h4 {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 16px;
+          letter-spacing: 0.5px;
+        }
       }
     }
   }
@@ -21,8 +66,6 @@
 
 @media (max-width: 750px) {
   .TabBar {
-    // display: flex;
-    .content {
-    }
+    display: flex;
   }
 }
