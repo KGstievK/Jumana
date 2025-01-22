@@ -7,4 +7,16 @@ namespace PRODUCT {
 
   type addToBasketRes = post_cart_item[];
   type addToBasketReq = post_cart_item;
+
+  type editBasketRes = AllCart;
+  type editBasketReq = {
+    id?: number;
+    updateBasket: patch_cart_item;
+  };
+
+  type deleteBasketRes = cart[];
+  type deleteBasketReq = number;
+
+  type getAllCartRes = AllCart;
+  type getAllCartReq = void;
 }

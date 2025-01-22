@@ -28,56 +28,84 @@ interface AllClothes {
   }>;
 }
 
+interface AllCart {
+  id: number;
+  user: number;
+  total_price: number;
+  cart_items: Array<{
+    id: number;
+    clothes: {
+      clothes_name: string;
+      clothes_img: Array<{
+        id: number;
+        photo: string;
+        color: string;
+      }>;
+    };
+    size: string;
+    color: number;
+    quantity: number;
+    price_clothes: string;
+    total_price: number;
+    color_id: number;
+    clothes_id: number;
+    just_price: string;
+  }>;
+}
 interface cart {
-  id: number
+  id: number;
   clothes: {
-    clothes_name: string
+    clothes_name: string;
     clothes_img: Array<{
-      id: number
-      photo: string
-      color: string
-    }>
-  }
-  size: string
-  color: number
-  quantity: number
-  price_clothes: string
-  total_price: string
-  color_id: number
-  clothes_id: number
+      id: number;
+      photo: string;
+      color: string;
+    }>;
+  };
+  size: string;
+  color: number;
+  quantity: number;
+  price_clothes: string;
+
 }
 interface get_cart_item {
-  id: number
+  id: number;
   clothes: {
-    clothes_name: string
+    clothes_name: string;
     clothes_img: Array<{
-      id: number
-      photo: string
-      color: string
-    }>
-  }
-  clothes_id: number
-  quantity: number
-  size: string
+      id: number;
+      photo: string;
+      color: string;
+    }>;
+  };
+  clothes_id: number;
+  quantity: number;
+  size: string;
   color: {
-    id: number
-    photo: string
-    color: string
-  }
-  color_id: number
+    id: number;
+    photo: string;
+    color: string;
+  };
+  color_id: number;
+  just_price: string;
+
 }
 
 interface post_cart_item {
   clothes: {
-    clothes_name: string
-  }
-  clothes_id: number
-  quantity: number
-  size: string
+    clothes_name: string;
+  };
+  clothes_id: number;
+  quantity: number;
+  size: string;
   color: {
-    color: string
-  }
-  color_id: number
+    color: string;
+  };
+  color_id: number;
+}
+interface patch_cart_item {
+  quantity: number;
+
 }
 
 interface clothesById {
@@ -191,7 +219,7 @@ interface SingleProductData {
 //! data type
 
 interface PostToFavorite {
-  clothes?: {
+  clothes: {
     promo_category: Array<{
       promo_category: string;
     }>;

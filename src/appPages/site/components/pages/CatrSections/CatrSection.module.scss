@@ -42,16 +42,20 @@
                 border-bottom: 1px solid #e0e0e0;
 
                 td {
-                  padding: 15px 10px;
+                  padding: 35px 10px;
                   text-align: left;
 
                   .product {
                     display: flex;
                     justify-content: start;
                     gap: 30px;
+                    img {
+                      border-radius: 4px;
+                    }
                     .title {
                       display: flex;
                       flex-direction: column;
+                      gap: 10px;
                       h3 {
                         font-size: 20px;
                         font-weight: 500;
@@ -69,38 +73,66 @@
                       }
                     }
                   }
-
+                  .left_box {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 40px;
+                    width: 70px;
+                    margin-bottom: 60px;
+                  }
+                  .price {
+                    display: flex;
+                    flex-direction: column;
+                    del {
+                      color: gray;
+                      font-family: Avenir Next;
+                    }
+                    h4 {
+                      font-family: Avenir Next;
+                      font-size: 15px;
+                      font-weight: 400;
+                      line-height: 20.49px;
+                    }
+                  }
                   h2 {
                     font-family: Avenir Next;
                     font-size: 15px;
                     font-weight: 400;
                     line-height: 20.49px;
-                    text-align: left;
-                    text-underline-position: from-font;
-                    text-decoration-skip-ink: none;
                   }
-                  .plus_minus {
-                    width: 120px;
-                    height: 40px;
+                  .center {
                     display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 0px 10px;
-                    border-radius: 5px;
-                    border: 0.81px solid #a73539;
-                    h4 {
-                      font-family: Inter;
-                      font-size: 16.9px;
-                      font-weight: 400;
-                      line-height: 13.74px;
-                    }
-                    button {
-                      background: none;
-                      border: none;
-                      padding: 5px 15px;
-                      font-size: 25px;
-                      width: 50px;
+                    flex-direction: column;
+                    .plus_minus {
+                      width: 120px;
                       height: 40px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                      padding: 0px 10px;
+                      border-radius: 5px;
+                      border: 0.81px solid #a73539;
+                      h4 {
+                        font-family: Inter;
+                        font-size: 16.9px;
+                        font-weight: 400;
+                        line-height: 13.74px;
+                      }
+                      button {
+                        background: none;
+                        border: none;
+                        padding: 5px 15px;
+                        font-size: 25px;
+                        width: 50px;
+                        height: 40px;
+                      }
+                    }
+                    p {
+                      padding: 10px 0 10px 20px;
+                      font-size: 15px;
+                      font-weight: 400;
+                      line-height: 16.39px;
+                      text-decoration-line: underline;
                     }
                   }
                 }
