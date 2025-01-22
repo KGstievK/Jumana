@@ -1,5 +1,12 @@
 .TabBar {
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+  background: #ffff;
+  width: 100%;
+
   .content {
+    display: none;
     .block {
       display: flex;
       align-items: center;
@@ -8,6 +15,14 @@
       span {
         color: maroon;
       }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .TabBar {
+    // display: flex;
+    .content {
     }
   }
 }
