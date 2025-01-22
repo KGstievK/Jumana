@@ -12,25 +12,28 @@ namespace ICATEGORY {
     id: number;
     clothes: {
       id: number;
-      promo_category: Array<{
-        promo_category: string;
-      }>;
+      promo_category: { promo_category: string }[];
       clothes_name: string;
       price: number;
       discount_price: string;
       size: string;
       average_rating: string;
       created_date: string;
-      clothes_img: Array<{
-        id: number;
-        photo: string;
-        color: string;
-      }>;
+      clothes_img: { id: number; photo: string; color: string }[];
     };
     clothes_id: number;
     favorite_user: number;
   };
-  type postToFavoreReq = PostToFavorite;
+  type postToFavoreReq = {
+    clothes: {
+      promo_category: { promo_category: string }[];
+      clothes_name: string;
+      price: number;
+      size: string;
+    };
+    clothes_id: number;
+    favorite_user: number;
+  };
 
   type getToFavoreRes = GetFavorites[];
   type getToFavoreReq = void;

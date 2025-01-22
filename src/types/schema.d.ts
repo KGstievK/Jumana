@@ -66,7 +66,6 @@ interface cart {
   color: number;
   quantity: number;
   price_clothes: string;
-
 }
 interface get_cart_item {
   id: number;
@@ -88,7 +87,6 @@ interface get_cart_item {
   };
   color_id: number;
   just_price: string;
-
 }
 
 interface post_cart_item {
@@ -105,7 +103,6 @@ interface post_cart_item {
 }
 interface patch_cart_item {
   quantity: number;
-
 }
 
 interface clothesById {
@@ -219,16 +216,25 @@ interface SingleProductData {
 //! data type
 
 interface PostToFavorite {
+  id: number;
   clothes: {
+    id: number;
     promo_category: Array<{
       promo_category: string;
     }>;
     clothes_name: string;
     price: number;
+    discount_price: string;
     size: string;
+    average_rating: string;
+    created_date: string;
+    clothes_img: Array<{
+      id: number;
+      photo: string;
+      color: string;
+    }>;
   };
-  clothes_id: number;
-  favorite_user: number;
+  time: string;
 }
 
 interface GetFavorites {

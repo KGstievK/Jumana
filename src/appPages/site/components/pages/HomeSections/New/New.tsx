@@ -23,6 +23,7 @@ const New = () => {
       (category) => category.promo_category.toLowerCase() === "новинка"
     )
   );
+  console.log(newArrivals);
 
   return (
     <section className={scss.New}>

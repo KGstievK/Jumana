@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import scss from "./newClothes.module.scss";
+import scss from "./sale.module.scss";
 import arrow from "@/assets/icons/Icon.svg";
 import star from "@/assets/images/star.png";
 import cart from "@/assets/icons/bag-happyBlack.svg";
@@ -13,12 +13,12 @@ import {
   useGetToFavoriteQuery,
   usePostToFavoriteMutation,
 } from "@/redux/api/category";
-import ColorsClothes from "../../ui/colors/Colors";
+import ColorsClothes from "../../../ui/colors/Colors";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import backIcon from "@/assets/icons/backIcon.svg";
 
-const NewClothesSection = () => {
+const SalePage = () => {
   const router = useRouter();
 
   const [state, setState] = useState(false);
@@ -26,41 +26,18 @@ const NewClothesSection = () => {
   console.log("🚀 ~ NewClothesSection ~ data:", data);
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
-      (category) => category.promo_category.toLowerCase() === "новинка"
+      (category) => category.promo_category.toLowerCase() === "скидки"
     )
   );
-
-  const [likedItems, setLikedItems] = useState<any[]>([]);
-  const { data: resData } = useGetToFavoriteQuery();
-
-  const [postToFavorite] = usePostToFavoriteMutation();
-  const [deleteFavorite] = useDeleteFavoriteMutation();
-
-  const toggleLike = async (item: any) => {
-    console.log("🚀 ~ toggleLike ~ item:", item);
-    try {
-      const isLiked = resData?.some((likedItem) => likedItem.id === item.id);
-
-      if (isLiked) {
-        // Удаляем из избранного
-        await deleteFavorite(item.id);
-      } else {
-        // Добавляем в избранное
-        await postToFavorite(item);
-      }
-    } catch (error) {
-      console.error("Ошибка при обновлении избранного:", error);
-    }
-  };
 
   return (
     <div id={scss.Cards}>
       <div className="container">
         <div className={scss.header}>
           <Image src={backIcon} alt="icon " width={22} height={22} />
-          <Link href="/">Главная</Link>/<Link href="/new">Новинки</Link>
+          <Link href="/">Главная</Link>/<Link href="/sale">Скидки</Link>
         </div>
-        <h1 className={scss.title}>Новинки</h1>
+        <h1 className={scss.title}>Скидки</h1>
         <div className={scss.content}>
           {newArrivals?.map((item) => (
             <div key={item.id} className={scss.card}>
@@ -70,7 +47,7 @@ const NewClothesSection = () => {
                     <Image src={star} alt="photo" />
                     <h6>{item.average_rating}</h6>
                   </div>
-                  <div
+                  {/* <div
                     className={scss.heart}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -87,7 +64,7 @@ const NewClothesSection = () => {
                       }
                       alt="heart"
                     />
-                  </div>
+                  </div> */}
                 </div>
 
                 <Image
@@ -130,4 +107,4 @@ const NewClothesSection = () => {
   );
 };
 
-export default NewClothesSection;
+export default SalePage;
