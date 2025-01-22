@@ -29,28 +29,28 @@ interface AllClothes {
 }
 
 interface AllCart {
-  id: number
-  user: number
-  total_price: string
+  id: number;
+  user: number;
+  total_price: string;
   cart_items: Array<{
-    id: number
+    id: number;
     clothes: {
-      clothes_name: string
+      clothes_name: string;
       clothes_img: Array<{
-        id: number
-        photo: string
-        color: string
-      }>
-    }
-    size: string
-    color: number
-    quantity: number
-    price_clothes: string
-    total_price: string
-    color_id: number
-    clothes_id: number
-    just_price: string
-  }>
+        id: number;
+        photo: string;
+        color: string;
+      }>;
+    };
+    size: string;
+    color: number;
+    quantity: number;
+    price_clothes: string;
+    total_price: string;
+    color_id: number;
+    clothes_id: number;
+    just_price: string;
+  }>;
 }
 interface cart {
   id: number;
@@ -68,7 +68,6 @@ interface cart {
   price_clothes: string;
   just_price: string;
   total_price: number;
-
 }
 interface get_cart_item {
   id: number;
@@ -94,15 +93,15 @@ interface get_cart_item {
 
 interface post_cart_item {
   clothes: {
-    clothes_name: string
-  }
-  clothes_id: number
-  quantity: number
-  size: string
+    clothes_name: string;
+  };
+  clothes_id: number;
+  quantity: number;
+  size: string;
   color: {
-    color: string
-  }
-  color_id: number
+    color: string;
+  };
+  color_id: number;
 }
 interface patch_cart_item {
   quantity: number;
@@ -136,6 +135,16 @@ interface clothesById {
   }>;
   clothes_review: Array<any>;
   clothes_description: string;
+}
+interface AboutUs {
+  title: string;
+  made: string;
+  logo: string;
+  about_me: Array<{
+    title: string;
+    text: string;
+    img: string;
+  }>;
 }
 
 interface category {

@@ -19,4 +19,7 @@ namespace PRODUCT {
 
   type getAllCartRes = AllCart;
   type getAllCartReq = void;
+
+  type getAboutRes = AboutUs[];
+  type getAboutReq = void;
 }
