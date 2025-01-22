@@ -11,12 +11,12 @@ const baseQuery = fetchBaseQuery({
       ? JSON.parse(String(localStorage.getItem("accessToken")))
       : null;
 
-    // if (!token) {
-    //   token = sessionStorage.getItem("accessToken")
-    //     ? JSON.parse(String(sessionStorage.getItem("accessToken")))
-    //     : null;
+    if (!token) {
+      token = sessionStorage.getItem("accessToken")
+        ? JSON.parse(String(sessionStorage.getItem("accessToken")))
+        : null;
 
-    // }
+    }
 
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
