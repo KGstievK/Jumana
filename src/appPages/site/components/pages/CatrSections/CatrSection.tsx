@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 
 const CatrSection = () => {
   const { data: cart } = useGetCartQuery();
+  console.log("🚀 ~ CatrSection ~ cart:", cart);
   const [basketData, setBasketData] = useState(
     cart && Array.isArray(cart) && cart[0]?.cart_items ? cart[0].cart_items : []
   );
@@ -34,7 +35,6 @@ const CatrSection = () => {
   };
 
   const prod = cart && Array.isArray(cart) && cart[0]?.total_price;
-  console.log("🚀 ~ CatrSection ~ prod:", prod);
 
   const handleUpdateQuantity = async (itemId: number, quantity: number) => {
     const updateData = { quantity };
@@ -50,10 +50,8 @@ const CatrSection = () => {
 
       console.log("Update Success", response);
     } catch (error) {
-
       console.error("Error updating basket", error);
     }
-    
   };
 
   return (
@@ -148,54 +146,54 @@ const CatrSection = () => {
                   </div>
                 </div>
                 {cart ? (
-            <>
-              <div className={scss.block_right}>
-                <h2>Детали оплаты</h2>
-                {basketData.map((item: cart, index: number) => {
-                  const selectedImage = item.clothes.clothes_img.find(
-                    (img) => img.id === item.color
-                  );
+                  <>
+                    <div className={scss.block_right}>
+                      <h2>Детали оплаты</h2>
+                      {basketData.map((item: cart, index: number) => {
+                        const selectedImage = item.clothes.clothes_img.find(
+                          (img) => img.id === item.color
+                        );
 
-                  return (
-                    <div key={index} className={scss.box}>
-                      <Image
-                        width={150}
-                        height={150}
-                        src={selectedImage?.photo || "photo"}
-                        alt="product"
-                      />
-                      <div className={scss.text}>
-                        <h3>{item.clothes.clothes_name}</h3>
-                        <p>{selectedImage?.color}</p>
-                        <p className={scss.quantity}>
-                          {item.quantity} x {item.just_price}c
-                        </p>
+                        return (
+                          <div key={index} className={scss.box}>
+                            <Image
+                              width={150}
+                              height={150}
+                              src={selectedImage?.photo || "photo"}
+                              alt="product"
+                            />
+                            <div className={scss.text}>
+                              <h3>{item.clothes.clothes_name}</h3>
+                              <p>{selectedImage?.color}</p>
+                              <p className={scss.quantity}>
+                                {item.quantity} x {item.just_price}c
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                      <div className={scss.summary}>
+                        <div className={scss.row}>
+                          <span>Итог</span>
+                          <span>{prod} сом</span>
+                        </div>
+
+                        <div className={scss.row}>
+                          <span>Скидка</span>
+                          <span>0</span>
+                        </div>
+                        <div className={scss.total_row}>
+                          <span>Итого к оплате:</span>
+                          <span>{prod} сом</span>
+                        </div>
                       </div>
+                      <button>Продолжить</button>
                     </div>
-                  );
-                })}
-
-                <div className={scss.summary}>
-                  <div className={scss.row}>
-                    <span>Итог</span>
-                    <span>{prod} сом</span>
-                  </div>
-
-                  <div className={scss.row}>
-                    <span>Скидка</span>
-                    <span>0</span>
-                  </div>
-                  <div className={scss.total_row}>
-                    <span>Итого к оплате:</span>
-                    <span>{prod} сом</span>
-                  </div>
-                </div>
-                <button>Продолжить</button>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </>
           ) : (

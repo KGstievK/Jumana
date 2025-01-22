@@ -9,7 +9,6 @@ interface SessionProviderProps {
 }
 
 export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
-  const { status, data } = useGetMeQuery();
 
 
 const { status, data } = useGetMeQuery()
