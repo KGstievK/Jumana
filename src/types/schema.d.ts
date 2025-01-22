@@ -31,7 +31,7 @@ interface AllClothes {
 interface AllCart {
   id: number;
   user: number;
-  total_price: number;
+  total_price: string;
   cart_items: Array<{
     id: number;
     clothes: {
@@ -46,7 +46,7 @@ interface AllCart {
     color: number;
     quantity: number;
     price_clothes: string;
-    total_price: number;
+    total_price: string;
     color_id: number;
     clothes_id: number;
     just_price: string;
@@ -66,6 +66,7 @@ interface cart {
   color: number;
   quantity: number;
   price_clothes: string;
+
 }
 interface get_cart_item {
   id: number;
@@ -133,6 +134,16 @@ interface clothesById {
   }>;
   clothes_review: Array<any>;
   clothes_description: string;
+}
+interface AboutUs {
+  title: string;
+  made: string;
+  logo: string;
+  about_me: Array<{
+    title: string;
+    text: string;
+    img: string;
+  }>;
 }
 
 interface category {

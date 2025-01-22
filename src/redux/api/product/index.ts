@@ -78,6 +78,13 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+
+    getAboutUs: build.query<PRODUCT.getAboutRes, PRODUCT.getAboutReq>({
+      query: () => ({
+        url: `/about_me`,
+        method: `GET`,
+      }),
+    }),
   }),
 });
 
@@ -92,4 +99,5 @@ export const {
   useDeleteBasketMutation,
   useUpdateBasketMutation,
   useGetCartQuery,
+  useGetAboutUsQuery,
 } = api;
