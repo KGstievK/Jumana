@@ -46,7 +46,7 @@ const SignUpPage: FC = () => {
       if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem("accessToken", JSON.stringify(response.data.access));
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (e) {
       console.error("An error occurred:", e);

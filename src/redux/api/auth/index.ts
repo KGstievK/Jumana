@@ -38,13 +38,14 @@
           invalidatesTags: ["auth"],
         }
       ),
-      // putMe: build.mutation<AUTH.PutMeResponse, AUTH.PutMeRequest>({
-      //   query: ({ id, }) => ({
-      //     url: `/profile/${id}/`,
-      //     method: "PUT",
-      //   }),
-      //   invalidatesTags: ["auth"],
-      // }),
+      putMe: build.mutation<AUTH.PutMeResponse, AUTH.PutMeRequest>({
+        query: ({ id, ...data}) => ({
+          url: `/profile/${id}/`,
+          method: "PUT",
+          body: data,
+        }),
+        invalidatesTags: ["auth"],
+      }),
       patchRefreshToken: build.mutation<
         AUTH.PatchRefreshResponse,
         AUTH.PatchRefreshRequest
@@ -82,7 +83,7 @@
   });
   export const {
     useGetMeQuery,
-    // usePutMeMutation,
+    usePutMeMutation,
     usePostLoginMutation,
     usePostRegistrationMutation,
     usePostLogoutMutation,

@@ -1,9 +1,9 @@
 "use client";
 import scss from "./ProfileSection.module.scss";
 import { FC, useState } from "react";
-import { useGetMeQuery } from "@/redux/api/auth";
+import { useGetMeQuery, usePutMeMutation } from "@/redux/api/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { CheckboxChangeEvent } from "antd";
 
 interface PutMeProps {
@@ -19,19 +19,13 @@ interface PutMeProps {
 const ProfileSection: FC = () => {
   const { data: response } = useGetMeQuery();
 
-  // const [putMe] = usePutMeMutation();
+  const [putMe] = usePutMeMutation();
 
   const { register, handleSubmit } = useForm<AUTH.PutMeRequest>();
 
-  const [rememberMe, setRememberMe] = useState(false);  
-
-  const handleRememberMeChange = (e: CheckboxChangeEvent) => {
-    setRememberMe(e.target.checked);
-  };
-
   const onSubmit: SubmitHandler<PutMeProps> = async (userData) => {
     const dataUser = {
-      id: userData.id,
+      id: response?.map((el) => el.id),
       username: userData.username,
       first_name: userData.first_name,
       last_name: userData.last_name,
@@ -40,19 +34,12 @@ const ProfileSection: FC = () => {
       number: userData.number,
     };
 
-    // try {
-      // const { data: responser, error } = await putMe(dataUser);
-
-      // if (responser?.access) {
-    //     const storage = rememberMe ? localStorage : sessionStorage;
-    //     storage.setItem("accessToken", JSON.stringify(responser?.access));
-    //     storage.setItem("accessToken", JSON.stringify(responser?.access));
-    //   }
-
-    //   console.log("Response:", responser);
-    // } catch (e) {
-    //   console.error("An error occurred:", e);
-    // }
+    try {
+      const { data: userId, error } = await putMe(dataUser);
+      window.location.reload();
+    } catch (e) {
+      console.error("An error occurred:", e);
+    }
   };
 
   return (
@@ -65,17 +52,24 @@ const ProfileSection: FC = () => {
           {response?.map((el, idx) => (
             <form key={idx} onSubmit={handleSubmit(onSubmit)}>
               <p>Имя и Фамилия</p>
-              <input
-                type="text"
-                placeholder={`${el.first_name! ? el.first_name : "Александр"} ${
-                  el.last_name! ? el.last_name : "Петрович"
-                }`}
-                {...register("first_name", { required: true })}
-              />
+              <div className={scss.firstName_and_LastName}>
+                <input
+                  type="text"
+                  placeholder={`${
+                    el.first_name! ? el.first_name : "Александр"
+                  }`}
+                  {...register("first_name", { required: true })}
+                />
+                <input
+                  type="text"
+                  placeholder={`${el.last_name! ? el.last_name : "Петрович"}`}
+                  {...register("last_name", { required: true })}
+                />
+              </div>
               <p>Номер телефона</p>
               <input
                 type="text"
-                placeholder={el.number! ? el.number : "+12345678910"}
+                placeholder={el.number! ? el.number : "+996123456"}
                 {...register("number", { required: true })}
               />
               <p>Адресс</p>
