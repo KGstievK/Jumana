@@ -11,26 +11,23 @@ interface SessionProviderProps {
 export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
   const { status, data } = useGetMeQuery();
 
-
-const { status, data } = useGetMeQuery()
-const [refreshTokenMutation] = usePatchRefreshTokenMutation()
-
+  const [refreshTokenMutation] = usePatchRefreshTokenMutation();
 
   const pathname = usePathname();
   const router = useRouter();
 
   const handleRefreshToken = async () => {
-    const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
+    const localStorageData = JSON.parse(localStorage.getItem("accessToken")!);
     const { accessTokenExpiration, refresh } = localStorageData;
-  
+
     if (accessTokenExpiration < new Date().getTime()) {
-     const { data, error } = await refreshTokenMutation({ refresh });
-     console.log(data);
-     console.log(error);
+      const { data, error } = await refreshTokenMutation({ refresh });
+      console.log(data);
+      console.log(error);
     } else {
-     console.log('Токен живой!');
+      console.log("Токен живой!");
     }
-   };
+  };
 
   const handleNavigation = () => {
     switch (pathname) {
@@ -58,7 +55,7 @@ const [refreshTokenMutation] = usePatchRefreshTokenMutation()
 
   useEffect(() => {
     handleRefreshToken();
-   }, []);
+  }, []);
 
   useEffect(() => {
     handleNavigation();

@@ -23,6 +23,7 @@ const NewClothesSection = () => {
 
   const [state, setState] = useState(false);
   const { data } = useGetAllClothesQuery();
+  console.log("🚀 ~ NewClothesSection ~ data:", data);
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
       (category) => category.promo_category.toLowerCase() === "новинка"
