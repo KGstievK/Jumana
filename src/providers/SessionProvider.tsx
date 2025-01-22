@@ -21,17 +21,22 @@ const [refreshTokenMutation] = usePatchRefreshTokenMutation()
   const router = useRouter();
 
   const handleRefreshToken = async () => {
-    const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
-    const { accessTokenExpiration, refresh } = localStorageData;
-  
-    if (accessTokenExpiration < new Date().getTime()) {
-     const { data, error } = await refreshTokenMutation({ refresh });
-     console.log(data);
-     console.log(error);
-    } else {
-     console.log('Токен живой!');
-    }
-   };
+		const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
+		if (localStorageData === 'undefined' || localStorageData === undefined) {
+			localStorage.removeItem('accessToken');
+		}
+		if (localStorageData) {
+			const { accessTokenExpiration, refresh } = localStorageData;
+			if (accessTokenExpiration < new Date().getTime()) {
+				localStorage.removeItem('tokens');
+				const { data } = await refreshTokenMutation({ refresh });
+				localStorage.setItem('tokens', JSON.stringify(data));
+				window.location.reload();
+			} else {
+				console.log('refreshToken живой!');
+			}
+		}
+	};
 
   const handleNavigation = () => {
     switch (pathname) {

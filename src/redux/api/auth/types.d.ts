@@ -58,8 +58,8 @@ namespace AUTH {
   };
 
   type PostLogoutResponse = {
-    message: string;
-  }[];
+    // message: string;
+  };
   type PostLogoutRequest = void;
 
   type PatchRefreshResponse = {
