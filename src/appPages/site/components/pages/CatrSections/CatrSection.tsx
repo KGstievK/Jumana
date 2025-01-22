@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from "react";
 
 const CatrSection = () => {
-  const { data: cart } = useGetCartQuery();
+  const { data: cart ,refetch} = useGetCartQuery();
   console.log("🚀 ~ CatrSection ~ cart:", cart);
   const [basketData, setBasketData] = useState(
     cart && Array.isArray(cart) && cart[0]?.cart_items ? cart[0].cart_items : []
@@ -47,7 +47,7 @@ const CatrSection = () => {
         updateBasket: updateData,
       });
       setBasketData(updatedItem);
-
+      await refetch();
       console.log("Update Success", response);
     } catch (error) {
       console.error("Error updating basket", error);
@@ -130,6 +130,7 @@ const CatrSection = () => {
                                         +
                                       </button>
                                     </div>
+
                                     <p onClick={() => deleteMutation(item.id)}>
                                       удалить
                                     </p>
