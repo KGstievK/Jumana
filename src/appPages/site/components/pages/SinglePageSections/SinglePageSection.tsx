@@ -12,6 +12,7 @@ import { useParams, useRouter } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
 import React, { FC, useState, useEffect } from "react";
 import Sizes from "./sizes/Sizes";
+import { ToastContainer, toast } from "react-toastify";
 
 const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
@@ -22,10 +23,12 @@ const SinglePageSection: FC = () => {
   const id = useParams();
   const { data } = useGetClothesByIdQuery(Number(id.single));
   const { data: cart } = useGetCartQuery();
-  console.log("🚀 ~ cart:", cart)
+  console.log("🚀 ~ cart:", cart);
 
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const [value, setValue] = useState<post_cart_item>({
     clothes: { clothes_name: "" },
     clothes_id: 0,
@@ -50,32 +53,24 @@ const SinglePageSection: FC = () => {
 
   const handleAddToBasket = async () => {
     if (!value.size || !value.color_id || !value.clothes_id) {
-      alert("Выберите размер и цвет товара!");
+      toast.warning("Выберите размер и цвет товара!");
       return;
     }
 
     const cartItems = cart?.cart_items || [];
-    console.log("🚀 ~ handleAddToBasket ~ cartItems:", cartItems)
     const isAlreadyInBasket = cartItems.some(
-      (item) =>
-        item.size === value.size &&
-        item.color === value.color_id
-    );
-
-    console.log(
-      "🚀 ~ handleAddToBasket ~ isAlreadyInBasket:",
-      isAlreadyInBasket
+      (item) => item.size === value.size && item.color === value.color_id
     );
 
     if (isAlreadyInBasket) {
-      alert("Этот товар уже добавлен в корзину!");
+      toast.warning("Этот товар уже добавлен в корзину!");
       return;
     }
     const payload = { ...value, quantity: count };
 
     try {
       const result = await addBasketMutation(payload).unwrap();
-      alert("Товар успешно добавлен в корзину!");
+      toast.success("Товар успешно добавлен в корзину!");
       router.push("/cart");
     } catch (error) {
       console.error("Ошибка:", error);
@@ -93,10 +88,12 @@ const SinglePageSection: FC = () => {
     textile_clothes,
     clothes_img,
     average_rating,
+    quantities,
   } = data;
 
   return (
     <section className={scss.SinglePageSection}>
+      <ToastContainer />
       <div className="container">
         <div className={scss.header}>
           <Link href="/catalog">
@@ -172,8 +169,16 @@ const SinglePageSection: FC = () => {
               </h4>
             </div>
             <div className={scss.description}>
-              <p>{clothes_description}</p>
+              <p>
+                {isExpanded
+                  ? clothes_description
+                  : clothes_description.slice(0, 550)}
+                <span onClick={() => setIsExpanded((prev) => !prev)}>
+                  {isExpanded ? "Свернуть" : "Ещё"}
+                </span>
+              </p>
             </div>
+
             <div className={scss.sizes}>
               <Sizes
                 sizes={sizes}
@@ -193,10 +198,17 @@ const SinglePageSection: FC = () => {
                     -
                   </button>
                   <span>{count}</span>
-                  <button onClick={() => setCounter((c) => c + 1)}>+</button>
+                  <button
+                    onClick={() =>
+                      setCounter((c) => Math.min(quantities, c + 1))
+                    }
+                    disabled={count >= quantities}
+                  >
+                    +
+                  </button>
                 </div>
-                <div className={scss.cart}>
-                  <button onClick={handleAddToBasket}>В корзинку</button>
+                <div className={scss.cart} onClick={handleAddToBasket}>
+                  <button>В корзинку</button>
                   <Image src={bagSvg} alt="bag" width={24} height={24} />
                 </div>
               </div>
