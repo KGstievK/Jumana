@@ -66,7 +66,6 @@ interface cart {
   color: number;
   quantity: number;
   price_clothes: string;
-
 }
 interface get_cart_item {
   id: number;
@@ -226,7 +225,7 @@ interface SingleProductData {
 
 //! data type
 
-interface PostToFavorite {
+interface PostToFavoriteRes {
   id: number;
   clothes: {
     id: number;
@@ -245,7 +244,21 @@ interface PostToFavorite {
       color: string;
     }>;
   };
-  time: string;
+  clothes_id: number;
+  favorite_user: number;
+}
+
+interface PostToFavoriteReq {
+  clothes: {
+    promo_category: Array<{
+      promo_category: string;
+    }>;
+    clothes_name: string;
+    price: number;
+    size: string;
+  };
+  clothes_id: number;
+  favorite_user: number;
 }
 
 interface GetFavorites {

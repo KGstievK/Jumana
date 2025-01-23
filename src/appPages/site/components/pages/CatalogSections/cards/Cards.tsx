@@ -25,7 +25,7 @@ interface ClothesImg {
   photo: string;
   color: string;
 }
-interface ClothesCategoryItem {
+interface IpostFav {
   id: number;
   promo_category: PromoCategory[];
   clothes_name: string;
@@ -37,16 +37,23 @@ interface ClothesCategoryItem {
   clothes_img: ClothesImg[];
 }
 
-interface PostToFavorite {
-  id: number;
-  clothes: {
-    promo_category: PromoCategory[];
+interface ClothesCategoryItem {
+  clothes_category: Array<{
+    id: number;
+    promo_category: Array<{
+      promo_category: string;
+    }>;
     clothes_name: string;
     price: number;
-    size: string;
-  };
-  clothes_id: number;
-  favorite_user: number;
+    discount_price: number;
+    size: Array<string>;
+    average_rating: number;
+    created_date: string;
+    clothes_img: Array<{
+      photo: string;
+      color: string;
+    }>;
+  }>;
 }
 
 const Cards: FC<{ value: string; size: string; color: string }> = ({
@@ -56,39 +63,52 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
 }) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
-  console.log("🚀 ~ data:", data);
   const [datas, setDatas] = useState(data);
+  console.log("🚀 ~ datas:", datas);
   const [likedItems, setLikedItems] = useState<any[]>([]); // Локальное состояние для отслеживания избранных товаров
   const [postToFavorite] = usePostToFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
-  const toggleLike = async (clothesItem: ClothesCategoryItem) => {
-    const isLiked = likedItems.includes(clothesItem.id);
+  // const toggleLike = async (clothesItem: ClothesCategoryItem) => {
+  //   const isLiked = likedItems.includes(clothesItem.);
 
-    const requestBody: PostToFavorite = {
-      clothes: {
-        promo_category: clothesItem.promo_category,
-        clothes_name: clothesItem.clothes_name,
-        price: clothesItem.price,
-        size: clothesItem.size.join(", "), // Если size - массив, можно объединить его в строку
-      },
-      clothes_id: clothesItem.id,
-      favorite_user: 0,
-      id: 0,
-    };
+  // const requestBody: IpostFav = {
+  //   clothes: {
+  //     promo_category: [
+  //       { promo_category: "Category1" }, // Замените "Category1" на ваше значение
+  //       { promo_category: "Category2" }, // Добавьте столько объектов, сколько вам нужно
+  //     ],
+  //     clothes_name: clothesItem.,
+  //     price: clothesItem.price,
+  //     size: clothesItem.size.join(", "), // Если size - массив, объедините его в строку
+  //   },
+  //   clothes_id: clothesItem.id,
+  //   favorite_user: 0,
+  // };
 
-    try {
-      if (isLiked) {
-        await deleteFavorite(clothesItem.id);
-        setLikedItems((prev) => prev.filter((id) => id !== clothesItem.id));
-      } else {
-        await postToFavorite(requestBody);
-        setLikedItems((prev) => [...prev, clothesItem.id]);
-      }
-    } catch (error) {
-      console.error("Ошибка при обновлении избранного:", error);
-    }
-  };
+  // {
+  //   clothes: {
+  //     promo_category: clothesItem.promo_category,
+  //     clothes_name: clothesItem.clothes_name,
+  //     price: clothesItem.price,
+  //     size: clothesItem.size.join(", "), // Если size - массив, можно объединить его в строку
+  //   },
+  //   clothes_id: clothesItem.id,
+  //   favorite_user: 0,
+  // };
+  //   try {
+  //     if (isLiked) {
+  //       await deleteFavorite(clothesItem.id);
+  //       setLikedItems((prev) => prev.filter((id) => id !== clothesItem.id));
+  //     } else {
+  //       await postToFavorite(requestBody);
+  //       setLikedItems((prev) => [...prev, clothesItem.id]);
+  //     }
+  //   } catch (error) {
+  //     console.error("Ошибка при обновлении избранного:", error);
+  //   }
+  // };
+
   useEffect(() => {
     if (data) {
       let filteredData = data;
@@ -150,7 +170,7 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                       className={scss.heart}
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleLike(item);
+                        // toggleLike(item);
                       }}
                     >
                       <Image
@@ -196,8 +216,7 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                   <div className={scss.price}>
                     <span>
                       {Math.round(item.discount_price).toString()} com
-                    </span>{" "}
-                    {/* Преобразуем в строку */}
+                    </span>
                     <del>{Math.round(item.price)} c</del>
                   </div>
                 </div>
