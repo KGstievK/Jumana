@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 
 const CatrSection = () => {
   const { data: cart ,refetch} = useGetCartQuery();
+  console.log("🚀 ~ CatrSection ~ cart:", cart)
   const [basketData, setBasketData] = useState(
     cart && Array.isArray(cart) && cart[0]?.cart_items ? cart[0].cart_items : []
   );

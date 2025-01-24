@@ -24,7 +24,7 @@ const Favorite = () => {
           <div
             key={item.id}
             className={scss.card}
-            onClick={() => router.push(`/${item.id}`)}
+            onClick={() => router.push(`/${item.clothes.id}`)}
           >
             <div className={scss.blockImg}>
               <div className={scss.like}>
