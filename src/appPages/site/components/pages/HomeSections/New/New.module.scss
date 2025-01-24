@@ -73,11 +73,11 @@
     .cards {
       display: flex;
       align-items: start;
-      justify-content: start;
-      gap: 20px;
+      justify-content: space-between;
+      gap: 30px;
 
       .card {
-        max-width: clamp(150px, 20vw, 350px);
+        max-width: clamp(150px, 20vw, 400px);
         width: 100%;
         background: #fff;
         cursor: pointer;
