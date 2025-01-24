@@ -69,101 +69,90 @@
         color: var(--main-color);
       }
     }
-    .mySwiper {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
 
-      &_slide {
-        max-width: 282px;
+    .cards {
+      display: flex;
+      align-items: start;
+      justify-content: start;
+      gap: 20px;
+
+      .card {
+        max-width: clamp(150px, 20vw, 350px);
         width: 100%;
-        height: 484px;
-        display: grid;
-        align-items: center;
-        gap: 10px;
-        @media (max-width: 400px) {
-          max-width: 252px;
-          height: 300px;
-        }
-        .ProductNew {
+        background: #fff;
+        cursor: pointer;
+        margin-bottom: 20px;
+        .blockImg {
           position: relative;
           width: 100%;
-          height: 389px;
-          padding: 10px 18px;
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          border-radius: 4px;
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-position: top;
-          @media (max-width: 400px) {
-            display: grid;
-            align-items: end;
-            flex-direction: column;
-            justify-content: end;
-
-            height: 200px;
+          .mainImg {
+            object-fit: cover;
+            border-radius: 5px;
+            height: 440px !important;
           }
-          p {
+          .like {
+            position: absolute;
+            z-index: 12;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            font-family: "Outfit", sans-serif;
-            gap: 10px;
-            color: var(--background);
-            @media (max-width: 400px) {
-              display: none;
+            justify-content: space-between;
+            width: 100%;
+            padding: 15px;
+            .star {
+              display: flex;
+              align-items: end;
+              img {
+                width: 20px;
+                object-fit: cover;
+              }
+              h6 {
+                color: #fff;
+                font-size: 20px;
+                font-weight: 400;
+              }
             }
-          }
-          button {
-            &:nth-child(2) {
-              position: absolute;
-              right: 18px;
-              top: 10px;
-              align-self: flex-start;
-              justify-self: flex-end;
-            }
-            &:nth-child(3) {
-              align-self: flex-end;
-              justify-self: end;
-              @media (max-width: 400px) {
-                align-self: flex-end;
-                justify-self: end;
+            .heart {
+              img {
+                width: 25px;
+                height: 25px;
               }
             }
           }
         }
-        .Product_info {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          p {
-            font-family: "inter", sans-serif;
-            font-size: 14px;
-            color: var(--silver);
-            text-transform: uppercase;
+
+        .blockText {
+          .productCategory {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h4 {
+              font-family: "Lato";
+              font-size: 20px;
+              font-weight: 400;
+              color: #757575;
+            }
           }
           h2 {
-            font-family: "Playfair Display", sans-serif;
-            font-size: 28px;
+            color: #3e3e3e;
+            font-family: "Playfair Display";
+            font-size: 22px;
             font-weight: 400;
-            line-height: 36px;
-            text-transform: uppercase;
           }
           .price {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            gap: 12px;
-            p {
-              color: var(--footer);
-              text-transform: none;
-              &:nth-child(2) {
-                color: var(--silver);
-              }
+            justify-content: start;
+            gap: 15px;
+
+            span {
+              font-size: 16px;
+              font-weight: 500;
+              color: #121212;
+            }
+            del {
+              color: #6c7275;
+              font-size: 16px;
+              font-weight: 400;
             }
           }
         }

@@ -35,7 +35,7 @@ const SinglePageSection: FC = () => {
     },
     color_id: 0,
   });
-  console.log("🚀 ~ value:", value)
+  console.log("🚀 ~ value:", value);
 
   const [count, setCounter] = useState<number>(1);
   const [addBasketMutation] = useAddToBasketMutation();
@@ -186,7 +186,7 @@ const SinglePageSection: FC = () => {
                   <button
                     onClick={() => {
                       if (!value.size || !value.color_id || !value.clothes_id) {
-                        alert("Выберите размер и цвет товара!");
+                        ("Выберите размер и цвет товара!");
                         return;
                       }
 
@@ -195,7 +195,6 @@ const SinglePageSection: FC = () => {
                         quantity: count,
                       };
 
-                      console.log("Отправляем данные:", payload);
                       addBasketMutation(payload);
                       router.push("/cart");
                     }}
@@ -214,4 +213,3 @@ const SinglePageSection: FC = () => {
 };
 
 export default SinglePageSection;
-
