@@ -7,9 +7,7 @@ import {
   usePostToFavoriteMutation,
 } from "@/redux/api/category";
 import Image from "next/image";
-import SideBar from "../sideBar/SideBar";
 import scss from "./cards.module.scss";
-import cart from "@/assets/icons/bag-happyBlack.svg";
 import heart from "@/assets/icons/HeartStraight.svg";
 import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
@@ -22,7 +20,7 @@ interface ClothesCategoryItem {
       promo_category: string;
     }>;
     clothes_name: string;
-    clothes_id: number;
+    clothes_id?: number;
     price: number;
     discount_price: number;
     size: Array<string>;
@@ -43,13 +41,11 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
   const [datas, setDatas] = useState(data);
-  console.log("🚀 ~ datas:", datas);
-  const [likedItems, setLikedItems] = useState<any[]>([]);
   const [postToFavorite] = usePostToFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
   const { data: favoriteItems } = useGetToFavoriteQuery();
-  console.log("🚀 ~ favoriteItems:", favoriteItems);
+
   const handleFavoriteClick = async (
     e: React.MouseEvent,
     item: ClothesCategoryItem["clothes_category"][0]
@@ -171,12 +167,6 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                       className={scss.mainImg}
                     />
                   ))}
-                  <div
-                    className={scss.cart}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <Image layout="intrinsic" src={cart} alt="cart" />
-                  </div>
                 </div>
                 <div className={scss.blockText}>
                   <div className={scss.productCategory}>
@@ -190,9 +180,9 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                   <h2>{item.clothes_name}</h2>
                   <div className={scss.price}>
                     <span>
-                      {Math.round(item.discount_price).toString()} com
+                      {Math.round(item.discount_price).toString()} cом
                     </span>
-                    <del>{Math.round(item.price)} c</del>
+                    <del>{Math.round(item.price)} cом</del>
                   </div>
                 </div>
               </div>
