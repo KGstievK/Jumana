@@ -6,13 +6,12 @@ import bagSvg from "@/assets/icons/bag-happy.svg";
 import Image from "next/image";
 import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
-import { useAddToBasketMutation, useGetCartQuery } from "@/redux/api/product";
+import { useAddToBasketMutation } from "@/redux/api/product";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
 import { useParams, useRouter } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
 import React, { FC, useState, useEffect } from "react";
 import Sizes from "./sizes/Sizes";
-import { ToastContainer, toast } from "react-toastify";
 
 const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
@@ -22,62 +21,53 @@ const capitalize = (str: string): string =>
 const SinglePageSection: FC = () => {
   const id = useParams();
   const { data } = useGetClothesByIdQuery(Number(id.single));
-  const { data: cart } = useGetCartQuery();
-  console.log("🚀 ~ cart:", cart);
-
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const [value, setValue] = useState<post_cart_item>({
-    clothes: { clothes_name: "" },
+    clothes: {
+      clothes_name: "",
+    },
     clothes_id: 0,
     quantity: 1,
     size: "",
-    color: { color: "" },
+    color: {
+      color: "",
+    },
     color_id: 0,
   });
-  const [basket, setBasket] = useState<post_cart_item[]>([]);
+  console.log("🚀 ~ value:", value)
+
   const [count, setCounter] = useState<number>(1);
   const [addBasketMutation] = useAddToBasketMutation();
   const router = useRouter();
-
-  useEffect(() => {
-    if (data?.clothes_img?.length) setSelectedPhoto(data.clothes_img[0].photo);
-    if (data?.id) setValue((prev) => ({ ...prev, clothes_id: data.id }));
-  }, [data]);
 
   const updateValue = (key: keyof post_cart_item, newValue: any) => {
     setValue((prev) => ({ ...prev, [key]: newValue }));
   };
 
-  const handleAddToBasket = async () => {
-    if (!value.size || !value.color_id || !value.clothes_id) {
-      toast.warning("Выберите размер и цвет товара!");
-      return;
+  useEffect(() => {
+    if (data?.clothes_img?.length) {
+      setSelectedPhoto(data.clothes_img[0].photo);
     }
 
-    const cartItems = cart?.cart_items || [];
-    const isAlreadyInBasket = cartItems.some(
-      (item) => item.size === value.size && item.color === value.color_id
-    );
-
-    if (isAlreadyInBasket) {
-      toast.warning("Этот товар уже добавлен в корзину!");
-      return;
+    if (data?.id) {
+      setValue((prev) => ({ ...prev, clothes_id: data.id }));
     }
-    const payload = { ...value, quantity: count };
-
-    try {
-      const result = await addBasketMutation(payload).unwrap();
-      toast.success("Товар успешно добавлен в корзину!");
-      router.push("/cart");
-    } catch (error) {
-      console.error("Ошибка:", error);
-    }
-  };
+  }, [data]);
 
   if (!data) return <div>Загрузка данных...</div>;
+
+  const incrementCount = () => {
+    setCounter((prevCount) =>
+      prevCount < data.quantities ? prevCount + 1 : prevCount
+    );
+    updateValue("quantity", count + 1);
+  };
+
+  const decrementCount = () => {
+    setCounter((prevCount) => (prevCount > 1 ? prevCount - 1 : prevCount));
+    updateValue("quantity", count - 1);
+  };
 
   const {
     clothes_name,
@@ -88,12 +78,10 @@ const SinglePageSection: FC = () => {
     textile_clothes,
     clothes_img,
     average_rating,
-    quantities,
   } = data;
 
   return (
     <section className={scss.SinglePageSection}>
-      <ToastContainer />
       <div className="container">
         <div className={scss.header}>
           <Link href="/catalog">
@@ -121,7 +109,9 @@ const SinglePageSection: FC = () => {
                     el.photo === selectedPhoto ? scss.activeThumbnail : ""
                   }`}
                   onClick={() => {
-                    updateValue("color", { color: el.color });
+                    updateValue("color", {
+                      color: el.color,
+                    });
                     updateValue("color_id", el.id);
                     setSelectedPhoto(el.photo);
                   }}
@@ -169,16 +159,8 @@ const SinglePageSection: FC = () => {
               </h4>
             </div>
             <div className={scss.description}>
-              <p>
-                {isExpanded
-                  ? clothes_description
-                  : clothes_description.slice(0, 550)}
-                <span onClick={() => setIsExpanded((prev) => !prev)}>
-                  {isExpanded ? "Свернуть" : "Ещё"}
-                </span>
-              </p>
+              <p>{clothes_description}</p>
             </div>
-
             <div className={scss.sizes}>
               <Sizes
                 sizes={sizes}
@@ -194,21 +176,32 @@ const SinglePageSection: FC = () => {
               <h3>Количество:</h3>
               <div className={scss.groupOfBtn}>
                 <div className={scss.counter}>
-                  <button onClick={() => setCounter((c) => Math.max(1, c - 1))}>
+                  <button onClick={decrementCount} disabled={count === 1}>
                     -
                   </button>
                   <span>{count}</span>
-                  <button
-                    onClick={() =>
-                      setCounter((c) => Math.min(quantities, c + 1))
-                    }
-                    disabled={count >= quantities}
-                  >
-                    +
-                  </button>
+                  <button onClick={incrementCount}>+</button>
                 </div>
-                <div className={scss.cart} onClick={handleAddToBasket}>
-                  <button>В корзинку</button>
+                <div className={scss.cart}>
+                  <button
+                    onClick={() => {
+                      if (!value.size || !value.color_id || !value.clothes_id) {
+                        alert("Выберите размер и цвет товара!");
+                        return;
+                      }
+
+                      const payload = {
+                        ...value,
+                        quantity: count,
+                      };
+
+                      console.log("Отправляем данные:", payload);
+                      addBasketMutation(payload);
+                      router.push("/cart");
+                    }}
+                  >
+                    В корзинку
+                  </button>
                   <Image src={bagSvg} alt="bag" width={24} height={24} />
                 </div>
               </div>
@@ -221,3 +214,4 @@ const SinglePageSection: FC = () => {
 };
 
 export default SinglePageSection;
+

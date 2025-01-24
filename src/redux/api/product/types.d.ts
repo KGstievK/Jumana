@@ -1,5 +1,5 @@
 namespace PRODUCT {
-  type getBasketRes = cart[];
+  type getBasketRes = AllCart;
   type getBasketReq = void;
 
   type getCartItemRes = get_cart_item;

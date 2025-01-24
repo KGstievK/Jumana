@@ -15,28 +15,6 @@ import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
 import ColorsClothes from "../../../ui/colors/Colors";
 
-// Типы для данных
-interface PromoCategory {
-  promo_category: string;
-}
-
-interface ClothesImg {
-  id: number;
-  photo: string;
-  color: string;
-}
-interface IpostFav {
-  id: number;
-  promo_category: PromoCategory[];
-  clothes_name: string;
-  price: number;
-  discount_price: number; // Ожидаем число
-  size: string[];
-  average_rating: string;
-  created_date: string;
-  clothes_img: ClothesImg[];
-}
-
 interface ClothesCategoryItem {
   clothes_category: Array<{
     id: number;
@@ -44,6 +22,7 @@ interface ClothesCategoryItem {
       promo_category: string;
     }>;
     clothes_name: string;
+    clothes_id: number;
     price: number;
     discount_price: number;
     size: Array<string>;
@@ -65,49 +44,44 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
   const { data } = useGetAllCategoryQuery();
   const [datas, setDatas] = useState(data);
   console.log("🚀 ~ datas:", datas);
-  const [likedItems, setLikedItems] = useState<any[]>([]); // Локальное состояние для отслеживания избранных товаров
+  const [likedItems, setLikedItems] = useState<any[]>([]);
   const [postToFavorite] = usePostToFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
-  // const toggleLike = async (clothesItem: ClothesCategoryItem) => {
-  //   const isLiked = likedItems.includes(clothesItem.);
+  const { data: favoriteItems } = useGetToFavoriteQuery();
+  console.log("🚀 ~ favoriteItems:", favoriteItems);
+  const handleFavoriteClick = async (
+    e: React.MouseEvent,
+    item: ClothesCategoryItem["clothes_category"][0]
+  ) => {
+    e.stopPropagation();
 
-  // const requestBody: IpostFav = {
-  //   clothes: {
-  //     promo_category: [
-  //       { promo_category: "Category1" }, // Замените "Category1" на ваше значение
-  //       { promo_category: "Category2" }, // Добавьте столько объектов, сколько вам нужно
-  //     ],
-  //     clothes_name: clothesItem.,
-  //     price: clothesItem.price,
-  //     size: clothesItem.size.join(", "), // Если size - массив, объедините его в строку
-  //   },
-  //   clothes_id: clothesItem.id,
-  //   favorite_user: 0,
-  // };
+    const isFavorite = favoriteItems?.some((fav) => fav.clothes.id === item.id);
 
-  // {
-  //   clothes: {
-  //     promo_category: clothesItem.promo_category,
-  //     clothes_name: clothesItem.clothes_name,
-  //     price: clothesItem.price,
-  //     size: clothesItem.size.join(", "), // Если size - массив, можно объединить его в строку
-  //   },
-  //   clothes_id: clothesItem.id,
-  //   favorite_user: 0,
-  // };
-  //   try {
-  //     if (isLiked) {
-  //       await deleteFavorite(clothesItem.id);
-  //       setLikedItems((prev) => prev.filter((id) => id !== clothesItem.id));
-  //     } else {
-  //       await postToFavorite(requestBody);
-  //       setLikedItems((prev) => [...prev, clothesItem.id]);
-  //     }
-  //   } catch (error) {
-  //     console.error("Ошибка при обновлении избранного:", error);
-  //   }
-  // };
+    try {
+      if (isFavorite) {
+        const favoriteItem = favoriteItems?.find(
+          (fav) => fav.clothes.id === item.id
+        );
+        if (favoriteItem) {
+          await deleteFavorite(favoriteItem.id);
+        }
+      } else {
+        await postToFavorite({
+          clothes: {
+            promo_category: item.promo_category,
+            clothes_name: item.clothes_name,
+            price: item.price,
+            size: item.size[0],
+          },
+          clothes_id: item.id,
+          favorite_user: 1,
+        });
+      }
+    } catch (error) {
+      console.error("Favori işlemi başarısız:", error);
+    }
+  };
 
   useEffect(() => {
     if (data) {
@@ -169,15 +143,16 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
                     <div
                       className={scss.heart}
                       onClick={(e) => {
-                        e.stopPropagation();
-                        // toggleLike(item);
+                        e.stopPropagation(), handleFavoriteClick(e, item);
                       }}
                     >
                       <Image
                         width={24}
                         height={24}
                         src={
-                          likedItems.includes(item.id) // Проверяем по локальному состоянию
+                          favoriteItems?.some(
+                            (fav) => fav.clothes.id === item.id
+                          )
                             ? heartRed
                             : heart
                         }
