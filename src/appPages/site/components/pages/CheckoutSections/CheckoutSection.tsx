@@ -1,184 +1,212 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import scss from "./CheckoutSection.module.scss";
-import img1 from "@/assets/image.png";
 import Image from "next/image";
-import { useGetCartQuery } from "@/redux/api/product";
+import { useRouter } from "next/navigation";
+import {
+ useGetCartQuery,
+ usePostOrderMutation,
+} from "@/redux/api/product";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface IOrder {
+ order_user: number;
+ cart: number;
+ delivery: "курьер" | "самовывоз";
+ order_info: {
+   first_name: string;
+   phone_number: string;
+   city: string;
+   address: string;
+ };
+}
+
+interface CartItem {
+ id: number;
+ quantity: number;
+ just_price: number;
+ clothes: {
+   clothes_name: string;
+   clothes_img: Array<{
+     id: number;
+     photo: string;
+     color: string;
+   }>;
+ };
+ color: number;
+}
 
 const CheckoutSection = () => {
-  const { data: cart } = useGetCartQuery();
-  console.log("🚀 ~ CheckoutSection ~ data:", cart);
-  const [basketData, setBasketData] = useState(
-    cart && Array.isArray(cart) && cart[0]?.cart_items ? cart[0].cart_items : []
-  );
+ const router = useRouter();
+ const { data: cart } = useGetCartQuery();
+ const [basketData, setBasketData] = useState<CartItem[]>([]);
+ const [postOrderMutation] = usePostOrderMutation();
+ const { register, handleSubmit } = useForm<IOrder>();
+ const [step, setStep] = useState(1);
 
-  useEffect(() => {
-    if (cart && Array.isArray(cart) && cart[0]?.cart_items) {
-      setBasketData(cart[0].cart_items);
-    }
-  }, [cart]);
-  const prod = cart && Array.isArray(cart) && cart[0]?.total_price;
+ useEffect(() => {
+   if (cart && Array.isArray(cart) && cart[0]?.cart_items) {
+     setBasketData(cart[0].cart_items);
+   }
+ }, [cart]);
 
-  const [step, setStep] = useState(1);
+ const totalPrice = cart && Array.isArray(cart) && cart[0]?.total_price;
 
-  const handleNextStep = () => {
-    setStep((prev) => prev + 1);
-  };
+ const onSubmit: SubmitHandler<IOrder> = async (data) => {
+   const orderData = {
+     order_user: 1,
+     cart: cart?.[0]?.id,
+     delivery: data.delivery,
+     order_info: {
+       first_name: data.order_info.first_name,
+       phone_number: data.order_info.phone_number,
+       city: data.order_info.city,
+       address: data.order_info.address
+     }
+   };
 
-  const handlePrevStep = () => {
-    setStep((prev) => prev - 1);
-  };
+   try {
+     await postOrderMutation(orderData);
+     router.push("/success");
+   } catch (error) {
+     console.error("Order error:", error);
+   }
+ };
 
-  return (
-    <section className={scss.CheckoutSection}>
-      <div className="container">
-        <div className={scss.content}>
-          <div className={scss.block_left}>
-            {step === 1 && (
-              <div className={scss.step}>
-                <h2> Личная информация</h2>
-                <form className={scss.stepOne}>
-                  <label>
-                    Имя
-                    <input type="text" placeholder="Введите ваше имя" />
-                  </label>
-                  <label>
-                    Телефон
-                    <input type="tel" placeholder="Введите ваш телефон" />
-                  </label>
-                  <label>
-                    Город
-                    <input type="email" placeholder="Введите вашу почту" />
-                  </label>
-                  <label>
-                    Адрес
-                    <input type="email" placeholder="Введите вашу почту" />
-                  </label>
-                  <button type="button" onClick={handleNextStep}>
-                    Далее
-                  </button>
-                </form>
-              </div>
-            )}
+ const handleNextStep = () => setStep(prev => prev + 1);
+ const handlePrevStep = () => setStep(prev => prev - 1);
 
-            {step === 2 && (
-              <div className={scss.step}>
-                <h2>2. Способ получения</h2>
-                <form className={scss.deliveryForm}>
-                  <label className={scss.radioLabel}>
-                    <input type="radio" name="delivery" value="pickup" />
-                    <div className={scss.radioContent}>
-                      <p>Самовывоз</p>
-                      <p className={scss.deliveryDetail}>1-2 рабочих дней</p>
-                    </div>
-                  </label>
-                  <label className={scss.radioLabel}>
-                    <input type="radio" name="delivery" value="delivery" />
-                    <div className={scss.radioContent}>
-                      <p>Доставка</p>
-                      <div className={scss.sum}>
-                        <p>за час</p>
-                        <p>200с</p>
-                      </div>
-                    </div>
-                  </label>
-                  <div className={scss.buttonGroup}>
-                    <button
-                      type="button"
-                      onClick={handlePrevStep}
-                      className={scss.prevButton}
-                    >
-                      Назад
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleNextStep}
-                      className={scss.nextButton}
-                    >
-                      Далее
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
+ return (
+   <section className={scss.CheckoutSection}>
+     <div className="container">
+       <div className={scss.content}>
+         <div className={scss.block_left}>
+           <form onSubmit={handleSubmit(onSubmit)}>
+             {step === 1 && (
+               <div className={scss.step}>
+                 <h2>Личная информация</h2>
+                 <div className={scss.stepOne}>
+                   <label>
+                     Имя
+                     <input
+                       type="text"
+                       placeholder="Введите ваше имя"
+                       {...register("order_info.first_name", { required: true })}
+                     />
+                   </label>
+                   <label>
+                     Телефон
+                     <input
+                       type="tel"
+                       placeholder="Введите ваш телефон"
+                       {...register("order_info.phone_number", { required: true })}
+                     />
+                   </label>
+                   <label>
+                     Город
+                     <input
+                       type="text"
+                       placeholder="Введите ваш город"
+                       {...register("order_info.city", { required: true })}
+                     />
+                   </label>
+                   <label>
+                     Адрес
+                     <input
+                       type="text"
+                       placeholder="Введите ваш адрес"
+                       {...register("order_info.address", { required: true })}
+                     />
+                   </label>
+                   <button type="button" onClick={handleNextStep}>Далее</button>
+                 </div>
+               </div>
+             )}
 
-            {step === 3 && (
-              <div className={scss.step}>
-                <h2>3. Оплата</h2>
-                <form className={scss.stepOne}>
-                  <label>
-                    Номер карты:
-                    <input type="text" placeholder="0000 0000 0000 0000" />
-                  </label>
-                  <label>
-                    Срок действия:
-                    <input type="text" placeholder="MM/YY" />
-                  </label>
-                  <label>
-                    CVV:
-                    <input type="password" placeholder="***" />
-                  </label>
-                  <button type="button" onClick={handlePrevStep}>
-                    Назад
-                  </button>
-                  <button type="submit">Оплатить</button>
-                </form>
-              </div>
-            )}
-          </div>
-          {cart ? (
-            <>
-              <div className={scss.block_right}>
-                <h2>Детали оплаты</h2>
-                {basketData.map((item: cart, index: number) => {
-                  const selectedImage = item.clothes.clothes_img.find(
-                    (img) => img.id === item.color
-                  );
+             {step === 2 && (
+               <div className={scss.step}>
+                 <h2>Способ получения</h2>
+                 <div className={scss.deliveryForm}>
+                   <label className={scss.radioLabel}>
+                     <input
+                       type="radio"
+                       value="самовывоз"
+                       {...register("delivery", { required: true })}
+                     />
+                     <div className={scss.radioContent}>
+                       <p>Самовывоз</p>
+                       <p className={scss.deliveryDetail}>1-2 рабочих дней</p>
+                     </div>
+                   </label>
+                   <label className={scss.radioLabel}>
+                     <input
+                       type="radio"
+                       value="курьер"
+                       {...register("delivery", { required: true })}
+                     />
+                     <div className={scss.radioContent}>
+                       <p>Доставка</p>
+                       <div className={scss.sum}>
+                         <p>за час</p>
+                         <p>200с</p>
+                       </div>
+                     </div>
+                   </label>
+                   <div className={scss.buttonGroup}>
+                     <button type="button" onClick={handlePrevStep}>Назад</button>
+                     <button type="submit">Оформить заказ</button>
+                   </div>
+                 </div>
+               </div>
+             )}
+           </form>
+         </div>
 
-                  return (
-                    <div key={index} className={scss.box}>
-                      <Image
-                        width={150}
-                        height={150}
-                        src={selectedImage?.photo || "photo"}
-                        alt="product"
-                      />
-                      <div className={scss.text}>
-                        <h3>{item.clothes.clothes_name}</h3>
-                        <p>{selectedImage?.color}</p>
-                        <p className={scss.quantity}>
-                          {item.quantity} x {item.just_price}c
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+         <div className={scss.block_right}>
+           <h2>Детали оплаты</h2>
+           {basketData.map((item, index) => {
+             const selectedImage = item.clothes.clothes_img.find(
+               img => img.id === item.color
+             );
 
-                <div className={scss.summary}>
-                  <div className={scss.row}>
-                    <span>Итог</span>
-                    <span>{prod} сом</span>
-                  </div>
+             return (
+               <div key={index} className={scss.box}>
+                 <Image
+                   width={150}
+                   height={150}
+                   src={selectedImage?.photo || "/fallback-image.png"}
+                   alt="product"
+                 />
+                 <div className={scss.text}>
+                   <h3>{item.clothes.clothes_name}</h3>
+                   <p>{selectedImage?.color}</p>
+                   <p className={scss.quantity}>
+                     {item.quantity} x {item.just_price}c
+                   </p>
+                 </div>
+               </div>
+             );
+           })}
 
-                  <div className={scss.row}>
-                    <span>Скидка</span>
-                    <span>0</span>
-                  </div>
-                  <div className={scss.total_row}>
-                    <span>Итого к оплате:</span>
-                    <span>{prod} сом</span>
-                  </div>
-                </div>
-                <button>Продолжить</button>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
-        </div>
-      </div>
-    </section>
-  );
+           <div className={scss.summary}>
+             <div className={scss.row}>
+               <span>Итог</span>
+               <span>{totalPrice} сом</span>
+             </div>
+             <div className={scss.row}>
+               <span>Скидка</span>
+               <span>0</span>
+             </div>
+             <div className={scss.total_row}>
+               <span>Итого к оплате:</span>
+               <span>{totalPrice} сом</span>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+ );
 };
 
 export default CheckoutSection;
