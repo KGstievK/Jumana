@@ -20,4 +20,10 @@ namespace ICATEGORY {
 
   type getFirstSectionRes = firstSection[];
   type getFirstSectionReq = void;
+
+  type getContactInfoRes = GetContactInfo[];
+  type getContactInfoReq = void;
+
+  type getSaleInfoRes = SaleContent[];
+  type getSaleInfoReq = void;
 }
