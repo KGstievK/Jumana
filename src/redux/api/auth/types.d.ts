@@ -1,7 +1,6 @@
 namespace AUTH {
   type GetResponse = {
-    id: any;
-    _id?: number;
+    id: number
     first_name: string;
     last_name: string;
     email: string
@@ -15,7 +14,7 @@ namespace AUTH {
     // refresh: string;
   }
   type PutMeRequest = {
-    id?: number
+    id: number
     first_name: string;
     last_name: string;
     email: string

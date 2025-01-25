@@ -4,12 +4,11 @@ import { FC, useState } from "react";
 import { useGetMeQuery, usePutMeMutation } from "@/redux/api/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-
 interface PutMeProps {
-  id: number
+  id: number;
   first_name: string;
   last_name: string;
-  email: string
+  email: string;
   address: string;
   number: string;
   password: string;
@@ -19,12 +18,11 @@ const ProfileSection: FC = () => {
   const { data: response } = useGetMeQuery();
   const [putMe] = usePutMeMutation();
 
-  // Используем тип PutMeProps для формы
   const { register, handleSubmit } = useForm<PutMeProps>();
 
-  const onSubmit: SubmitHandler<PutMeProps> = async (userData) => {
+  const onSubmit: SubmitHandler<AUTH.PutMeRequest> = async (userData) => {
     const dataUser = {
-      id: response?.map((el) => el.id), // Используем первый элемент массива, если response - массив
+      id: response?.map((el) => el?.id), // Используем первый элемент массива, если response - массив
       email: userData.email,
       first_name: userData.first_name,
       last_name: userData.last_name,
@@ -34,7 +32,7 @@ const ProfileSection: FC = () => {
     };
 
     try {
-      const { data: userId, error } = await putMe(dataUser);
+      const { data: userId } = await putMe(dataUser);
       console.log(userId);
       // window.location.reload();
     } catch (e) {
@@ -55,7 +53,9 @@ const ProfileSection: FC = () => {
               <div className={scss.firstName_and_LastName}>
                 <input
                   type="text"
-                  placeholder={`${el.first_name! ? el.first_name : "Александр"}`}
+                  placeholder={`${
+                    el.first_name! ? el.first_name : "Александр"
+                  }`}
                   {...register("first_name", { required: true })}
                 />
                 <input
@@ -79,7 +79,11 @@ const ProfileSection: FC = () => {
               <p>Адресс</p>
               <input
                 type="text"
-                placeholder={el.address! ? el.address : "HubSpot, 25 First Street, Cambridge MA 02141, United States"}
+                placeholder={
+                  el.address!
+                    ? el.address
+                    : "HubSpot, 25 First Street, Cambridge MA 02141, United States"
+                }
                 {...register("address", { required: true })}
               />
               <p>Пароль</p>
