@@ -2,9 +2,11 @@ import Link from "next/link";
 import scss from "./Footer.module.scss";
 import Image from "next/image";
 import logo from "@/assets/icons/logoWite.svg";
-
+import { useGetContactInfoQuery } from "@/redux/api/category";
 
 const Footer = () => {
+  const { data } = useGetContactInfoQuery();
+
   const links = [
     {
       link: "/",
@@ -29,22 +31,17 @@ const Footer = () => {
   ];
   const help = [
     {
-      // link: "/",
       name: "Доставка",
     },
     {
-      // link: "/new",
       name: "Оплата",
     },
     {
-      // link: "/catalog",
       name: "Частые вопросы",
     },
     {
-      // link: "/about",
       name: "Политика конфиденциальности",
     },
-  
   ];
 
   return (
@@ -52,28 +49,32 @@ const Footer = () => {
       <div className="container">
         <div className={scss.content}>
           <div className={scss.footerLogo}>
-            <Link href='/'>
-              <Image src={logo} alt="Logo"/>
-            </Link> 
+            <Link href="/">
+              <Image src={logo} alt="Logo" />
+            </Link>
           </div>
           <div className={scss.footerResurse}>
-            <div className={scss.footerContacts}>
-              <ul className={scss.footerUl}>
-                <li className={scss.footerLi}>
-                  <span>WhatsApp</span> <Link href="">: +996700987654</Link>
-                </li>
-                <li className={scss.footerLi}>
-                  <span>Email</span> <Link href="">: hello@modestwear.com</Link>
-                </li>
-                <li className={scss.footerLi}>
-                  <span>Address</span>{" "}
-                  <Link href="">
-                    : Lorem ipsum street Block B Number 08, Bishkek, Kyrgyzstan,
-                    12345
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {data?.map((item) => (
+              <div className={scss.footerContacts}>
+                <ul className={scss.footerUl}>
+                  <li className={scss.footerLi}>
+                    <span>WhatsApp</span>
+                    <Link href="">: {item.messenger}</Link>
+                  </li>
+                  <li className={scss.footerLi}>
+                    <span>Email</span> <Link href="">:{item.email}</Link>
+                  </li>
+                  <li className={scss.footerLi}>
+                    <span>{item.address}</span>
+                    <Link href="">
+                      : Lorem ipsum street Block B Number 08, Bishkek,
+                      Kyrgyzstan, 12345
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            ))}
+
             <div className={scss.navigation}>
               <div className={scss.footerNav}>
                 <h1>Меню</h1>
@@ -89,7 +90,7 @@ const Footer = () => {
                 <h1>Обратиться за помощью</h1>
                 {help.map((item, idx) => (
                   <li key={idx}>
-                    <Link href=''>{item.name}</Link>
+                    <Link href="">{item.name}</Link>
                   </li>
                 ))}
               </div>

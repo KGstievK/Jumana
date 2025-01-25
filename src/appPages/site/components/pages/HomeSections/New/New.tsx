@@ -1,12 +1,6 @@
 "use client";
 import scss from "./New.module.scss";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/scss";
-import "swiper/scss/pagination";
-import "swiper/scss/navigation";
-
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 import star from "@/assets/icons/Star.svg";
 
@@ -94,22 +88,22 @@ const New = () => {
   return (
     <section className={scss.New}>
       <div className="container">
-        <div className={scss.content}>
-          <div className={scss.navigate_title}>
-            <h1 className="title">Новинки</h1>
-            <Link href="/new">
-              <button>
-                Посмотреть все <Image src={arrow} alt="arrow" />
-              </button>
-            </Link>
-          </div>
-          <ul>
-            <li>туника</li>
-            <li>платье</li>
-            <li>платок</li>
-          </ul>
-          <div className={scss.cards}>
-            {newArrivals?.map((item) => (
+        {newArrivals?.slice(0, window.innerWidth <= 768 ? 2 : 4).map((item) => (
+          <div className={scss.content}>
+            <div className={scss.navigate_title}>
+              <h1 className="title">Новинки</h1>
+              <Link href="/new">
+                <button>
+                  Посмотреть все <Image src={arrow} alt="arrow" />
+                </button>
+              </Link>
+            </div>
+            <ul>
+              <li>туника</li>
+              <li>платье</li>
+              <li>платок</li>
+            </ul>
+            <div className={scss.cards}>
               <div
                 key={item.id}
                 className={scss.card}
@@ -177,16 +171,16 @@ const New = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
+            <div className={scss.navigate_mobile}>
+              <Link href="/new">
+                <button>
+                  Посмотреть все <Image src={arrow} alt="arrow" />
+                </button>
+              </Link>
+            </div>
           </div>
-          <div className={scss.navigate_mobile}>
-            <Link href="/new">
-              <button>
-                Посмотреть все <Image src={arrow} alt="arrow" />
-              </button>
-            </Link>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );

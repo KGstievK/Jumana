@@ -4,25 +4,26 @@ import Link from "next/link";
 
 import sale from "@/assets/images/image.svg";
 import arrow from "@/assets/icons/arrowBlack.svg";
+import { useGetSaleContentQuery } from "@/redux/api/category";
 
 const Sale = () => {
+  const { data } = useGetSaleContentQuery();
   return (
     <section className={scss.Sale}>
-      <div className={scss.content}>
-        <div className={scss.SaleLeft}>
-          <Image src={sale} alt="Sale" />
+      {data?.map((item) => (
+        <div className={scss.content}>
+          <div className={scss.SaleLeft}>
+            <Image src={item.img} alt="Sale" />
+          </div>
+          <div className={scss.SaleRight}>
+            <h1 className="title">{item.title}</h1>
+            <p>{item.text}</p>
+            <Link href="/sale">
+              Подробнее <Image src={arrow} alt="arrow" />
+            </Link>
+          </div>
         </div>
-        <div className={scss.SaleRight}>
-          <h1 className="title">Скидки до 50%!</h1>
-          <p>
-            Не упустите шанс! Выберите стильные модели по выгодным ценам. Акция
-            действует ограниченное время.
-          </p>
-          <Link href="/sale">
-            Подробнее <Image src={arrow} alt="arrow" />
-          </Link>
-        </div>
-      </div>
+      ))}
     </section>
   );
 };

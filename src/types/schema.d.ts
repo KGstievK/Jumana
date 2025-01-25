@@ -12,6 +12,18 @@ interface User {
   number: string;
 }
 
+interface GetContactInfo {
+  messenger: string;
+  email: string;
+  address: string;
+}
+
+interface SaleContent {
+  img: string;
+  title: string;
+  text: string;
+}
+
 interface AllClothes {
   id: number;
   promo_category: Array<{
