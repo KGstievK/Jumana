@@ -1,5 +1,6 @@
 namespace AUTH {
   type GetResponse = {
+    id: any;
     // profile: User
     _id?: number;
     // image?: string;
@@ -36,16 +37,13 @@ namespace AUTH {
   };
 
   type PostLoginRequest = {
-    // email: string;
     username: string;
     password: string;
   };
 
   type PostRegistrationResponse = {
-    // key: string
     access: string;
     refresh: string;
-    message: string;
     // accessToken: string;
     // accessTokenExpiration: number;
     // refreshToken: string
@@ -65,9 +63,6 @@ namespace AUTH {
   type PatchRefreshResponse = {
     access: string;
     refresh: string;
-    // accessToken: string;
-    // accessTokenExpiration: number;
-    // key: string
   };
   type PatchRefreshRequest = {
     refresh: string

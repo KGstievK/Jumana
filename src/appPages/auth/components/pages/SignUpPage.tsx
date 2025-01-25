@@ -45,7 +45,7 @@ const SignUpPage: FC = () => {
       
       if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem("accessToken", JSON.stringify(response.data.access));
+        storage.setItem("accessToken", JSON.stringify(response.data));
         window.location.reload();
       }
     } catch (e) {

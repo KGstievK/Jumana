@@ -18,7 +18,6 @@ interface LoginProps {
 
 const SignInPage: FC = () => {
   const [postLoginMutation] = usePostLoginMutation();
-  // console.log("🚀 ~ postLoginMutation:", postLoginMutation)
   const { register, handleSubmit } = useForm<AUTH.PostLoginRequest>();
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -39,11 +38,9 @@ const SignInPage: FC = () => {
       );
       if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem("accessToken", JSON.stringify(response.data.access));
-        storage.setItem("accessToken", JSON.stringify(response.data.access));
+        storage.setItem("accessToken", JSON.stringify(response.data));
       }
-
-      window.location.reload();
+      // window.location.reload();
       console.log(response.data);
     } catch (e) {
       console.error("An error occurred:", e);

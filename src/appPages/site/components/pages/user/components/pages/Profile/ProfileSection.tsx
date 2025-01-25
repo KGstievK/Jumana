@@ -36,6 +36,8 @@ const ProfileSection: FC = () => {
 
     try {
       const { data: userId, error } = await putMe(dataUser);
+      console.log(userId);
+      
       window.location.reload();
     } catch (e) {
       console.error("An error occurred:", e);
@@ -82,6 +84,11 @@ const ProfileSection: FC = () => {
                 }
               />
               <p>User name</p>
+              <input
+                type="text"
+                placeholder={`${el.username! ? el.username : "Ваш никнейм"}`}
+                {...register("username", { required: true })}
+              />
               <input
                 type="text"
                 placeholder={`${el.username! ? el.username : "Ваш никнейм"}`}

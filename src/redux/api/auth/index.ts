@@ -50,10 +50,10 @@
         AUTH.PatchRefreshResponse,
         AUTH.PatchRefreshRequest
       >({
-        query: (refreshTokenData) => ({
-          url: "/api/token/refresh",
+        query: (data) => ({
+          url: "/api/token/refresh/",
           method: "POST",
-          body: refreshTokenData
+          body: data,
         }),
         invalidatesTags: ["auth"],
       }),

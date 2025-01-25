@@ -1,6 +1,5 @@
 "use client";
 import { FC, ReactNode, useEffect } from "react";
-// import { SessionProvider as NextAuthProvider } from "next-auth/react";
 import { useGetMeQuery, usePatchRefreshTokenMutation } from "@/redux/api/auth";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -9,29 +8,48 @@ interface SessionProviderProps {
 }
 
 export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
-
+  const { status } = useGetMeQuery();
   const [refreshTokenMutation] = usePatchRefreshTokenMutation();
 
   const pathname = usePathname();
   const router = useRouter();
 
   const handleRefreshToken = async () => {
-		const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
-		if (localStorageData === 'undefined' || localStorageData === undefined) {
-			localStorage.removeItem('accessToken');
-		}
-		if (localStorageData) {
-			const { accessTokenExpiration, refresh } = localStorageData;
-			if (accessTokenExpiration < new Date().getTime()) {
-				localStorage.removeItem('tokens');
-				const { data } = await refreshTokenMutation({ refresh });
-				localStorage.setItem('tokens', JSON.stringify(data));
-				window.location.reload();
-			} else {
-				console.log('refreshToken живой!');
-			}
-		}
-	};
+    const localStorageData = JSON.parse(localStorage.getItem("accessToken")!);
+
+    if (!localStorageData) {
+      console.warn("Токены отсутствуют в локальном хранилище.");
+      return;
+    }
+
+    const { access, refresh } = localStorageData;
+
+    // Проверка, истек ли срок действия токена
+    const isTokenExpired = (token: string): boolean => {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1])); // Полезная нагрузка — это вторая часть
+        const now = Math.floor(Date.now() / 1000);
+        return payload.exp < now;
+      } catch (error) {
+        console.error("Ошибка при проверке токена:", error);
+        return true;
+      }
+    };
+
+    if (isTokenExpired(access)) {
+      try {
+        const { data } = await refreshTokenMutation({ refresh });
+        if (data) {
+          localStorage.setItem("accessToken", JSON.stringify(data));  // Сохраняем новые токены
+          console.log("Токены успешно обновлены:", data);
+        }
+      } catch (error) {
+        console.error("Не удалось обновить токены:", error);
+        localStorage.removeItem("accessToken");
+        router.push("/auth/sign-in");  // Переход на страницу логина
+      }
+    }
+  };
 
   const handleNavigation = () => {
     switch (pathname) {
@@ -58,12 +76,12 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    handleRefreshToken();
+    handleRefreshToken(); // Обновление токенов при монтировании компонента
   }, []);
 
   useEffect(() => {
-    handleNavigation();
+    handleNavigation(); // Навигация в зависимости от статуса аутентификации
   }, [status, pathname, router]);
 
-  return children; // <NextAuthProvider>{children}</NextAuthProvider>;
+  return children;
 };

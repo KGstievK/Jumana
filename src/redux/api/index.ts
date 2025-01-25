@@ -5,44 +5,20 @@ import {
 } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
-  prepareHeaders: (headers) => {
-    let token = localStorage.getItem("accessToken")
-      ? JSON.parse(String(localStorage.getItem("accessToken")))
-      : null;
-
-    if (!token) {
-      token = sessionStorage.getItem("accessToken")
-        ? JSON.parse(String(sessionStorage.getItem("accessToken")))
-        : null;
-
-    }
-
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
-
-    // Устанавливаем Content-Type для запросов с JSON-данными
-    headers.set("Content-Type", "application/json");
-
-    return headers;
-  },
+	baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
+	prepareHeaders: (headers) => {
+		let token = null;
+		const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
+		if (localStorageData) {
+			const { access } = localStorageData;
+			token = access;
+		}
+		if (token) {
+			headers.set('Authorization', `Bearer ${token}`);
+		}
+		return headers;
+	}
 });
-// const baseQuery = fetchBaseQuery({
-// 	baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
-// 	prepareHeaders: (headers) => {
-// 		let token = null;
-// 		const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
-// 		if (localStorageData) {
-// 			const { accessToken } = localStorageData;
-// 			token = accessToken;
-// 		}
-// 		if (token) {
-// 			headers.set('Authorization', `Bearer ${token}`);
-// 		}
-// 		return headers;
-// 	}
-// });
 
 const baseQueryExtended: BaseQueryFn = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
