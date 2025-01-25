@@ -85,6 +85,38 @@ const api = index.injectEndpoints({
         method: `GET`,
       }),
     }),
+    postOrder: build.mutation<PRODUCT.postOrderRes, PRODUCT.postOrderReq>({
+      query: (data) => ({
+        url: `/user/order/create/`,
+        method: `POST`,
+        body: data,
+      }),
+    }),
+
+    getOrder: build.query<PRODUCT.getOrderRes, PRODUCT.getOrderReq>({
+      query: () => ({
+        url: `/user/order/create/`,
+        method: `GET`,
+      }),
+    }),
+    postOrderCreate: build.mutation<
+      PRODUCT.postOrderCreateRes,
+      PRODUCT.postOrderCreateReq
+    >({
+      query: (data) => ({
+        url: `/order/create/`,
+        method: `POST`,
+        body: data,
+      }),
+    }),
+    getOrderItem: build.query<PRODUCT.getOrderItemRes, PRODUCT.getOrderItemReq>(
+      {
+        query: () => ({
+          url: `/order/check/`,
+          method: "GET",
+        }),
+      }
+    ),
   }),
 });
 
@@ -100,4 +132,9 @@ export const {
   useUpdateBasketMutation,
   useGetCartQuery,
   useGetAboutUsQuery,
+  usePostOrderMutation,
+  useGetOrderQuery,
+  usePostOrderCreateMutation,
+  useGetOrderItemQuery,
+  
 } = api;

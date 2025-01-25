@@ -12,6 +12,29 @@ const api = index.injectEndpoints({
       }),
       providesTags: ["category"],
     }),
+
+    getContactInfo: build.query<
+      ICATEGORY.getContactInfoRes,
+      ICATEGORY.getContactInfoReq
+    >({
+      query: () => ({
+        url: "/contact_info/",
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
+
+    getSaleContent: build.query<
+      ICATEGORY.getSaleInfoRes,
+      ICATEGORY.getSaleInfoReq
+    >({
+      query: () => ({
+        url: "/sale/",
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
+
     getAllCategory: build.query<
       ICATEGORY.getCategoryRes,
       ICATEGORY.getCategoryReq
@@ -90,4 +113,6 @@ export const {
   useGetToFavoriteQuery,
   useDeleteFavoriteMutation,
   useGetFirstSectionQuery,
+  useGetContactInfoQuery,
+  useGetSaleContentQuery
 } = api;

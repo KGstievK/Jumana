@@ -22,4 +22,16 @@ namespace PRODUCT {
 
   type getAboutRes = AboutUs[];
   type getAboutReq = void;
+
+  type postOrderRes = IOrder;
+  type postOrderReq = IOrder;
+
+  type getOrderRes = IOrder;
+  type getOrderReq = void;
+
+  type postOrderCreateRes = OrderCreate;
+  type postOrderCreateReq = OrderCreate;
+
+  type getOrderItemRes = getOrderitem;
+  type getOrderItemReq = void;
 }

@@ -89,22 +89,22 @@ const Popular = () => {
   return (
     <section className={scss.Popular}>
       <div className="container">
-        <div className={scss.content}>
-          <div className={scss.navigate_title}>
-            <h1 className="title">Популярные товары</h1>
-            <Link href="/popular">
-              <button>
-                Посмотреть все <Image src={arrow} alt="arrow" />
-              </button>
-            </Link>
-          </div>
-          <ul>
-            <li>туника</li>
-            <li>платье</li>
-            <li>платок</li>
-          </ul>
-          <div className={scss.cards}>
-            {newArrivals?.map((item) => (
+        {newArrivals?.slice(0, window.innerWidth <= 768 ? 2 : 4).map((item) => (
+          <div className={scss.content}>
+            <div className={scss.navigate_title}>
+              <h1 className="title">Популярные товары</h1>
+              <Link href="/popular">
+                <button>
+                  Посмотреть все <Image src={arrow} alt="arrow" />
+                </button>
+              </Link>
+            </div>
+            <ul>
+              <li>туника</li>
+              <li>платье</li>
+              <li>платок</li>
+            </ul>
+            <div className={scss.cards}>
               <div
                 key={item.id}
                 className={scss.card}
@@ -172,16 +172,16 @@ const Popular = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
+            <div className={scss.navigate_mobile}>
+              <Link href="/popular">
+                <button>
+                  Посмотреть все <Image src={arrow} alt="arrow" />
+                </button>
+              </Link>
+            </div>
           </div>
-          <div className={scss.navigate_mobile}>
-            <Link href="/popular">
-              <button>
-                Посмотреть все <Image src={arrow} alt="arrow" />
-              </button>
-            </Link>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
