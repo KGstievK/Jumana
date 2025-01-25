@@ -77,7 +77,7 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
 
   useEffect(() => {
     handleRefreshToken(); // Обновление токенов при монтировании компонента
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     handleNavigation(); // Навигация в зависимости от статуса аутентификации

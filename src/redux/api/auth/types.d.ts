@@ -1,30 +1,27 @@
 namespace AUTH {
   type GetResponse = {
     id: any;
-    // profile: User
     _id?: number;
-    // image?: string;
-    username: string;
     first_name: string;
     last_name: string;
+    email: string
     address: string;
-    index_pochta: string;
     number: string;
   }[];
   type GetRequest = void;
 
   type PutMeResponse = {
-    access: string;
-    refresh: string;
+    // access: string;
+    // refresh: string;
   }
   type PutMeRequest = {
-    id: number
-    username: string;
-    first_name?: string;
-    last_name?: string;
-    address?: string;
-    index_pochta?: string;
+    id?: number
+    first_name: string;
+    last_name: string;
+    email: string
+    address: string;
     number: string;
+    password: string;
   }
 
   type PostLoginResponse = {

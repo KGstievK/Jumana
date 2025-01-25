@@ -39,7 +39,7 @@
         }
       ),
       putMe: build.mutation<AUTH.PutMeResponse, AUTH.PutMeRequest>({
-        query: ({ id, ...data}) => ({
+        query: ({id, ...data}) => ({
           url: `/profile/${id}/`,
           method: "PUT",
           body: data,

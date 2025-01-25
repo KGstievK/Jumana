@@ -3,42 +3,40 @@ import scss from "./ProfileSection.module.scss";
 import { FC, useState } from "react";
 import { useGetMeQuery, usePutMeMutation } from "@/redux/api/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useParams, useSearchParams } from "next/navigation";
-import { CheckboxChangeEvent } from "antd";
+
 
 interface PutMeProps {
-  id: number;
-  username: string;
-  first_name?: string;
-  last_name?: string;
-  address?: string;
-  index_pochta?: string;
+  id: number
+  first_name: string;
+  last_name: string;
+  email: string
+  address: string;
   number: string;
+  password: string;
 }
 
 const ProfileSection: FC = () => {
   const { data: response } = useGetMeQuery();
-
   const [putMe] = usePutMeMutation();
 
-  const { register, handleSubmit } = useForm<AUTH.PutMeRequest>();
+  // Используем тип PutMeProps для формы
+  const { register, handleSubmit } = useForm<PutMeProps>();
 
   const onSubmit: SubmitHandler<PutMeProps> = async (userData) => {
     const dataUser = {
-      id: response?.map((el) => el.id),
-      username: userData.username,
+      id: response?.map((el) => el.id), // Используем первый элемент массива, если response - массив
+      email: userData.email,
       first_name: userData.first_name,
       last_name: userData.last_name,
       address: userData.address,
-      index_pochta: userData.index_pochta,
       number: userData.number,
+      password: userData.password,
     };
 
     try {
       const { data: userId, error } = await putMe(dataUser);
       console.log(userId);
-      
-      window.location.reload();
+      // window.location.reload();
     } catch (e) {
       console.error("An error occurred:", e);
     }
@@ -57,9 +55,7 @@ const ProfileSection: FC = () => {
               <div className={scss.firstName_and_LastName}>
                 <input
                   type="text"
-                  placeholder={`${
-                    el.first_name! ? el.first_name : "Александр"
-                  }`}
+                  placeholder={`${el.first_name! ? el.first_name : "Александр"}`}
                   {...register("first_name", { required: true })}
                 />
                 <input
@@ -68,6 +64,12 @@ const ProfileSection: FC = () => {
                   {...register("last_name", { required: true })}
                 />
               </div>
+              <p>E-mail адрес</p>
+              <input
+                type="text"
+                placeholder={el.email! ? el.email : "user@example.com"}
+                {...register("email", { required: true })}
+              />
               <p>Номер телефона</p>
               <input
                 type="text"
@@ -77,22 +79,14 @@ const ProfileSection: FC = () => {
               <p>Адресс</p>
               <input
                 type="text"
-                placeholder={
-                  el.address!
-                    ? el.address
-                    : "HubSpot, 25 First Street, Cambridge MA 02141, United States"
-                }
+                placeholder={el.address! ? el.address : "HubSpot, 25 First Street, Cambridge MA 02141, United States"}
+                {...register("address", { required: true })}
               />
-              <p>User name</p>
+              <p>Пароль</p>
               <input
                 type="text"
-                placeholder={`${el.username! ? el.username : "Ваш никнейм"}`}
-                {...register("username", { required: true })}
-              />
-              <input
-                type="text"
-                placeholder={`${el.username! ? el.username : "Ваш никнейм"}`}
-                {...register("username", { required: true })}
+                placeholder="Пароль"
+                {...register("password", { required: true })}
               />
               <button className={scss.submit} type="submit">
                 Сохранить
