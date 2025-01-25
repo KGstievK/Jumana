@@ -5,19 +5,28 @@ import "swiper/css";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import Image from "next/image";
 import arrow from "@/assets/icons/arrow.svg";
-import img1 from "@/assets/images/SwiperImages/1.svg";
-import img2 from "@/assets/images/SwiperImages/2.svg";
-import img3 from "@/assets/images/SwiperImages/3.svg";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useGetFirstSectionQuery } from "@/redux/api/category";
 
 const Welcome = () => {
-  const [tab, setTab] = useState(img1.src);
+  const router = useRouter();
+  const { data } = useGetFirstSectionQuery();
+  const [tab, setTab] = useState<string | null>(null);
   const [visibleImages, setVisibleImages] = useState([1, 2]);
+
+  useEffect(() => {
+    if (data?.[0]?.img1) {
+      setTab(data[0].img1);
+    }
+  }, [data]);
+
+  if (!data?.[0] || !tab) return null;
+
   const images = [
-    { id: 1, image: img1.src },
-    { id: 2, image: img2.src },
-    { id: 3, image: img3.src },
+    { id: 1, image: data[0]?.img1 },
+    { id: 2, image: data[0]?.img2 },
+    { id: 3, image: data[0]?.img3 },
   ];
 
   const handleImageClick = (clickedIndex: number) => {
@@ -30,7 +39,6 @@ const Welcome = () => {
     });
   };
 
-  const navigate = useRouter();
   return (
     <section className={scss.Welcome}>
       <div className="container">
@@ -46,9 +54,9 @@ const Welcome = () => {
           >
             <SwiperSlide className={scss.SwiperSlide}>
               <div className={scss.Swiper_Title}>
-                <h4>made in KYrgyzstan</h4>
-                <h1>Скромность, воплощённая в элегантности</h1>
-                <button onClick={() => navigate.push("/catalog")}>
+                <h4>{data[0].made}</h4>
+                <h1>{data[0].title}</h1>
+                <button onClick={() => router.push("/catalog")}>
                   Каталог
                   <Image src={arrow} alt="Valid src" />
                 </button>
@@ -73,9 +81,7 @@ const Welcome = () => {
                     alt={`Slide ${visibleIndex}`}
                     width={156}
                     height={234}
-                    style={{
-                      cursor: "pointer",
-                    }}
+                    style={{ cursor: "pointer" }}
                     onClick={() => handleImageClick(visibleIndex)}
                   />
                 ))}
