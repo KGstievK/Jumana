@@ -7,7 +7,6 @@ import profile from "@/assets/icons/Profile.svg";
 import cart from "@/assets/icons/cart.svg";
 import Search from "@/appPages/site/components/ui/Search/Search";
 
-
 const Header = () => {
   const pathname = usePathname();
 
@@ -15,10 +14,6 @@ const Header = () => {
     {
       link: "/",
       name: "Главная",
-    },
-    {
-      link: "/new",
-      name: "Новинки",
     },
     {
       link: "/catalog",
@@ -43,7 +38,7 @@ const Header = () => {
             </a>
           </div>
           <div className={scss.Search}>
-            <Search/>
+            <Search />
           </div>
           <div className={scss.nav}>
             <ul>
@@ -61,7 +56,7 @@ const Header = () => {
           </div>
           <div className={scss.profile_cart}>
             <div>
-              <Search/>
+              <Search />
             </div>
             <Link href="/profile">
               <Image src={profile} alt="Profile" />
@@ -70,9 +65,7 @@ const Header = () => {
               <Image src={cart} alt="cart" />
             </Link>
           </div>
-          <div className={scss.burgerMenu}>
-            
-          </div>
+          <div className={scss.burgerMenu}></div>
         </div>
       </div>
     </header>
