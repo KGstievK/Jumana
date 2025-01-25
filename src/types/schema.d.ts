@@ -1,3 +1,5 @@
+import { Interface } from "readline";
+
 interface User {
   _id?: number;
   // image: string;
@@ -29,28 +31,28 @@ interface AllClothes {
 }
 
 interface AllCart {
-  id: number
-  user: number
-  total_price: string
+  id: number;
+  user: number;
+  total_price: string;
   cart_items: Array<{
-    id: number
+    id: number;
     clothes: {
-      clothes_name: string
+      clothes_name: string;
       clothes_img: Array<{
-        id: number
-        photo: string
-        color: string
-      }>
-    }
-    size: string
-    color: number
-    quantity: number
-    price_clothes: string
-    total_price: string
-    color_id: number
-    clothes_id: number
-    just_price: string
-  }>
+        id: number;
+        photo: string;
+        color: string;
+      }>;
+    };
+    size: string;
+    color: number;
+    quantity: number;
+    price_clothes: string;
+    total_price: string;
+    color_id: number;
+    clothes_id: number;
+    just_price: string;
+  }>;
 }
 interface cart {
   id: number;
@@ -68,8 +70,6 @@ interface cart {
   price_clothes: string;
   just_price: string;
   total_price: string;
-
-
 }
 interface get_cart_item {
   id: number;
@@ -199,6 +199,25 @@ interface Textile {
   textile_name: string;
 }
 
+interface IOrder {
+  order_user: number;
+  cart: number;
+  delivery: "курьер" | "самовывоз";
+  order_info: {
+    first_name: string;
+    phone_number: string;
+    city: string;
+    address: string;
+  };
+}
+
+interface OrderCreate {
+  order_user: number;
+  cart: number;
+  delivery: string;
+  order_info: number;
+}
+
 interface SingleProductData {
   clothes_name: string;
   category: Array<{
@@ -225,6 +244,42 @@ interface SingleProductData {
   }>;
   clothes_review: Array<any>;
   clothes_description: string;
+}
+interface getOrderitem {
+  id: number;
+  cart: {
+    id: number;
+    user: number;
+    total_price: string;
+    cart_items: Array<{
+      id: number;
+      clothes: {
+        clothes_name: string;
+        clothes_img: Array<{
+          id: number;
+          photo: string;
+          color: string;
+        }>;
+      };
+      size: string;
+      color: number;
+      quantity: number;
+      price_clothes: string;
+      total_price: string;
+      color_id: number;
+      clothes_id: number;
+      just_price: string;
+    }>;
+  };
+  date: string;
+  order_status: string;
+  delivery: string;
+  order_info: {
+    first_name: string;
+    phone_number: string;
+    city: string;
+    address: string;
+  };
 }
 
 //! data type
