@@ -42,7 +42,7 @@ const SalePage = () => {
   const { data } = useGetAllClothesQuery();
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
-      (category) => category.promo_category.toLowerCase() === "скидки"
+      (category) => category.promo_category.toLowerCase() === "акция"
     )
   );
 

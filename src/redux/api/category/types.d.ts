@@ -17,4 +17,7 @@ namespace ICATEGORY {
 
   type deleteFavoreRes = GetFavorites[];
   type deleteFavoreReq = number;
+
+  type getFirstSectionRes = firstSection[];
+  type getFirstSectionReq = void;
 }

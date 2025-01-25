@@ -29,28 +29,28 @@ interface AllClothes {
 }
 
 interface AllCart {
-  id: number
-  user: number
-  total_price: string
+  id: number;
+  user: number;
+  total_price: string;
   cart_items: Array<{
-    id: number
+    id: number;
     clothes: {
-      clothes_name: string
+      clothes_name: string;
       clothes_img: Array<{
-        id: number
-        photo: string
-        color: string
-      }>
-    }
-    size: string
-    color: number
-    quantity: number
-    price_clothes: string
-    total_price: string
-    color_id: number
-    clothes_id: number
-    just_price: string
-  }>
+        id: number;
+        photo: string;
+        color: string;
+      }>;
+    };
+    size: string;
+    color: number;
+    quantity: number;
+    price_clothes: string;
+    total_price: string;
+    color_id: number;
+    clothes_id: number;
+    just_price: string;
+  }>;
 }
 interface cart {
   id: number;
@@ -68,8 +68,6 @@ interface cart {
   price_clothes: string;
   just_price: string;
   total_price: string;
-
-
 }
 interface get_cart_item {
   id: number;
@@ -285,4 +283,12 @@ interface GetFavorites {
     }>;
   };
   time: string;
+}
+
+interface firstSection {
+  img1: string;
+  img2: string;
+  img3: string;
+  made: string;
+  title: string;
 }
