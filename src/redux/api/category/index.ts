@@ -2,6 +2,16 @@ import { api as index } from "..";
 
 const api = index.injectEndpoints({
   endpoints: (build) => ({
+    getFirstSection: build.query<
+      ICATEGORY.getFirstSectionRes,
+      ICATEGORY.getFirstSectionReq
+    >({
+      query: () => ({
+        url: "/title/",
+        method: "GET",
+      }),
+      providesTags: ["category"],
+    }),
     getAllCategory: build.query<
       ICATEGORY.getCategoryRes,
       ICATEGORY.getCategoryReq
@@ -79,4 +89,5 @@ export const {
   usePostToFavoriteMutation,
   useGetToFavoriteQuery,
   useDeleteFavoriteMutation,
+  useGetFirstSectionQuery,
 } = api;

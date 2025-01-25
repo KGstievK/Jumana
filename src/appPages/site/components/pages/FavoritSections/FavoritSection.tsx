@@ -3,7 +3,6 @@ import Image from "next/image";
 import scss from "./FavoritSection.module.scss";
 import { useRouter } from "next/navigation";
 import star from "@/assets/images/star.png";
-import cart from "@/assets/icons/bag-happyBlack.svg";
 import {
   useDeleteFavoriteMutation,
   useGetToFavoriteQuery,
@@ -13,7 +12,6 @@ import ColorsClothes from "../../ui/colors/Colors";
 const Favorite = () => {
   const router = useRouter();
   const { data } = useGetToFavoriteQuery();
-  console.log("🚀 ~ Favorite ~ data:", data);
 
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
@@ -24,7 +22,7 @@ const Favorite = () => {
           <div
             key={item.id}
             className={scss.card}
-            onClick={() => router.push(`/${item.id}`)}
+            onClick={() => router.push(`/${item.clothes.id}`)}
           >
             <div className={scss.blockImg}>
               <div className={scss.like}>
@@ -47,15 +45,6 @@ const Favorite = () => {
                 alt="photo"
                 className={scss.mainImg}
               />
-              <div className={scss.cart} onClick={(e) => e.stopPropagation()}>
-                <Image
-                  width={300}
-                  height={300}
-                  layout="intrinsic"
-                  src={cart}
-                  alt="cart"
-                />
-              </div>
             </div>
             <div className={scss.blockText}>
               <div className={scss.productCategory}>
@@ -73,15 +62,15 @@ const Favorite = () => {
                   com
                 </span>
                 <del>{item.clothes.price}c</del>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteFavorite(item.id);
+                  }}
+                >
+                  Remove
+                </button>
               </div>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deleteFavorite(item.id);
-                }}
-              >
-                delete
-              </button>
             </div>
           </div>
         ))}

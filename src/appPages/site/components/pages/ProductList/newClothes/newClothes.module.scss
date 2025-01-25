@@ -1,159 +1,253 @@
 #Cards {
   padding-bottom: 50px;
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: 10px;
-
-    a {
-      color: #a73539;
-      font-size: clamp(12px, 2vw, 15px);
-      font-weight: 500;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    img {
-      display: none;
-    }
-  }
-
-  .title {
-    font-size: 48px;
-    font-weight: 500;
-    line-height: 62.4px;
-    color: #a73539;
-    margin-bottom: 20px;
-  }
   .content {
     display: flex;
-    align-items: start;
-    justify-content: start;
-    flex-wrap: wrap;
-    gap: 20px;
-    .card {
-      max-width: 300px;
-      width: 100%;
-      background: #fff;
-      .blockImg {
-        position: relative;
+    align-items: center;
+    justify-content: center;
+
+    .cards {
+      display: flex;
+      align-items: start;
+      justify-content: start;
+      gap: 20px;
+      flex-wrap: wrap;
+      .card {
+        max-width: clamp(150px, 20vw, 350px);
         width: 100%;
-        .mainImg {
+        background: #fff;
+        cursor: pointer;
+        margin-bottom: 20px;
+        .blockImg {
+          position: relative;
           width: 100%;
-          object-fit: cover;
-          border-radius: 5px;
-          height: 380px !important;
-        }
-        .like {
-          position: absolute;
-          z-index: 12;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: 100%;
-          padding: 15px;
-          .star {
+          .mainImg {
+            object-fit: cover;
+            border-radius: 5px;
+            height: 440px !important;
+          }
+          .like {
+            position: absolute;
+            z-index: 12;
             display: flex;
             align-items: center;
-            img {
-              width: 20px;
-              object-fit: cover;
+            justify-content: space-between;
+            width: 100%;
+            padding: 15px;
+            .star {
+              display: flex;
+              align-items: end;
+              img {
+                width: 20px;
+                object-fit: cover;
+              }
+              h6 {
+                color: #fff;
+                font-size: 20px;
+                font-weight: 400;
+              }
             }
-            h6 {
-              color: #fff;
-              font-size: 18px;
+            .heart {
+              img {
+                width: 25px;
+                height: 25px;
+              }
+            }
+          }
+        }
+
+        .blockText {
+          .productCategory {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h4 {
+              font-family: "Lato";
+              font-size: 20px;
+              font-weight: 400;
+              color: #757575;
+            }
+          }
+          h2 {
+            color: #3e3e3e;
+            font-family: "Playfair Display";
+            font-size: 22px;
+            font-weight: 400;
+          }
+          .price {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 15px;
+
+            span {
+              font-size: 16px;
+              font-weight: 500;
+              color: #121212;
+            }
+            del {
+              color: #6c7275;
+              font-size: 16px;
               font-weight: 400;
             }
           }
-          .heart {
-            cursor: pointer;
-            img {
-              width: 25px;
-              height: 25px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #Cards {
+    padding-bottom: 10px;
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      gap: 10px;
+
+      .cards {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+
+        .card {
+          margin-bottom: 10px;
+          .blockImg {
+            .mainImg {
+              height: 200px !important;
+            }
+            .like {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 10px;
+              .star {
+                display: flex;
+                align-items: end;
+                justify-content: center;
+                img {
+                  width: 18px;
+                }
+                h6 {
+                  color: #fff;
+                  font-size: 18px;
+                  font-weight: 400;
+                }
+              }
+
+              .heart {
+                img {
+                  width: 15px;
+                  height: 15px;
+                }
+              }
+            }
+
+            .cart {
+              img {
+                width: 18px;
+              }
             }
           }
-        }
-        .cart {
-          display: flex;
-          align-items: center;
-          background: #fff;
-          padding: 5px;
-          border-radius: 50%;
-          position: absolute;
-          z-index: 12;
-          bottom: 20px;
-          right: 15px;
-          cursor: pointer;
-          img {
-            width: 25px;
+
+          .blockText {
+            .productCategory {
+              h4 {
+                font-size: 13px;
+              }
+            }
+            h2 {
+              font-size: 14px;
+            }
+            .price {
+              span {
+                font-size: 12px;
+              }
+              del {
+                font-size: 12px;
+              }
+            }
           }
         }
       }
+    }
+  }
+}
 
-      .blockText {
+@media (max-width: 360px) {
+  #Cards {
+    padding-bottom: 10px;
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      gap: 10px;
+
+      .cards {
         display: flex;
         align-items: start;
-        justify-content: start;
-        flex-direction: column;
-        gap: 10px;
-
-        .productCategory {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: 100%;
-
-          h4 {
-            font-family: "Lato";
-            font-size: 20px;
-            font-weight: 400;
-            color: #757575;
-          }
-        }
-
-        h2 {
-          color: #3e3e3e;
-          font-family: "Playfair Display";
-          font-size: 30px;
-          font-weight: 400;
-        }
-        .price {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 15px;
-          width: 100%;
-
-          span {
-            font-size: 20px;
-            font-weight: 500;
-            color: #121212;
-          }
-          del {
-            color: #6c7275;
-            font-size: 18px;
-            font-weight: 400;
-          }
-          .cart {
-            background: #a73539;
-            padding: 8px;
-            width: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            border-radius: 8px;
-            cursor: pointer;
-            button {
-              background: none;
-              border: none;
-              color: white;
-              font-size: 15px;
-              font-weight: 500;
+        justify-content: space-between;
+        gap: 5px;
+        .card {
+          margin-bottom: 10px;
+          width: 135px;
+          .blockImg {
+            width: 100%;
+            .mainImg {
+              width: 100%;
             }
-            img {
-              width: 15px;
+            .like {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 10px;
+              .star {
+                display: flex;
+                align-items: end;
+                justify-content: center;
+                img {
+                  width: 18px;
+                }
+                h6 {
+                  color: #fff;
+                  font-size: 18px;
+                  font-weight: 400;
+                }
+              }
+
+              .heart {
+                img {
+                  width: 15px;
+                  height: 15px;
+                }
+              }
+            }
+
+            .cart {
+              img {
+                width: 18px;
+              }
+            }
+          }
+
+          .blockText {
+            .productCategory {
+              h4 {
+                font-size: 10px;
+              }
+            }
+            h2 {
+              font-size: 12px;
+            }
+            .price {
+              span {
+                font-size: 10px;
+              }
+              del {
+                font-size: 10px;
+              }
             }
           }
         }
