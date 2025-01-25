@@ -12,6 +12,8 @@ import { useParams, useRouter } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
 import React, { FC, useState, useEffect } from "react";
 import Sizes from "./sizes/Sizes";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { post_cart_item } from "@/types/schema";
 
 const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
@@ -102,28 +104,39 @@ const SinglePageSection: FC = () => {
               />
             </div>
             <div className={scss.thumbnails}>
-              {clothes_img.map((el, index) => (
-                <div
-                  key={index}
-                  className={`${scss.thumbnail} ${
-                    el.photo === selectedPhoto ? scss.activeThumbnail : ""
-                  }`}
-                  onClick={() => {
-                    updateValue("color", {
-                      color: el.color,
-                    });
-                    updateValue("color_id", el.id);
-                    setSelectedPhoto(el.photo);
-                  }}
-                >
-                  <Image
-                    src={el.photo}
-                    alt={`Thumbnail ${index + 1}`}
-                    width={2500}
-                    height={2500}
-                  />
-                </div>
-              ))}
+              {clothes_img.map(
+                (
+                  el: {
+                    photo:
+                      | StaticImport
+                      | React.SetStateAction<string | undefined>;
+                    color: any;
+                    id: any;
+                  },
+                  index: React.Key | null | undefined
+                ) => (
+                  <div
+                    key={index}
+                    className={`${scss.thumbnail} ${
+                      el.photo === selectedPhoto ? scss.activeThumbnail : ""
+                    }`}
+                    onClick={() => {
+                      updateValue("color", {
+                        color: el.color,
+                      });
+                      updateValue("color_id", el.id);
+                      setSelectedPhoto(el.photo);
+                    }}
+                  >
+                    <Image
+                      src={el.photo}
+                      alt={`Thumbnail ${index + 1}`}
+                      width={2500}
+                      height={2500}
+                    />
+                  </div>
+                )
+              )}
             </div>
           </div>
 
@@ -147,6 +160,7 @@ const SinglePageSection: FC = () => {
                 onClick={(item) => {
                   updateValue("color", { color: item.color });
                   updateValue("color_id", item.id);
+                  setSelectedPhoto(item.photo); // Добавляем эту строку
                 }}
               />
             </div>

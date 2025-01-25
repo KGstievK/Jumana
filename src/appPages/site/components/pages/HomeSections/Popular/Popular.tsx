@@ -18,6 +18,8 @@ import {
 } from "@/redux/api/category";
 import { useRouter } from "next/navigation";
 import ColorsClothes from "../../../ui/colors/Colors";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { Key } from "react";
 
 interface ClothesCategoryItem {
   clothes_category: Array<{
@@ -43,7 +45,8 @@ const Popular = () => {
   const { data } = useGetAllClothesQuery();
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
-      (category) => category.promo_category.toLowerCase() === "популярные"
+      (category: { promo_category: string }) =>
+        category.promo_category.toLowerCase() === "популярные"
     )
   );
   const router = useRouter();
@@ -89,99 +92,108 @@ const Popular = () => {
   return (
     <section className={scss.Popular}>
       <div className="container">
-        {newArrivals?.slice(0, window.innerWidth <= 768 ? 2 : 4).map((item) => (
-          <div className={scss.content}>
-            <div className={scss.navigate_title}>
-              <h1 className="title">Популярные товары</h1>
-              <Link href="/popular">
-                <button>
-                  Посмотреть все <Image src={arrow} alt="arrow" />
-                </button>
-              </Link>
-            </div>
-            <ul>
-              <li>туника</li>
-              <li>платье</li>
-              <li>платок</li>
-            </ul>
-            <div className={scss.cards}>
-              <div
-                key={item.id}
-                className={scss.card}
-                onClick={() => router.push(`/${item.id}`)}
-              >
-                <div className={scss.blockImg}>
-                  <div className={scss.like}>
-                    <div className={scss.star}>
-                      <Image
-                        width={500}
-                        height={300}
-                        layout="intrinsic"
-                        alt="photo"
-                        src={star}
-                      />
-                      <h6>{item.average_rating}</h6>
+        {newArrivals
+          ?.slice(0, window.innerWidth <= 768 ? 2 : 4)
+          .map((item, idx) => (
+            <div key={idx} className={scss.content}>
+              <div className={scss.navigate_title}>
+                <h1 className="title">Популярные товары</h1>
+                <Link href="/popular">
+                  <button>
+                    Посмотреть все <Image src={arrow} alt="arrow" />
+                  </button>
+                </Link>
+              </div>
+              <ul>
+                <li>туника</li>
+                <li>платье</li>
+                <li>платок</li>
+              </ul>
+              <div className={scss.cards}>
+                <div
+                  key={item.id}
+                  className={scss.card}
+                  onClick={() => router.push(`/${item.id}`)}
+                >
+                  <div className={scss.blockImg}>
+                    <div className={scss.like}>
+                      <div className={scss.star}>
+                        <Image
+                          width={500}
+                          height={300}
+                          layout="intrinsic"
+                          alt="photo"
+                          src={star}
+                        />
+                        <h6>{item.average_rating}</h6>
+                      </div>
+                      <div
+                        className={scss.heart}
+                        onClick={(e) => {
+                          e.stopPropagation(), handleFavoriteClick(e, item);
+                        }}
+                      >
+                        <Image
+                          width={24}
+                          height={24}
+                          src={
+                            favoriteItems?.some(
+                              (fav) => fav.clothes.id === item.id
+                            )
+                              ? heartRed
+                              : heart
+                          }
+                          alt="heart"
+                        />
+                      </div>
                     </div>
-                    <div
-                      className={scss.heart}
-                      onClick={(e) => {
-                        e.stopPropagation(), handleFavoriteClick(e, item);
-                      }}
-                    >
-                      <Image
-                        width={24}
-                        height={24}
-                        src={
-                          favoriteItems?.some(
-                            (fav) => fav.clothes.id === item.id
-                          )
-                            ? heartRed
-                            : heart
-                        }
-                        alt="heart"
-                      />
-                    </div>
+                    {item.clothes_img
+                      .slice(0, 1)
+                      .map(
+                        (
+                          el: { photo: string | StaticImport },
+                          index: Key | null | undefined
+                        ) => (
+                          <Image
+                            key={index}
+                            width={5000}
+                            height={3000}
+                            layout="intrinsic"
+                            src={el.photo}
+                            alt="photo"
+                            className={scss.mainImg}
+                          />
+                        )
+                      )}
                   </div>
-                  {item.clothes_img.slice(0, 1).map((el, index) => (
-                    <Image
-                      key={index}
-                      width={5000}
-                      height={3000}
-                      layout="intrinsic"
-                      src={el.photo}
-                      alt="photo"
-                      className={scss.mainImg}
-                    />
-                  ))}
-                </div>
-                <div className={scss.blockText}>
-                  <div className={scss.productCategory}>
-                    <h4>Product Category</h4>
-                    <div className={scss.colors}>
-                      <ColorsClothes
-                        clothesImg={item.clothes_img.slice(0, 3)}
-                      />
+                  <div className={scss.blockText}>
+                    <div className={scss.productCategory}>
+                      <h4>Product Category</h4>
+                      <div className={scss.colors}>
+                        <ColorsClothes
+                          clothesImg={item.clothes_img.slice(0, 3)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <h2>{item.clothes_name}</h2>
-                  <div className={scss.price}>
-                    <span>
-                      {Math.round(item.discount_price).toString()} cом
-                    </span>
-                    <del>{Math.round(item.price)} cом</del>
+                    <h2>{item.clothes_name}</h2>
+                    <div className={scss.price}>
+                      <span>
+                        {Math.round(item.discount_price).toString()} cом
+                      </span>
+                      <del>{Math.round(item.price)} cом</del>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className={scss.navigate_mobile}>
+                <Link href="/popular">
+                  <button>
+                    Посмотреть все <Image src={arrow} alt="arrow" />
+                  </button>
+                </Link>
+              </div>
             </div>
-            <div className={scss.navigate_mobile}>
-              <Link href="/popular">
-                <button>
-                  Посмотреть все <Image src={arrow} alt="arrow" />
-                </button>
-              </Link>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </section>
   );
