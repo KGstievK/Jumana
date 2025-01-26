@@ -10,8 +10,8 @@ const Content = () => {
 
   return (
     <>
-      {data?.map((item) => (
-        <section className={scss.Content}>
+      {data?.map((item, idx) => (
+        <section key={idx} className={scss.Content}>
           <div className={scss.content}>
             <h1>
               Мы создаём одежду, которая объединяет традиции и современный

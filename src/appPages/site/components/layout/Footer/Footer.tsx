@@ -54,8 +54,8 @@ const Footer = () => {
             </Link>
           </div>
           <div className={scss.footerResurse}>
-            {data?.map((item) => (
-              <div className={scss.footerContacts}>
+            {data?.map((item, idx) => (
+              <div key={idx} className={scss.footerContacts}>
                 <ul className={scss.footerUl}>
                   <li className={scss.footerLi}>
                     <span>WhatsApp</span>
@@ -65,11 +65,8 @@ const Footer = () => {
                     <span>Email</span> <Link href="">:{item.email}</Link>
                   </li>
                   <li className={scss.footerLi}>
-                    <span>{item.address}</span>
-                    <Link href="">
-                      : Lorem ipsum street Block B Number 08, Bishkek,
-                      Kyrgyzstan, 12345
-                    </Link>
+                    <span>Address</span>
+                    <Link href="">{item.address}</Link>
                   </li>
                 </ul>
               </div>
