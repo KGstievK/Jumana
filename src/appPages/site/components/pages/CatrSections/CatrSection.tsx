@@ -5,11 +5,9 @@ import { useParams, useRouter } from "next/navigation";
 import {
   useDeleteBasketMutation,
   useGetCartQuery,
-  usePostOrderMutation,
   useUpdateBasketMutation,
 } from "@/redux/api/product";
 import { useState, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 
 interface CartItem {
   id: number;
@@ -28,10 +26,7 @@ interface CartItem {
   };
 }
 
-interface Cart {
-  cart_items: CartItem[];
-  total_price: number;
-}
+
 
 const CartSection = () => {
   const { data: cart, refetch } = useGetCartQuery();
@@ -40,13 +35,12 @@ const CartSection = () => {
   const [deleteMutation] = useDeleteBasketMutation();
   const router = useRouter();
 
-
   useEffect(() => {
     refetch();
   }, []);
 
   useEffect(() => {
-    if (cart && Array.isArray(cart) && cart[0]?.cart_items) {
+    if (cart?.[0]?.cart_items && cart[0].cart_items.length > 0) {
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);
