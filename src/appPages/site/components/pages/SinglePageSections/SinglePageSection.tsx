@@ -155,7 +155,7 @@ const SinglePageSection: FC = () => {
                 onClick={(item) => {
                   updateValue("color", { color: item.color });
                   updateValue("color_id", item.id);
-                  setSelectedPhoto(item.photo); // Добавляем эту строку
+                  setSelectedPhoto(item.photo);
                 }}
               />
             </div>
@@ -163,7 +163,10 @@ const SinglePageSection: FC = () => {
               <h5>Ткань:</h5>
               <h4>
                 {textile_clothes
-                  .map((el:any) => capitalize(el.textile_name))
+
+                  .map((el: { textile_name: string }) =>
+                    capitalize(el.textile_name)
+                  )
                   .join(", ")}
               </h4>
             </div>
@@ -189,7 +192,13 @@ const SinglePageSection: FC = () => {
                     -
                   </button>
                   <span>{count}</span>
-                  <button onClick={incrementCount}>+</button>
+                  <button
+                    onClick={incrementCount}
+                    disabled={count >= data.quantities}
+                    className={count >= data.quantities ? scss.disabledBtn : ""}
+                  >
+                    +
+                  </button>
                 </div>
                 <div className={scss.cart}>
                   <button
