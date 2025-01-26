@@ -39,20 +39,7 @@ const CartSection = () => {
   const [updateMutation] = useUpdateBasketMutation();
   const [deleteMutation] = useDeleteBasketMutation();
   const router = useRouter();
-  // const [postOrderMutation] = usePostOrderMutation();
-  // const { register: registerAdd, handleSubmit: handleSubmitAdd } =
-  //   useForm<IOrder>();
 
-  // const onSubmit: SubmitHandler<IOrder> = async (data) => {
-  //   const newData = {
-  //     first_name: data.first_name,
-  //     phone_number: data.phone_number,
-  //     city: data.city,
-  //     address: data.address,
-  //   };
-
-  //   await postOrderMutation(newData);
-  // };
 
   useEffect(() => {
     refetch();

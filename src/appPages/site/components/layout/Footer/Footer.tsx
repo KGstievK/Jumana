@@ -55,6 +55,7 @@ const Footer = () => {
           </div>
           <div className={scss.footerResurse}>
             {data?.map((item, idx) => (
+
               <div key={idx} className={scss.footerContacts}>
                 <ul className={scss.footerUl}>
                   <li className={scss.footerLi}>
