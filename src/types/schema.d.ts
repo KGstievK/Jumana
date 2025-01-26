@@ -231,32 +231,43 @@ interface OrderCreate {
 }
 
 interface SingleProductData {
+  id: number;
   clothes_name: string;
   category: Array<{
     category_name: string;
   }>;
   promo_category: Array<{
     promo_category: string;
-    time: any;
+    time: string;
   }>;
   quantities: number;
   active: boolean;
   price: number;
-  discount_price: number;
-  size: Array<string>;
-  average_rating: number;
+  discount_price: string;
+  size: string;
+  average_rating: string;
   made_in: string;
   textile_clothes: Array<{
     textile_name: string;
   }>;
   clothes_img: Array<{
+    id: number;
     photo: string;
     color: string;
-    id: number;
   }>;
-  clothes_review: Array<any>;
+  clothes_review: Array<{
+    author: {
+      first_name: string;
+      last_name: string;
+    };
+    text: string;
+    stars: number;
+    review_photo: string;
+    created_date: string;
+  }>;
   clothes_description: string;
 }
+
 interface getOrderitem {
   id: number;
   cart: {

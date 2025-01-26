@@ -12,8 +12,8 @@ const Catalog = () => {
   return (
     <section className={scss.Catalog}>
       <div className="container">
-        {data?.map((item) => (
-          <div className={scss.content}>
+        {data?.map((item, idx) => (
+          <div key={idx} className={scss.content}>
             <div className={scss.navigate_title}>
               <h1 className="title">Каталог</h1>
               <Link href="/catalog">
