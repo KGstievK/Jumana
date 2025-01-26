@@ -24,14 +24,12 @@ namespace PRODUCT {
   type getAboutReq = void;
 
   type postOrderRes = IOrder;
-  type postOrderReq = IOrder;
+  type postOrderReq = IOrderPost;
 
   type getOrderRes = IOrder;
   type getOrderReq = void;
+  
+  type getPayRes = Pay;
+  type getPayReq = void;
 
-  type postOrderCreateRes = OrderCreate;
-  type postOrderCreateReq = OrderCreate;
-
-  type getOrderItemRes = getOrderitem;
-  type getOrderItemReq = void;
 }

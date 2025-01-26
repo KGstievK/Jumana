@@ -20,6 +20,12 @@ const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 const capitalize = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
+interface clothesImg {
+  photo: string;
+  id: number;
+  color: string;
+}
+
 const SinglePageSection: FC = () => {
   const id = useParams();
   const { data } = useGetClothesByIdQuery(Number(id.single));
@@ -104,39 +110,28 @@ const SinglePageSection: FC = () => {
               />
             </div>
             <div className={scss.thumbnails}>
-              {clothes_img.map(
-                (
-                  el: {
-                    photo:
-                      | StaticImport
-                      | React.SetStateAction<string | undefined>;
-                    color: any;
-                    id: any;
-                  },
-                  index: React.Key | null | undefined
-                ) => (
-                  <div
-                    key={index}
-                    className={`${scss.thumbnail} ${
-                      el.photo === selectedPhoto ? scss.activeThumbnail : ""
-                    }`}
-                    onClick={() => {
-                      updateValue("color", {
-                        color: el.color,
-                      });
-                      updateValue("color_id", el.id);
-                      setSelectedPhoto(el.photo);
-                    }}
-                  >
-                    <Image
-                      src={el.photo}
-                      alt={`Thumbnail ${index + 1}`}
-                      width={2500}
-                      height={2500}
-                    />
-                  </div>
-                )
-              )}
+              {clothes_img?.map((el:clothesImg, index:number) => (
+                <div
+                  key={index}
+                  className={`${scss.thumbnail} ${
+                    el.photo === selectedPhoto ? scss.activeThumbnail : ""
+                  }`}
+                  onClick={() => {
+                    updateValue("color", {
+                      color: el.color,
+                    });
+                    updateValue("color_id", el.id);
+                    setSelectedPhoto(el.photo);
+                  }}
+                >
+                  <Image
+                    src={el.photo}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={2500}
+                    height={2500}
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -168,7 +163,7 @@ const SinglePageSection: FC = () => {
               <h5>Ткань:</h5>
               <h4>
                 {textile_clothes
-                  .map((el) => capitalize(el.textile_name))
+                  .map((el:any) => capitalize(el.textile_name))
                   .join(", ")}
               </h4>
             </div>

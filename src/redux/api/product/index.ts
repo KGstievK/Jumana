@@ -87,7 +87,7 @@ const api = index.injectEndpoints({
     }),
     postOrder: build.mutation<PRODUCT.postOrderRes, PRODUCT.postOrderReq>({
       query: (data) => ({
-        url: `/user/order/create/`,
+        url: `/order/create/`,
         method: `POST`,
         body: data,
       }),
@@ -95,28 +95,16 @@ const api = index.injectEndpoints({
 
     getOrder: build.query<PRODUCT.getOrderRes, PRODUCT.getOrderReq>({
       query: () => ({
-        url: `/user/order/create/`,
+        url: `/order/check/`,
         method: `GET`,
       }),
     }),
-    postOrderCreate: build.mutation<
-      PRODUCT.postOrderCreateRes,
-      PRODUCT.postOrderCreateReq
-    >({
-      query: (data) => ({
-        url: `/order/create/`,
-        method: `POST`,
-        body: data,
+    getPay: build.query<PRODUCT.getPayRes, PRODUCT.getPayReq>({
+      query: () => ({
+        url: `/pay/`,
+        method: `GET`,
       }),
     }),
-    getOrderItem: build.query<PRODUCT.getOrderItemRes, PRODUCT.getOrderItemReq>(
-      {
-        query: () => ({
-          url: `/order/check/`,
-          method: "GET",
-        }),
-      }
-    ),
   }),
 });
 
@@ -134,7 +122,5 @@ export const {
   useGetAboutUsQuery,
   usePostOrderMutation,
   useGetOrderQuery,
-  usePostOrderCreateMutation,
-  useGetOrderItemQuery,
-  
+  useGetPayQuery
 } = api;
