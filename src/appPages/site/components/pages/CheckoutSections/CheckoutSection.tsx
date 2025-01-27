@@ -31,14 +31,23 @@ interface CartItem {
 
 const CheckoutSection = () => {
   const router = useRouter();
-  const { data: cart,} = useGetCartQuery();
+  const { data: cart } = useGetCartQuery();
   const [basketData, setBasketData] = useState<CartItem[]>([]);
   const [postOrderMutation] = usePostOrderMutation();
-  const { register, handleSubmit } = useForm<IOrderPost>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<IOrderPost>({
+    mode: "onChange",
+  });
   const [step, setStep] = useState(1);
   const { data: check } = useGetOrderQuery();
   const [isClosing, setIsClosing] = useState(false);
   const [modalType, setModalType] = useState<"form" | "success" | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
   useEffect(() => {
     if (cart && Array.isArray(cart) && cart[0]?.cart_items) {
       setBasketData(cart[0].cart_items);
@@ -47,7 +56,44 @@ const CheckoutSection = () => {
 
   const totalPrice = cart && Array.isArray(cart) && cart[0]?.total_price;
 
+  const handleNextStep = () => {
+    const firstName = watch("first_name");
+    const phoneNumber = watch("phone_number");
+    const city = watch("city");
+    const address = watch("address");
+
+    if (!firstName || firstName.trim() === "") {
+      setValidationError("Пожалуйста, введите ваше имя");
+      return;
+    }
+    if (!phoneNumber || phoneNumber.trim() === "") {
+      setValidationError("Пожалуйста, введите ваш телефон");
+      return;
+    }
+    if (!city || city.trim() === "") {
+      setValidationError("Пожалуйста, введите ваш город");
+      return;
+    }
+    if (!address || address.trim() === "") {
+      setValidationError("Пожалуйста, введите ваш адрес");
+      return;
+    }
+
+    setValidationError(null);
+    setStep((prev) => prev + 1);
+  };
+
+  const handlePrevStep = () => {
+    setValidationError(null);
+    setStep((prev) => prev - 1);
+  };
+
   const onSubmit: SubmitHandler<IOrderPost> = async (data) => {
+    if (!data.delivery) {
+      setValidationError("Пожалуйста, выберите способ доставки");
+      return;
+    }
+
     const orderData = {
       order_user: cart?.[0]?.user,
       cart_id: cart?.[0]?.id,
@@ -60,14 +106,12 @@ const CheckoutSection = () => {
 
     try {
       await postOrderMutation(orderData);
-      // router.push("/success");
+      handleOpenModal();
     } catch (error) {
       console.error("Order error:", error);
+      setValidationError("Произошла ошибка при оформлении заказа");
     }
   };
-
-  const handleNextStep = () => setStep((prev) => prev + 1);
-  const handlePrevStep = () => setStep((prev) => prev - 1);
 
   const handleOpenModal = () => {
     setModalType("form");
@@ -98,36 +142,69 @@ const CheckoutSection = () => {
                           type="text"
                           placeholder="Введите ваше имя"
                           {...register("first_name", {
-                            required: true,
+                            required: "Это поле обязательно",
+                            minLength: {
+                              value: 2,
+                              message: "Минимум 2 символа",
+                            },
                           })}
                         />
+                        {errors.first_name && (
+                          <span className={scss.errorText}>
+                            {errors.first_name.message}
+                          </span>
+                        )}
                       </label>
                       <label>
                         Телефон
                         <input
                           type="tel"
-                          placeholder="Введите ваш телефон"
+                          placeholder="Введите номер телефона +996"
                           {...register("phone_number", {
-                            required: true,
+                            required: "Это поле обязательно",
                           })}
                         />
+                        {errors.phone_number && (
+                          <span className={scss.errorText}>
+                            {errors.phone_number.message}
+                          </span>
+                        )}
                       </label>
                       <label>
                         Город
                         <input
                           type="text"
                           placeholder="Введите ваш город"
-                          {...register("city", { required: true })}
+                          {...register("city", {
+                            required: "Это поле обязательно",
+                          })}
                         />
+                        {errors.city && (
+                          <span className={scss.errorText}>
+                            {errors.city.message}
+                          </span>
+                        )}
                       </label>
                       <label>
                         Адрес
                         <input
                           type="text"
                           placeholder="Введите ваш адрес"
-                          {...register("address", { required: true })}
+                          {...register("address", {
+                            required: "Это поле обязательно",
+                          })}
                         />
+                        {errors.address && (
+                          <span className={scss.errorText}>
+                            {errors.address.message}
+                          </span>
+                        )}
                       </label>
+                      {validationError && (
+                        <div className={scss.errorMessage}>
+                          {validationError}
+                        </div>
+                      )}
                       <button type="button" onClick={handleNextStep}>
                         Далее
                       </button>
@@ -143,7 +220,9 @@ const CheckoutSection = () => {
                         <input
                           type="radio"
                           value="самовывоз"
-                          {...register("delivery", { required: true })}
+                          {...register("delivery", {
+                            required: "Выберите способ доставки",
+                          })}
                         />
                         <div className={scss.radioContent}>
                           <p>Самовывоз</p>
@@ -156,7 +235,9 @@ const CheckoutSection = () => {
                         <input
                           type="radio"
                           value="курьер"
-                          {...register("delivery", { required: true })}
+                          {...register("delivery", {
+                            required: "Выберите способ доставки",
+                          })}
                         />
                         <div className={scss.radioContent}>
                           <p>Доставка</p>
@@ -166,11 +247,20 @@ const CheckoutSection = () => {
                           </div>
                         </div>
                       </label>
+                      {errors.delivery && (
+                        <span className={scss.errorText}>
+                          {errors.delivery.message}
+                        </span>
+                      )}
                       <div className={scss.buttonGroup}>
-                        <button type="button" onClick={handlePrevStep}>
+                        <button
+                          className={scss.prevButton}
+                          type="button"
+                          onClick={handlePrevStep}
+                        >
                           Назад
                         </button>
-                        <button onClick={handleOpenModal} type="submit">
+                        <button className={scss.nextButton} type="submit">
                           Оформить заказ
                         </button>
                       </div>

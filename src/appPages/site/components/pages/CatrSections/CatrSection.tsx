@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import imgBasket from "@/assets/images/basket.svg";
 import scss from "./CatrSection.module.scss";
 import { useParams, useRouter } from "next/navigation";
 import {
@@ -26,10 +27,9 @@ interface CartItem {
   };
 }
 
-
-
 const CartSection = () => {
   const { data: cart, refetch } = useGetCartQuery();
+  console.log("🚀 ~ CartSection ~ cart:", cart);
   const [basketData, setBasketData] = useState<CartItem[]>([]);
   const [updateMutation] = useUpdateBasketMutation();
   const [deleteMutation] = useDeleteBasketMutation();
@@ -84,7 +84,7 @@ const CartSection = () => {
         <div className={scss.content}>
           <h1>Корзина</h1>
 
-          {cart ? (
+          {basketData.length > 0 ? (
             <div className={scss.block}>
               <div className={scss.block_left}>
                 <div className={scss.table}>
@@ -216,6 +216,7 @@ const CartSection = () => {
           ) : (
             <div className={scss.basket}>
               <div className={scss.basketBlock}>
+                <Image src={imgBasket} alt="photo" />
                 <h3>Ваша корзина пуста</h3>
                 <p>
                   Похоже, вы еще не добавили в корзину никаких товаров. Начните
