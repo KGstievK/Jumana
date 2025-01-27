@@ -31,6 +31,7 @@ const ProfileSection: FC = () => {
       const { data: userId } = await putMe(dataUser);
       console.log(userId);
       // window.location.reload();
+      
     } catch (e) {
       console.error("An error occurred:", e);
     }

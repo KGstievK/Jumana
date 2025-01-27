@@ -78,18 +78,24 @@ const Review = () => {
         </div>
       </section>
     );
-  } 
-  if (status === 'rejected') {
-    return <section className={scss.Review}>
-      <div className={scss.content}>
-        <h1 className="title">Отзывы</h1>
-        <div className={scss.ReviewBlock}>
-          <Link href='auth/sign-in'>
-            <button>Войти</button>
-          </Link>
+  }
+  if (status === "rejected") {
+    return (
+      <section className={scss.Review}>
+        <div className={scss.content}>
+          <h1 className="title">Отзывы</h1>
+          <div className={scss.ReviewBlock}>
+            <div className={scss.ReviewForm}>
+              <h2>Оставить отзыв</h2>
+              <p>Оставляйте свои комментарии здесь для других клиентов</p>
+              <Link href="auth/sign-in">
+                <button>Войти</button>
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>;
+      </section>
+    );
   }
 };
 
