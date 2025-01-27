@@ -45,7 +45,6 @@ const SinglePageSection: FC = () => {
     },
     color_id: 0,
   });
-  console.log("🚀 ~ value:", value);
 
   const [count, setCounter] = useState<number>(1);
   const [addBasketMutation] = useAddToBasketMutation();

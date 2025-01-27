@@ -14,7 +14,6 @@ import Link from "next/link";
 
 const Review = () => {
   const id = useParams();
-  console.log("🚀 ~ Review ~ id:", id);
   const { data: userResponse, status } = useGetMeQuery();
   const { data: clothesResponse } = useGetClothesByIdQuery(Number(id.single));
   const { register, handleSubmit } = useForm<REVIEW.ReviewRequest>();
@@ -24,7 +23,6 @@ const Review = () => {
 
   const onSubmit: SubmitHandler<REVIEW.ReviewRequest> = async (ReviewData) => {
     if (!userResponse?.map((el) => el.id)) {
-      console.error("User data not available");
       return;
     }
 
@@ -42,7 +40,6 @@ const Review = () => {
 
     try {
       const { data } = await PostReviewMutation(ReviewDataRest);
-      console.log("Review submitted successfully:", data);
     } catch (e) {
       console.error("An error occurred:", e);
     }
