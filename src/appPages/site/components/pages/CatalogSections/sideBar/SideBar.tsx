@@ -12,6 +12,10 @@ const SideBar: FC = () => {
   const [category, setCategory] = useState("");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
+  const [priceRange, setPriceRange] = useState<{ min: string; max: string }>({
+    min: "",
+    max: "",
+  });
 
   const [openSections, setOpenSections] = useState<
     Record<SectionKeys, boolean>
@@ -42,8 +46,20 @@ const SideBar: FC = () => {
   const handleSizeChange = (size: string) => {
     setSelectedSize((prev) => (prev === size ? "" : size));
   };
+
   const handleColorChange = (color: string) => {
     setSelectedColor((prev) => (prev === color ? "" : color));
+  };
+
+  const handlePriceInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "min" | "max"
+  ) => {
+    const value = e.target.value;
+    setPriceRange((prev) => ({
+      ...prev,
+      [type]: value,
+    }));
   };
 
   return (
@@ -124,6 +140,35 @@ const SideBar: FC = () => {
             )}
           </div>
 
+          {/* ЦЕНА */}
+          <div className={scss.filterSection}>
+            <div
+              className={scss.filterHeader}
+              onClick={() => toggleSection("price")}
+            >
+              <h4>ЦЕНА</h4>
+              <Image src={arrow} alt="arrow" />
+            </div>
+            {openSections.price && (
+              <div className={scss.filterContent}>
+                <div className={scss.priceInputs}>
+                  <input
+                    type="number"
+                    placeholder="Мин"
+                    value={priceRange.min}
+                    onChange={(e) => handlePriceInputChange(e, "min")}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Макс"
+                    value={priceRange.max}
+                    onChange={(e) => handlePriceInputChange(e, "max")}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* ЦВЕТ */}
           <div className={scss.filterSection}>
             <div
@@ -151,10 +196,30 @@ const SideBar: FC = () => {
               </div>
             )}
           </div>
+
+          <div
+            className={scss.clearFilter}
+            onClick={() => {
+              setCategory("");
+              setSelectedSize("");
+              setSelectedColor("");
+              setPriceRange({ min: "", max: "" });
+            }}
+          >
+            <button>Очистить x</button>
+          </div>
         </div>
       </div>
 
-      <Cards value={category} size={selectedSize} color={selectedColor} />
+      <Cards
+        value={category}
+        size={selectedSize}
+        color={selectedColor}
+        priceRange={[
+          parseInt(priceRange.min) || 0,
+          parseInt(priceRange.max) || Infinity,
+        ]}
+      />
     </section>
   );
 };

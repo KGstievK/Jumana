@@ -12,6 +12,7 @@ import heart from "@/assets/icons/HeartStraight.svg";
 import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
 import ColorsClothes from "../../../ui/colors/Colors";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 interface ClothesCategoryItem {
   clothes_category: Array<{
@@ -33,11 +34,12 @@ interface ClothesCategoryItem {
   }>;
 }
 
-const Cards: FC<{ value: string; size: string; color: string }> = ({
-  value,
-  size,
-  color,
-}) => {
+const Cards: FC<{
+  value: string;
+  size: string;
+  color: string;
+  priceRange: [number, number];
+}> = ({ value, size, color, priceRange }) => {
   const router = useRouter();
   const { data } = useGetAllCategoryQuery();
   const [datas, setDatas] = useState(data);
@@ -92,101 +94,134 @@ const Cards: FC<{ value: string; size: string; color: string }> = ({
       if (size) {
         filteredData = filteredData.filter((el) =>
           el.clothes_category.some(
-            (item) =>
+            (item: { size: any[] }) =>
               Array.isArray(item.size) &&
-              item.size.some((s) => s.toUpperCase() === size.toUpperCase())
+              item.size.some(
+                (s: string) => s.toUpperCase() === size.toUpperCase()
+              )
           )
         );
       }
 
       if (color) {
         filteredData = filteredData.filter((el) =>
-          el.clothes_category.some((item) =>
+          el.clothes_category.some((item: { clothes_img: any[] }) =>
             item.clothes_img.some(
-              (c) => c.color.toLowerCase() === color.toLowerCase()
+              (c: { color: string }) =>
+                c.color.toLowerCase() === color.toLowerCase()
             )
+          )
+        );
+      }
+
+      if (priceRange) {
+        filteredData = filteredData.filter((el) =>
+          el.clothes_category.some(
+            (item: { discount_price: number }) =>
+              item.discount_price >= priceRange[0] &&
+              item.discount_price <= priceRange[1]
           )
         );
       }
 
       setDatas(filteredData);
     }
-  }, [data, value, size, color]);
+  }, [data, value, size, color, priceRange]);
 
   return (
     <div id={scss.Cards}>
       <div className={scss.content}>
         <div className={scss.cards}>
           {datas?.map((el) =>
-            el.clothes_category.map((item) => (
-              <div
-                key={item.id}
-                className={scss.card}
-                onClick={() => router.push(`/${item.id}`)}
-              >
-                <div className={scss.blockImg}>
-                  <div className={scss.like}>
-                    <div className={scss.star}>
-                      <Image
-                        width={500}
-                        height={300}
-                        layout="intrinsic"
-                        alt="photo"
-                        src={star}
-                      />
-                      <h6>{item.average_rating}</h6>
+            el.clothes_category.map(
+              (item: {
+                id: any;
+                average_rating: any;
+                clothes_img: any;
+                clothes_name: any;
+                discount_price: any;
+                price: any;
+                promo_category?: { promo_category: string }[];
+                clothes_id?: number | undefined;
+                size?: string[];
+                created_date?: string;
+              }) => (
+                <div
+                  key={item.id}
+                  className={scss.card}
+                  onClick={() => router.push(`/${item.id}`)}
+                >
+                  <div className={scss.blockImg}>
+                    <div className={scss.like}>
+                      <div className={scss.star}>
+                        <Image
+                          width={500}
+                          height={300}
+                          layout="intrinsic"
+                          alt="photo"
+                          src={star}
+                        />
+                        <h6>{item.average_rating}</h6>
+                      </div>
+                      <div
+                        className={scss.heart}
+                        onClick={(e) => {
+                          e.stopPropagation(), handleFavoriteClick(e, item);
+                        }}
+                      >
+                        <Image
+                          width={24}
+                          height={24}
+                          src={
+                            favoriteItems?.some(
+                              (fav) => fav.clothes.id === item.id
+                            )
+                              ? heartRed
+                              : heart
+                          }
+                          alt="heart"
+                        />
+                      </div>
                     </div>
-                    <div
-                      className={scss.heart}
-                      onClick={(e) => {
-                        e.stopPropagation(), handleFavoriteClick(e, item);
-                      }}
-                    >
-                      <Image
-                        width={24}
-                        height={24}
-                        src={
-                          favoriteItems?.some(
-                            (fav) => fav.clothes.id === item.id
-                          )
-                            ? heartRed
-                            : heart
-                        }
-                        alt="heart"
-                      />
+                    {item.clothes_img
+                      .slice(0, 1)
+                      .map(
+                        (
+                          el: { photo: string | StaticImport },
+                          index: React.Key | null | undefined
+                        ) => (
+                          <Image
+                            key={index}
+                            width={5000}
+                            height={3000}
+                            layout="intrinsic"
+                            src={el.photo}
+                            alt="photo"
+                            className={scss.mainImg}
+                          />
+                        )
+                      )}
+                  </div>
+                  <div className={scss.blockText}>
+                    <div className={scss.productCategory}>
+                      <h4>Product Category</h4>
+                      <div className={scss.colors}>
+                        <ColorsClothes
+                          clothesImg={item.clothes_img.slice(0, 3)}
+                        />
+                      </div>
+                    </div>
+                    <h2>{item.clothes_name}</h2>
+                    <div className={scss.price}>
+                      <span>
+                        {Math.round(item.discount_price).toString()} cом
+                      </span>
+                      <del>{Math.round(item.price)} cом</del>
                     </div>
                   </div>
-                  {item.clothes_img.slice(0, 1).map((el, index) => (
-                    <Image
-                      key={index}
-                      width={5000}
-                      height={3000}
-                      layout="intrinsic"
-                      src={el.photo}
-                      alt="photo"
-                      className={scss.mainImg}
-                    />
-                  ))}
                 </div>
-                <div className={scss.blockText}>
-                  <div className={scss.productCategory}>
-                    <h4>Product Category</h4>
-                    <div className={scss.colors}>
-                      <ColorsClothes
-                        clothesImg={item.clothes_img.slice(0, 3)}
-                      />
-                    </div>
-                  </div>
-                  <h2>{item.clothes_name}</h2>
-                  <div className={scss.price}>
-                    <span>
-                      {Math.round(item.discount_price).toString()} cом
-                    </span>
-                    <del>{Math.round(item.price)} cом</del>
-                  </div>
-                </div>
-              </div>
-            ))
+              )
+            )
           )}
         </div>
       </div>
