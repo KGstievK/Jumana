@@ -10,11 +10,12 @@ import {
   useGetClothesByIdQuery,
 } from "@/redux/api/category";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 const Review = () => {
   const id = useParams();
   console.log("🚀 ~ Review ~ id:", id);
-  const { data: userResponse } = useGetMeQuery();
+  const { data: userResponse, status } = useGetMeQuery();
   const { data: clothesResponse } = useGetClothesByIdQuery(Number(id.single));
   const { register, handleSubmit } = useForm<REVIEW.ReviewRequest>();
   const [value, setValue] = useState(0);
@@ -49,35 +50,50 @@ const Review = () => {
 
   const desc = ["Очень плохо", "Плохо", "Нормально", "Хорошо", "Отлично"];
 
-  return (
-    <section className={scss.Review}>
+  if (status === "fulfilled") {
+    return (
+      <section className={scss.Review}>
+        <div className={scss.content}>
+          <h1 className="title">Отзывы</h1>
+          <div className={scss.ReviewBlock}>
+            <div className={scss.ReviewForm}>
+              <h2>Оставить отзыв</h2>
+              <p>Оставляйте свои комментарии здесь для других клиентов</p>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Flex gap="middle" vertical className={scss.Flex}>
+                  <Rate
+                    tooltips={desc}
+                    onChange={setValue}
+                    value={value}
+                    className={scss.Rate}
+                  />
+                  {value ? <span>{desc[value - 1]}</span> : null}
+                </Flex>
+                <textarea
+                  {...register("text")}
+                  placeholder="Введите текст отзыва"
+                />
+                <button type="submit">Отправить отзыв</button>
+              </form>
+            </div>
+            <div className={scss.ReviewComment}></div>
+          </div>
+        </div>
+      </section>
+    );
+  } 
+  if (status === 'rejected') {
+    return <section className={scss.Review}>
       <div className={scss.content}>
         <h1 className="title">Отзывы</h1>
         <div className={scss.ReviewBlock}>
-          <div className={scss.ReviewForm}>
-            <h2>Оставить отзыв</h2>
-            <p>Оставляйте свои комментарии здесь для других клиентов</p>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Flex
-                gap="middle"
-                vertical
-                className={scss.Flex}
-              >
-                <Rate tooltips={desc} onChange={setValue} value={value} className={scss.Rate}/>
-                {value ? <span>{desc[value - 1]}</span> : null}
-              </Flex>
-              <textarea
-                {...register("text")}
-                placeholder="Введите текст отзыва"
-              />
-              <button type="submit">Отправить отзыв</button>
-            </form>
-          </div>
-          <div className={scss.ReviewComment}></div>
+          <Link href='auth/sign-in'>
+            <button>Войти</button>
+          </Link>
         </div>
       </div>
-    </section>
-  );
+    </section>;
+  }
 };
 
 export default Review;

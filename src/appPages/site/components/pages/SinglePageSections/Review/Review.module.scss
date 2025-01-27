@@ -2,9 +2,20 @@
   .content {
     .ReviewBlock {
       display: grid;
-      grid-template-columns:46% 53%;
+      grid-template-columns: 46% 53%;
       align-items: flex-start;
       justify-content: space-between;
+      a {
+        margin-top: 20px;
+        width: 100%;
+        button {
+          width: 100%;
+          height: 60px;
+          color: var(--background);
+          font-size: 22px;
+          font-weight: 500;
+        }
+      }
       .ReviewForm {
         display: flex;
         align-items: flex-start;
@@ -35,7 +46,7 @@
             gap: 50px; // Устанавливает отступы между элементами
             align-items: center;
           }
-          
+
           .Rate {
             font-size: 60px; // Размер звезд
             .ant-rate-star {
@@ -56,6 +67,8 @@
             width: 100%;
             height: 60px;
             color: var(--background);
+            font-size: 22px;
+            font-weight: 500;
           }
         }
       }
