@@ -278,3 +278,32 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .CatrSection {
+    .content {
+      .block {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .block_left {
+          .table {
+            width: 100%;
+            max-width: 500px;
+            thead {
+              display: none;
+            }
+            .product {
+              display: flex;
+              width: 50%;
+            }
+            .left_box {
+              display: flex;
+              flex-direction: column;
+            }
+          }
+        }
+      }
+    }
+  }
+}
