@@ -40,7 +40,7 @@ const SignInPage: FC = () => {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem("accessToken", JSON.stringify(response.data));
       }
-      // window.location.reload();
+      window.location.reload();
       console.log(response.data);
     } catch (e) {
       console.error("An error occurred:", e);
@@ -98,7 +98,7 @@ const SignInPage: FC = () => {
       <div className={scss.nav}>
         <p>У вас нет аккаунта?</p>
         <Link href="/auth/sign-up" className={scss.link}>
-          Зарегестрироваться 
+          Зарегестрироваться
         </Link>
       </div>
     </section>
