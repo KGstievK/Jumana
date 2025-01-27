@@ -98,7 +98,7 @@ const SignInPage: FC = () => {
       <div className={scss.nav}>
         <p>У вас нет аккаунта?</p>
         <Link href="/auth/sign-up" className={scss.link}>
-          Зарегестрироваться
+          Зарегестрироваться 
         </Link>
       </div>
     </section>
