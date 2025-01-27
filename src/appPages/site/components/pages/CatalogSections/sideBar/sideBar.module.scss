@@ -29,6 +29,22 @@
   padding: 16px;
 }
 
+.clearFilter {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  button {
+    background: none;
+    border: none;
+    color: #c4c4c4;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: left;
+  }
+}
+
 .filterContainer.open {
   transform: translateX(0);
   display: block;
