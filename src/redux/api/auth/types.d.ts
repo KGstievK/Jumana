@@ -10,8 +10,6 @@ namespace AUTH {
   type GetRequest = void;
 
   type PutMeResponse = {
-    // access: string;
-    // refresh: string;
   }
   type PutMeRequest = {
     id: number

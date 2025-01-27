@@ -4,25 +4,21 @@ import { FC, useState } from "react";
 import { useGetMeQuery, usePutMeMutation } from "@/redux/api/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-interface PutMeProps {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  address: string;
-  number: string;
-  password: string;
-}
-
 const ProfileSection: FC = () => {
   const { data: response } = useGetMeQuery();
   const [putMe] = usePutMeMutation();
 
-  const { register, handleSubmit } = useForm<PutMeProps>();
+  const { register, handleSubmit } = useForm<AUTH.PutMeRequest>();
 
   const onSubmit: SubmitHandler<AUTH.PutMeRequest> = async (userData) => {
+
+    if (!response?.map((el) => el.id)) {
+      console.error("User data not available");
+      return;
+    }
+
     const dataUser = {
-      id: response?.map((el) => el?.id), // Используем первый элемент массива, если response - массив
+      id: response[0].id,
       email: userData.email,
       first_name: userData.first_name,
       last_name: userData.last_name,

@@ -14,6 +14,7 @@ import React, { FC, useState, useEffect } from "react";
 import Sizes from "./sizes/Sizes";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { post_cart_item } from "@/types/schema";
+import Review from "./Review/Review";
 
 const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
@@ -28,6 +29,7 @@ interface clothesImg {
 
 const SinglePageSection: FC = () => {
   const id = useParams();
+
   const { data } = useGetClothesByIdQuery(Number(id.single));
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -110,7 +112,7 @@ const SinglePageSection: FC = () => {
               />
             </div>
             <div className={scss.thumbnails}>
-              {clothes_img?.map((el:clothesImg, index:number) => (
+              {clothes_img?.map((el: clothesImg, index: number) => (
                 <div
                   key={index}
                   className={`${scss.thumbnail} ${
@@ -224,6 +226,9 @@ const SinglePageSection: FC = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className={scss.review}>
+          <Review />
         </div>
       </div>
     </section>

@@ -1,0 +1,64 @@
+.Review {
+  .content {
+    .ReviewBlock {
+      display: grid;
+      grid-template-columns:46% 53%;
+      align-items: flex-start;
+      justify-content: space-between;
+      .ReviewForm {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 25px;
+        margin-top: 20px;
+        h2 {
+          font-size: 20px;
+          font-weight: 500;
+          color: var(--main-color);
+        }
+        p {
+          font-size: 18px;
+          font-weight: 300;
+          color: var(--main-color);
+        }
+        form {
+          width: 100%;
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: flex-start;
+          gap: 25px;
+          .Flex {
+            display: flex;
+            flex-direction: column;
+            gap: 50px; // Устанавливает отступы между элементами
+            align-items: center;
+          }
+          
+          .Rate {
+            font-size: 60px; // Размер звезд
+            .ant-rate-star {
+              transition: transform 0.2s ease; // Анимация при наведении
+            }
+            .ant-rate-star:hover {
+              transform: scale(1.2); // Увеличение звезд при наведении
+            }
+          }
+          textarea {
+            width: 100%;
+            height: 60px;
+            border: 1px solid var(--main-color);
+            border-radius: 8px;
+            padding: 10px 20px;
+          }
+          button {
+            width: 100%;
+            height: 60px;
+            color: var(--background);
+          }
+        }
+      }
+    }
+  }
+}
