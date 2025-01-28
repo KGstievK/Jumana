@@ -6,6 +6,7 @@
   border: 1px solid rgb(219, 219, 219);
   border-radius: 8px;
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 20px;
   @media (max-width: 400px) {
@@ -28,7 +29,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    align-self: center;
     margin-bottom: 25px;
   }
   h1 {
@@ -36,6 +36,7 @@
     font-size: 18px;
     margin-bottom: 15px;
     text-align: start;
+    align-self: flex-start;
   }
   form {
     width: 425px;

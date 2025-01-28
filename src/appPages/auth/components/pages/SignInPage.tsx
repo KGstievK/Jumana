@@ -85,22 +85,12 @@ const SignInPage: FC = () => {
               Сохранить вход
             </Checkbox>
           </ConfigProvider>
-          <Link href="/auth/forgot" className={scss.link}>
+          {/* <Link href="/auth/forgot" className={scss.link}>
             Забыли пароль?
-          </Link>
+          </Link> */}
         </div>
         <button type="submit">Войти</button>
       </form>
-      <div className={scss.orLine}>
-        <div className={scss.line}></div>
-        <p>или</p>
-        <div className={scss.line}></div>
-      </div>
-      <div className={scss.google}>
-        <button className={scss.link} onClick={() => signIn("google")}>
-          <Image src={google} alt="Google" />
-        </button>
-      </div>
       <div className={scss.nav}>
         <p>У вас нет аккаунта?</p>
         <Link href="/auth/sign-up" className={scss.link}>

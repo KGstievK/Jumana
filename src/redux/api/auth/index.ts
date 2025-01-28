@@ -9,6 +9,13 @@
         }),
         providesTags: ["auth"],
       }),
+      getMeid: build.query<AUTH.GetIdResponse, AUTH.GetIdRequest>({
+        query: (id) => ({
+          url: `/profile/${id}/`,
+          method: "GET",
+        }),
+        providesTags: ["auth"],
+      }),
       postLogin: build.mutation<AUTH.PostLoginResponse, AUTH.PostLoginRequest>({
         query: (data) => ({
           url: "/login/",
@@ -82,6 +89,7 @@
   });
   export const {
     useGetMeQuery,
+    useGetMeidQuery,
     usePutMeMutation,
     usePostLoginMutation,
     usePostRegistrationMutation,

@@ -3,10 +3,13 @@ import scss from "./ProfileSection.module.scss";
 import { FC, useState } from "react";
 import { useGetMeQuery, usePutMeMutation } from "@/redux/api/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useParams } from "next/navigation";
 
 const ProfileSection: FC = () => {
+  // const id = useParams()
   const [tab, setTab] = useState(false);
   const { data: response } = useGetMeQuery();
+  // const { data: responses } = useGetMeidQuery(Number(id.profile));
   const [putMe] = usePutMeMutation();
 
   const { register, handleSubmit } = useForm<AUTH.PutMeRequest>();

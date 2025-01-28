@@ -119,16 +119,6 @@ const SignUpPage: FC = () => {
           Войти
         </Link>
       </div>
-      <div className={scss.orLine}>
-        <div className={scss.line}></div>
-        <p>или</p>
-        <div className={scss.line}></div>
-      </div>
-      <div className={scss.google}>
-        <button className={scss.Google_link} onClick={() => signIn("google")}>
-          <Image src={google} alt="Google" />
-        </button>
-      </div>
     </section>
   );
 };
