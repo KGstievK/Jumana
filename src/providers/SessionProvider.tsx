@@ -16,13 +16,14 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
 
   const handleRefreshToken = async () => {
     const localStorageData = JSON.parse(localStorage.getItem("accessToken")!);
+    const SessionStorageData = JSON.parse(sessionStorage.getItem("accessToken")!);
 
-    if (!localStorageData) {
+    if (!localStorageData || !SessionStorageData) {
       console.warn("Токены отсутствуют в локальном хранилище.");
       return;
     }
 
-    const { access, refresh } = localStorageData;
+    const { access, refresh } = localStorageData || SessionStorageData;
 
     // Проверка, истек ли срок действия токена
     const isTokenExpired = (token: string): boolean => {
@@ -40,12 +41,14 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
       try {
         const { data } = await refreshTokenMutation({ refresh });
         if (data) {
-          localStorage.setItem("accessToken", JSON.stringify(data));  // Сохраняем новые токены
+          localStorage.setItem("accessToken", JSON.stringify(data));
+          sessionStorage.setItem("accessToken", JSON.stringify(data));
           console.log("Токены успешно обновлены:", data);
         }
       } catch (error) {
         console.error("Не удалось обновить токены:", error);
         localStorage.removeItem("accessToken");
+        sessionStorage.removeItem("accessToken");
         router.push("/auth/sign-in");  // Переход на страницу логина
       }
     }

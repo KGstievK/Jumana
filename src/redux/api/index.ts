@@ -9,8 +9,13 @@ const baseQuery = fetchBaseQuery({
 	prepareHeaders: (headers) => {
 		let token = null;
 		const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
+		const SessionStorageData = JSON.parse(sessionStorage.getItem('accessToken')!);
 		if (localStorageData) {
 			const { access } = localStorageData;
+			token = access;
+		}
+		if (SessionStorageData) {
+			const { access } = SessionStorageData;
 			token = access;
 		}
 		if (token) {
@@ -19,7 +24,19 @@ const baseQuery = fetchBaseQuery({
 		return headers;
 	}
 });
-
+// const baseQuery = fetchBaseQuery({
+//   baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
+//   prepareHeaders: (headers) => {
+//     let token = JSON.parse(String(localStorage.getItem("accessToken")));
+//     if (!token) {
+//       token = JSON.parse(String(sessionStorage.getItem("accessToken")));
+//     }
+//     if (token) {
+//       headers.set("Authorization", `Bearer ${token}`);
+//     }
+//     return headers;
+//   },
+// });
 const baseQueryExtended: BaseQueryFn = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
   return result;
