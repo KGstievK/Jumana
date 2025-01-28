@@ -27,7 +27,7 @@ const Review = () => {
       author: userResponse[0].id,
       text: ReviewData.text,
       stars: value,
-      clothes_review: clothesResponse?.id,
+      clothes_review: clothesResponse!.id,
     };
 
     try {

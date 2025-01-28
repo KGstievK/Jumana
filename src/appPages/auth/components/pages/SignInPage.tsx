@@ -8,8 +8,6 @@ import Link from "next/link";
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import logo from "@/assets/icons/logo.svg";
-import google from "@/assets/icons/google.svg";
-import { signIn } from "next-auth/react";
 
 interface LoginProps {
   username: string;

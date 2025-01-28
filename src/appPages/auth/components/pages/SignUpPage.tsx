@@ -8,8 +8,6 @@ import Checkbox, { CheckboxChangeEvent } from "antd/es/checkbox";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/assets/icons/logo.svg";
-import google from "@/assets/icons/google.svg";
-import { signIn } from "next-auth/react";
 
 interface SignUpPrors {
   username: string;

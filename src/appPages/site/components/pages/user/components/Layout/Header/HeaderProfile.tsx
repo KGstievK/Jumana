@@ -1,13 +1,11 @@
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import scss from "./HeaderProfile.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import vector from "@/assets/icons/ProfileVector.svg";
 import vectorWite from "@/assets/icons/vectorWite.svg";
-import { signOut } from "next-auth/react";
 import { usePostLogoutMutation } from "@/redux/api/auth";
-import { useForm } from "react-hook-form";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 
 const HeaderProfile: FC = () => {
@@ -18,6 +16,7 @@ const HeaderProfile: FC = () => {
 	const logout = async () => {
 		await logoutMutation();
 		localStorage.removeItem('accessToken');
+		sessionStorage.removeItem('accessToken');
 		window.location.reload();
 	};
 

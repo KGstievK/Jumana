@@ -1,9 +1,8 @@
 import { usePathname } from "next/navigation";
 import Header from "./Header/HeaderProfile";
 import scss from "./LayoutProfile.module.scss";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 import Link from "next/link";
-import { lampa } from "@/appPages/admin/components/pages/icons";
 
 interface LayoutProfileProps {
   children: ReactNode;
