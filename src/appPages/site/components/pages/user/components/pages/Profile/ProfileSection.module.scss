@@ -5,7 +5,7 @@
     margin-left: 0;
   }
   p {
-    font-family: 'inter', sans-serif;
+    font-family: "inter", sans-serif;
     font-size: 16px;
     line-height: 15px;
     font-weight: 500;
@@ -25,12 +25,12 @@
     gap: 20px;
     margin-top: 25px;
     h1 {
-      font-family: 'inter', sans-serif;
+      font-family: "inter", sans-serif;
     }
     p {
       font-size: 16px;
-      font-family: 'inter', sans-serif;
-      color: var(--silver);  
+      font-family: "inter", sans-serif;
+      color: var(--silver);
     }
     form {
       display: flex;
@@ -45,6 +45,19 @@
       input {
         width: 100%;
         margin-bottom: 24px;
+      }
+      h2 {
+        width: 100%;
+        height: 60px;
+        margin-bottom: 24px;
+        padding: 15px 10px;
+        font-family: "Playfair Display", sans-serif;
+        font-size: 18px;
+        outline: none;
+        border-radius: 8px;
+        background-color: transparent;
+        border: 2px solid #d3d3d3;
+        color: var(--main-color);
       }
       .firstName_and_LastName {
         width: 100%;

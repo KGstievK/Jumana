@@ -49,7 +49,7 @@ const Review = () => {
               <h2>Оставить отзыв</h2>
               <p>Оставляйте свои комментарии здесь для других клиентов</p>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Flex gap="middle" vertical className={scss.Flex}>
+                <Flex gap='middle' vertical className={scss.Flex}>
                   <Rate
                     tooltips={desc}
                     onChange={setValue}
