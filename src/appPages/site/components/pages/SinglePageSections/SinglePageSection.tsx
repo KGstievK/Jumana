@@ -12,8 +12,6 @@ import { useParams, useRouter } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
 import React, { FC, useState, useEffect } from "react";
 import Sizes from "./sizes/Sizes";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
-import { post_cart_item } from "@/types/schema";
 import Review from "./Review/Review";
 
 const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
@@ -221,6 +219,23 @@ const SinglePageSection: FC = () => {
                     В корзинку
                   </button>
                   <Image src={bagSvg} alt="bag" width={24} height={24} />
+                </div>
+
+                <div className={scss.ListOfReview}>
+                  <div className={scss.lists}>
+                    <div className={scss.listBlock}>
+                      {data?.clothes_review.map((item, idx) => (
+                        <div key={idx}>
+                          <div className={scss.head}>
+                            <img src="" alt="avatar" />
+                            <div className={scss.headTitle}>
+                              <h2>{item.first_name}</h2>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,8 +1,5 @@
-import { Interface } from "readline";
-
 interface User {
   _id?: number;
-  // image: string;
   username: string;
   email: string;
   first_name: string;
