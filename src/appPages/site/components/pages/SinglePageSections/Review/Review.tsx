@@ -5,10 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { usePostReviewMutation } from "@/redux/api/review";
 import { REVIEW } from "@/redux/api/review/types";
 import { useGetMeQuery } from "@/redux/api/auth";
-import {
-  useGetAllClothesQuery,
-  useGetClothesByIdQuery,
-} from "@/redux/api/category";
+import { useGetClothesByIdQuery } from "@/redux/api/category";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
@@ -25,11 +22,6 @@ const Review = () => {
     if (!userResponse?.map((el) => el.id)) {
       return;
     }
-
-    // if (!clothesResponse || clothesResponse.length === 0) {
-    //   console.error("Clothes data not available");
-    //   return;
-    // }
 
     const ReviewDataRest: REVIEW.ReviewRequest = {
       author: userResponse[0].id,

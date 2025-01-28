@@ -44,17 +44,16 @@
           .Flex {
             display: flex;
             flex-direction: column;
-            gap: 50px; // Устанавливает отступы между элементами
+            gap: 50px;
             align-items: center;
           }
 
           .Rate {
-            font-size: 60px; // Размер звезд
             .ant-rate-star {
-              transition: transform 0.2s ease; // Анимация при наведении
+              transition: transform 0.2s ease;
             }
             .ant-rate-star:hover {
-              transform: scale(1.2); // Увеличение звезд при наведении
+              transform: scale(1.2);
             }
           }
           textarea {
