@@ -12,11 +12,6 @@ import { useState, useEffect } from "react";
 
 interface CartItem {
   id: number;
-  quantity: number;
-  price_clothes: number;
-  just_price: number;
-  total_price: number;
-  color: number;
   clothes: {
     clothes_name: string;
     clothes_img: Array<{
@@ -25,11 +20,25 @@ interface CartItem {
       color: string;
     }>;
   };
+  size: string;
+  color: number;
+  quantity: number;
+  price_clothes: string;
+  total_price: string;
+  color_id: number;
+  clothes_id: number;
+  just_price: string;
+}
+
+interface Cart {
+  id: number;
+  user: number;
+  total_price: string;
+  cart_items: CartItem[];
 }
 
 const CartSection = () => {
-  const { data: cart, refetch } = useGetCartQuery();
-  console.log("🚀 ~ CartSection ~ cart:", cart);
+  const { data: cart, refetch } = useGetCartQuery<{ data: Cart[] }>();
   const [basketData, setBasketData] = useState<CartItem[]>([]);
   const [updateMutation] = useUpdateBasketMutation();
   const [deleteMutation] = useDeleteBasketMutation();
@@ -37,7 +46,7 @@ const CartSection = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
 
   useEffect(() => {
     if (cart?.[0]?.cart_items && cart[0].cart_items.length > 0) {
@@ -108,7 +117,7 @@ const CartSection = () => {
                             <td>
                               <div className={scss.product}>
                                 <Image
-                                  width={130}
+                                  width={120}
                                   height={130}
                                   src={
                                     selectedImage?.photo ||
