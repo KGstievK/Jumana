@@ -6,34 +6,21 @@ import { useState } from 'react';
 import logo from "@/assets/icons/logo.svg";
 import Link from 'next/link';
 
-interface RegisterType {
-  token: string;
-  confirmPassword: string
-  newPassword: string;
-}
-
 
 const ResetPasswordPage = () => {
   const [PatchResetPasswordMutation] = usePatchResetPasswordMutation();
 
-  const { register, watch, handleSubmit } = useForm<RegisterType>();
+  const { register, watch, handleSubmit } = useForm<AUTH.PatchResetPasswordRequest>();
 
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const onSubmit: SubmitHandler<RegisterType> = async (userData) => {
+  const onSubmit: SubmitHandler<AUTH.PatchResetPasswordRequest> = async (userData) => {
     const userDataRest = {
       newPassword: userData.newPassword,
-      token: userData.token
+      token: userData.access
     };
 
     try {
       const response = await PatchResetPasswordMutation(userDataRest);
       if (response.data) {
-        const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem(
-          "accessToken",
-          JSON.stringify(response.data)
-        );
         // window.location.reload();
       }
     } catch (e) {
@@ -45,7 +32,7 @@ const ResetPasswordPage = () => {
     <section className={scss.ResetPasswordPage}>
       <Image src={logo} alt="LOGO" />
       <h1>Новый пароль</h1>
-      <form action="">
+      <form  onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
           {...register("newPassword", { required: true })}

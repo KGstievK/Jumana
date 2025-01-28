@@ -36,16 +36,11 @@ const SignInPage: FC = () => {
     };
     try {
       const response = await postLoginMutation(datalogin);
-      console.log(
-        "🚀 ~ constonSubmit:SubmitHandler<LoginProps>= ~ response:",
-        response
-      );
       if (response.data?.access) {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem("accessToken", JSON.stringify(response.data));
       }
       window.location.reload();
-      console.log(response.data);
     } catch (e) {
       console.error("An error occurred:", e);
     }

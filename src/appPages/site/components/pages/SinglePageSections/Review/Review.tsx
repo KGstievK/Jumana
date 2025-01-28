@@ -13,7 +13,7 @@ const Review = () => {
   const id = useParams();
   const { data: userResponse, status } = useGetMeQuery();
   const { data: clothesResponse } = useGetClothesByIdQuery(Number(id.single));
-  const { register, handleSubmit } = useForm<REVIEW.ReviewRequest>();
+  const { register, handleSubmit, reset } = useForm<REVIEW.ReviewRequest>();
   const [value, setValue] = useState(0);
 
   const [PostReviewMutation] = usePostReviewMutation();
@@ -32,6 +32,9 @@ const Review = () => {
 
     try {
       const { data } = await PostReviewMutation(ReviewDataRest);
+      console.log("Review submitted successfully:", data);
+      reset();
+      setValue(0);
     } catch (e) {
       console.error("An error occurred:", e);
     }
@@ -49,7 +52,7 @@ const Review = () => {
               <h2>Оставить отзыв</h2>
               <p>Оставляйте свои комментарии здесь для других клиентов</p>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Flex gap='middle' vertical className={scss.Flex}>
+                <Flex gap="middle" vertical className={scss.Flex}>
                   <Rate
                     tooltips={desc}
                     onChange={setValue}

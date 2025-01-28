@@ -64,11 +64,10 @@ namespace AUTH {
   };
 
   type PatchResetPasswordResponse = {
-    message: string;
+    // message: string;
   };
   type PatchResetPasswordRequest = {
     access: string;
-    refresh: string;
     newPassword: string;
   };
 }

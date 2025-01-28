@@ -26,12 +26,9 @@ const ProfileSection: FC = () => {
       address: userData.address,
       number: userData.number,
     };
-    console.log("🚀 ~ constonSubmit:SubmitHandler<AUTH.PutMeRequest>= ~ dataUser:", dataUser)
-    console.log("🚀 ~ constonSubmit:SubmitHandler<AUTH.PutMeRequest>= ~ dataUser.response[0].id:", response.map((el) => el))
 
     try {
       const { data: userId } = await putMe(dataUser);
-      console.log(userId);
       window.location.reload();
     } catch (e) {
       console.error("An error occurred:", e);
@@ -124,8 +121,7 @@ const ProfileSection: FC = () => {
                   }
                   {...register("address", { required: true })}
                 />
-                <button className={scss.submit} type="submit" //onClick={() => setTab(!tab)}
-                >
+                <button className={scss.submit} type="submit">
                   Сохранить
                 </button>
               </form>

@@ -24,11 +24,10 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
     }
 
     const { access, refresh } = localStorageData || SessionStorageData;
-
-    // Проверка, истек ли срок действия токена
+   
     const isTokenExpired = (token: string): boolean => {
       try {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Полезная нагрузка — это вторая часть
+        const payload = JSON.parse(atob(token.split(".")[1]));
         const now = Math.floor(Date.now() / 1000);
         return payload.exp < now;
       } catch (error) {
@@ -43,13 +42,12 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
         if (data) {
           localStorage.setItem("accessToken", JSON.stringify(data));
           sessionStorage.setItem("accessToken", JSON.stringify(data));
-          console.log("Токены успешно обновлены:", data);
         }
       } catch (error) {
         console.error("Не удалось обновить токены:", error);
         localStorage.removeItem("accessToken");
         sessionStorage.removeItem("accessToken");
-        router.push("/auth/sign-in");  // Переход на страницу логина
+        router.push("/auth/sign-in"); 
       }
     }
   };
@@ -79,11 +77,11 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    handleRefreshToken(); // Обновление токенов при монтировании компонента
+    handleRefreshToken();
   }, [pathname]);
 
   useEffect(() => {
-    handleNavigation(); // Навигация в зависимости от статуса аутентификации
+    handleNavigation();
   }, [status, pathname, router]);
 
   return children;
