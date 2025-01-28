@@ -9,16 +9,10 @@ import {
   usePostOrderMutation,
 } from "@/redux/api/product";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { IOrderPost } from "@/types/schema";
 import ModalConsul from "./ModalConsul";
 
 interface CartItem {
   id: number;
-  quantity: number;
-  price_clothes: number;
-  just_price: number;
-  total_price: number;
-  color: number;
   clothes: {
     clothes_name: string;
     clothes_img: Array<{
@@ -27,11 +21,36 @@ interface CartItem {
       color: string;
     }>;
   };
+  size: string;
+  color: number;
+  quantity: number;
+  price_clothes: string;
+  total_price: string;
+  color_id: number;
+  clothes_id: number;
+  just_price: string;
+}
+
+interface Cart {
+  id: number;
+  user: number;
+  total_price: string;
+  cart_items: CartItem[];
+}
+
+interface IOrderPost {
+  order_user: number;
+  cart_id: number;
+  delivery: "курьер" | "самовывоз";
+  first_name: string;
+  phone_number: string;
+  city: string;
+  address: string;
 }
 
 const CheckoutSection = () => {
   const router = useRouter();
-  const { data: cart } = useGetCartQuery();
+  const { data: cart } = useGetCartQuery<{ data: Cart[] }>();
   const [basketData, setBasketData] = useState<CartItem[]>([]);
   const [postOrderMutation] = usePostOrderMutation();
   const {
@@ -94,9 +113,14 @@ const CheckoutSection = () => {
       return;
     }
 
-    const orderData = {
-      order_user: cart?.[0]?.user,
-      cart_id: cart?.[0]?.id,
+    if (!cart?.[0]?.id || !cart?.[0]?.user) {
+      setValidationError("Ошибка: данные корзины недоступны");
+      return;
+    }
+
+    const orderData: IOrderPost = {
+      order_user: cart[0].user,
+      cart_id: cart[0].id,
       delivery: data.delivery,
       first_name: data.first_name,
       phone_number: data.phone_number,

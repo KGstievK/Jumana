@@ -43,9 +43,8 @@
             border: 1px solid #a73539;
           }
         }
-        span{
-
-            color: red;
+        span {
+          color: red;
         }
         .errorMessage {
           color: red;
@@ -126,10 +125,18 @@
               }
             }
 
+           
+
             &:hover {
               background: #fbeae6;
               border-color: #90312f;
             }
+          }
+          span {
+            color: red;
+          }
+          .errorMessage {
+            color: red;
           }
 
           .sum {
