@@ -165,7 +165,7 @@ const Cards: FC<{
                       </div>
                       <div
                         className={scss.heart}
-                        onClick={(e) => {
+                        onClick={(e,) => {
                           e.stopPropagation(), handleFavoriteClick(e, item);
                         }}
                       >
