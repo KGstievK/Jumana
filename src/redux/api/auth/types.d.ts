@@ -1,6 +1,7 @@
 namespace AUTH {
   type GetResponse = {
     id: number
+    username: string
     first_name: string;
     last_name: string;
     email: string
@@ -13,21 +14,17 @@ namespace AUTH {
   }
   type PutMeRequest = {
     id: number
+    username: string
     first_name: string;
     last_name: string;
     email: string
     address: string;
     number: string;
-    password: string;
   }
 
   type PostLoginResponse = {
-    // accessToken: string;
-    // accessTokenExpiration: number;
-    // refreshToken: string
     access: string;
     refresh: string;
-    // key: string
   };
 
   type PostLoginRequest = {
@@ -38,9 +35,6 @@ namespace AUTH {
   type PostRegistrationResponse = {
     access: string;
     refresh: string;
-    // accessToken: string;
-    // accessTokenExpiration: number;
-    // refreshToken: string
   };
   type PostRegistrationRequest = {
     username: string;
@@ -50,7 +44,6 @@ namespace AUTH {
   };
 
   type PostLogoutResponse = {
-    // message: string;
   };
   type PostLogoutRequest = void;
 
@@ -74,7 +67,6 @@ namespace AUTH {
     message: string;
   };
   type PatchResetPasswordRequest = {
-    // token: string;
     access: string;
     refresh: string;
     newPassword: string;

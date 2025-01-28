@@ -25,12 +25,6 @@ const Review = () => {
     if (!userResponse?.map((el) => el.id)) {
       return;
     }
-
-    // if (!clothesResponse || clothesResponse.length === 0) {
-    //   console.error("Clothes data not available");
-    //   return;
-    // }
-
     const ReviewDataRest: REVIEW.ReviewRequest = {
       author: userResponse[0].id,
       text: ReviewData.text,
@@ -57,7 +51,7 @@ const Review = () => {
               <h2>Оставить отзыв</h2>
               <p>Оставляйте свои комментарии здесь для других клиентов</p>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Flex gap="middle" vertical className={scss.Flex}>
+                <Flex gap='middle' vertical className={scss.Flex}>
                   <Rate
                     tooltips={desc}
                     onChange={setValue}

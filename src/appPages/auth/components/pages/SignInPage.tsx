@@ -18,7 +18,11 @@ interface LoginProps {
 
 const SignInPage: FC = () => {
   const [postLoginMutation] = usePostLoginMutation();
-  const { register, handleSubmit } = useForm<AUTH.PostLoginRequest>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AUTH.PostLoginRequest>();
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleRememberMeChange = (e: CheckboxChangeEvent) => {
@@ -57,12 +61,19 @@ const SignInPage: FC = () => {
           type="text"
           placeholder="User Name"
           {...register("username", { required: true })}
-        />
+          aria-invalid={errors.username ? "true" : "false"}
+          />
+          {errors.username?.type === "required" && (
+            <p role="alert">*Введите имя пользователя</p>
+          )}
+
         <input
           type="password"
           placeholder="Password"
           {...register("password", { required: true })}
+          aria-invalid={errors.password ? "true" : "false"}
         />
+         {errors.password && <p role="alert">*Введите пароль</p>}
         <div className={scss.links}>
           <ConfigProvider
             theme={{

@@ -21,7 +21,7 @@ interface SignUpPrors {
 const SignUpPage: FC = () => {
   const [postRegisterMutation] = usePostRegistrationMutation();
 
-  const { register, watch, handleSubmit } =
+  const { register, formState: { errors }, handleSubmit } =
     useForm<AUTH.PostRegistrationRequest>();
 
   const [rememberMe, setRememberMe] = useState(false);
@@ -64,22 +64,38 @@ const SignUpPage: FC = () => {
           type="text"
           {...register("username", { required: true })}
           placeholder="Имя аккаунта"
-        />
+          aria-invalid={errors.username ? "true" : "false"}
+          />
+          {errors.username?.type === "required" && (
+            <p role="alert">*Придумайте имя пользователя</p>
+          )}
         <input
           type="text"
           {...register("email", { required: true })}
           placeholder="E-mail"
-        />
+          aria-invalid={errors.email ? "true" : "false"}
+          />
+          {errors.email?.type === "required" && (
+            <p role="alert">*Введите ваш адрес электронной почты</p>
+          )}
         <input
           type="password"
           {...register("password", { required: true })}
           placeholder="Пароль"
-        />
+          aria-invalid={errors.password ? "true" : "false"}
+          />
+          {errors.password?.type === "required" && (
+            <p role="alert">*Придумайте пароль</p>
+          )}
         <input
           type="password"
           {...register("confirm_password", { required: true })}
           placeholder="Повторите пароль"
-        />
+          aria-invalid={errors.confirm_password ? "true" : "false"}
+          />
+          {errors.confirm_password?.type === "required" && (
+            <p role="alert">*Повторите пароль</p>
+          )}
         <ConfigProvider
           theme={{
             token: {
