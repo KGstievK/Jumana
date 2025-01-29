@@ -41,7 +41,7 @@ interface Cart {
 interface IOrderPost {
   order_user: number;
   cart_id: number;
-  delivery: "курьер" | "самовывоз";
+  delivery: "курьер" | "самовызов";
   first_name: string;
   phone_number: string;
   city: string;
@@ -119,7 +119,7 @@ const CheckoutSection = () => {
       return;
     }
 
-    const orderData: IOrderPost = {
+    const orderData = {
       order_user: cart[0].user,
       cart_id: cart[0].id,
       delivery: data.delivery,
@@ -131,7 +131,7 @@ const CheckoutSection = () => {
 
     try {
       await postOrderMutation(orderData);
-      // handleOpenModal();
+      handleOpenModal();
     } catch (error) {
       console.error("Order error:", error);
       setValidationError("Произошла ошибка при оформлении заказа");
@@ -248,7 +248,7 @@ const CheckoutSection = () => {
                       <label className={scss.radioLabel}>
                         <input
                           type="radio"
-                          value="самовывоз"
+                          value="самовызов"
                           {...register("delivery", {
                             required: "Выберите способ доставки",
                           })}

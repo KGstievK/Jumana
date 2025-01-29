@@ -7,12 +7,35 @@ import { HiOutlineArrowPath } from "react-icons/hi2";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FaBoxOpen } from "react-icons/fa6";
 
+type OrderStatus = "Oбработка" | "Собирается" | "В пути" | "Доставлен";
+
+interface CartItem {
+  clothes: {
+    clothes_img: Array<{
+      id: number;
+      photo: string;
+    }>;
+  };
+  color: number;
+}
+
+interface Cart {
+  total_price: string;
+  user: number;
+  cart_items: CartItem[];
+}
+
+interface IOrder {
+  order_status: OrderStatus;  // Burada string yerine OrderStatus kullanıyoruz
+  date: string;
+  cart: Cart;
+}
+
 interface OrderStatusModalProps {
   isOpen: boolean;
   onClose: () => void;
   orderData: IOrder;
 }
-type OrderStatus = "Oбработка" | "Собирается" | "В пути" | "Доставлен";
 
 const OrderStatusModal = ({
   isOpen,
@@ -35,22 +58,22 @@ const OrderStatusModal = ({
   const timelineItems = [
     {
       icon: <GrBasket />,
-      status: "Oбработка",
+      status: "Oбработка" as OrderStatus,
       text: "Заказ размещен"
     },
     {
       icon: <HiOutlineArrowPath />,
-      status: "Собирается",
+      status: "Собирается" as OrderStatus,
       text: "Собирается"
     },
     {
       icon: <TbTruckDelivery />,
-      status: "В пути",
+      status: "В пути" as OrderStatus,
       text: "В пути"
     },
     {
       icon: <FaBoxOpen />,
-      status: "Доставлен",
+      status: "Доставлен" as OrderStatus,
       text: "Доставлен"
     }
   ];
@@ -106,9 +129,9 @@ const OrderStatusModal = ({
             </div>
           </div>
           <div className={styles.orderItems}>
-            {orderData.cart.cart_items.map((item: any, idx: number) => {
+            {orderData.cart.cart_items.map((item, idx) => {
               const selectedImage = item.clothes.clothes_img.find(
-                (img: any) => img.id === item.color
+                (img) => img.id === item.color
               );
 
               return (
