@@ -2,7 +2,7 @@ namespace ICATEGORY {
   type getAllClothesRes = AllClothes[];
   type getAllClothesReq = void;
 
-  type getClothesByIdRes = clothesById;
+  type getClothesByIdRes = SingleProductData;
   type getClothesByIdReq = number;
 
   type getCategoryRes = category[];
