@@ -1,5 +1,3 @@
-// components/OrderStatusModal.tsx
-
 "use client";
 import React from "react";
 import styles from "./OrderStatusModal.module.scss";
@@ -12,8 +10,9 @@ import { FaBoxOpen } from "react-icons/fa6";
 interface OrderStatusModalProps {
   isOpen: boolean;
   onClose: () => void;
-  orderData: any;
+  orderData: IOrder;
 }
+type OrderStatus = "Oбработка" | "Собирается" | "В пути" | "Доставлен";
 
 const OrderStatusModal = ({
   isOpen,
@@ -21,6 +20,40 @@ const OrderStatusModal = ({
   orderData,
 }: OrderStatusModalProps) => {
   if (!isOpen) return null;
+
+  const getTimelineStatus = (currentStatus: OrderStatus, itemStatus: OrderStatus): boolean => {
+    const statusOrder = {
+      "Oбработка": 1,
+      "Собирается": 2,
+      "В пути": 3,
+      "Доставлен": 4
+    };
+  
+    return statusOrder[currentStatus] >= statusOrder[itemStatus];
+  };
+
+  const timelineItems = [
+    {
+      icon: <GrBasket />,
+      status: "Oбработка",
+      text: "Заказ размещен"
+    },
+    {
+      icon: <HiOutlineArrowPath />,
+      status: "Собирается",
+      text: "Собирается"
+    },
+    {
+      icon: <TbTruckDelivery />,
+      status: "В пути",
+      text: "В пути"
+    },
+    {
+      icon: <FaBoxOpen />,
+      status: "Доставлен",
+      text: "Доставлен"
+    }
+  ];
 
   return (
     <div className={styles.modalOverlay}>
@@ -31,37 +64,33 @@ const OrderStatusModal = ({
         </div>
 
         <div className={styles.statusTimeline}>
-          <div className={styles.timelineItem + " " + styles.active}>
-            <div className={styles.icon}>
-              <GrBasket />
+          {timelineItems.map((item, index) => (
+            <div
+              key={index}
+              className={`${styles.timelineItem} ${
+                getTimelineStatus(orderData.order_status, item.status)
+                  ? styles.active
+                  : ""
+              }`}
+            >
+              <div className={styles.icon}>
+                {item.icon}
+              </div>
+              <p>{item.text}</p>
             </div>
-            <p>Заказ размещен</p>
-          </div>
-
-          <div className={styles.timelineItem + " " + styles.active}>
-            <div className={styles.icon}>
-              <HiOutlineArrowPath />
-            </div>
-            <p>Собирается</p>
-          </div>
-
-          <div className={styles.timelineItem}>
-            <div className={styles.icon}>
-            <TbTruckDelivery />
-            </div>
-            <p>В пути</p>
-          </div>
-
-          <div className={styles.timelineItem}>
-            <div className={styles.icon}>
-            <FaBoxOpen />
-            </div>
-            <p>Доставлен</p>
-          </div>
+          ))}
         </div>
 
         <div className={styles.orderInfo}>
-          <p>Ваш заказ собирается.</p>
+          <p>
+            {orderData.order_status === "Oбработка"
+              ? "Ваш заказ обрабатывается."
+              : orderData.order_status === "Собирается"
+              ? "Ваш заказ собирается."
+              : orderData.order_status === "В пути"
+              ? "Ваш заказ в пути."
+              : "Ваш заказ доставлен."}
+          </p>
           <div className={styles.orderDetails}>
             <div>
               <span>Дата заказа</span>
@@ -85,7 +114,7 @@ const OrderStatusModal = ({
               return (
                 <div key={idx} className={styles.item}>
                   <Image
-                    src={selectedImage?.photo || "photo"}
+                    src={selectedImage?.photo || "/fallback-image.png"}
                     alt="Product"
                     width={100}
                     height={120}

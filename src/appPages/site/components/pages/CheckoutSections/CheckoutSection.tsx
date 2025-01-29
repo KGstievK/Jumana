@@ -63,6 +63,7 @@ const CheckoutSection = () => {
   });
   const [step, setStep] = useState(1);
   const { data: check } = useGetOrderQuery();
+  console.log("🚀 ~ CheckoutSection ~ check:", check);
   const [isClosing, setIsClosing] = useState(false);
   const [modalType, setModalType] = useState<"form" | "success" | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -130,11 +131,15 @@ const CheckoutSection = () => {
 
     try {
       await postOrderMutation(orderData);
-      handleOpenModal();
+      // handleOpenModal();
     } catch (error) {
       console.error("Order error:", error);
       setValidationError("Произошла ошибка при оформлении заказа");
     }
+    console.log(
+      "🚀 ~ constonSubmit:SubmitHandler<IOrderPost>= ~ orderData:",
+      orderData
+    );
   };
 
   const handleOpenModal = () => {
