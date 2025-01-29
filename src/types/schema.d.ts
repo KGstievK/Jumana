@@ -184,7 +184,7 @@ interface Textile {
 interface IOrderPost {
   order_user: number;
   cart_id: number;
-  delivery: "курьер" | "самовывоз";
+  delivery: "курьер" | "самовызов";
   first_name: string;
   phone_number: string;
   city: string;
@@ -225,8 +225,12 @@ interface IOrder {
   address: string;
 }
 interface Pay {
-  pay_img: string;
-  whatsapp: string;
+  whatsapp: string
+  pay_title: Array<{
+    pay_img: string
+    number: string
+    info: string
+  }>
 }
 
 interface SingleProductData {

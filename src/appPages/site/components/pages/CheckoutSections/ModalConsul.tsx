@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import scss from "./ModalConsul.module.scss";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoIosCheckmarkCircle } from "react-icons/io";
@@ -10,13 +11,43 @@ interface ModalConsulProps {
   onClose: (type?: "success" | null) => void;
 }
 
+interface Scaner {
+  pay_img: string;
+  info: string;
+  number: string;
+}
+
+interface Pay {
+  whatsapp: string;
+  pay_title: [
+    {
+      pay_img: string;
+      number: string;
+      info: string;
+    }
+  ];
+}
+
 const ModalConsul: React.FC<ModalConsulProps> = ({ type, onClose }) => {
-  const { data } = useGetPayQuery();
+  const { data } = useGetPayQuery<{ data: Pay[] }>();
+  const [imgError, setImgError] = useState<{ [key: string]: boolean }>({});
+
+  useEffect(() => {
+    if (data) {
+      console.log("Payment Data:", data);
+    }
+  }, [data]);
+
   const isSuccess = type === "success";
+
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
+  };
+
+  const handleImageError = (idx: number) => {
+    setImgError((prev) => ({ ...prev, [idx]: true }));
   };
 
   return (
@@ -36,20 +67,27 @@ const ModalConsul: React.FC<ModalConsulProps> = ({ type, onClose }) => {
             </div>
           </div>
         ) : (
-          <div className={scss.block}>
-            <h2 className={scss.title}></h2>
-            <Image
-              width={400}
-              height={400}
-              src={data?.[0]?.pay_img || null}
-              alt="scanner"
-            />
-            <Link href="https://web.telegram.org/a/">
-            <button>
-              отправьте чек
-            </button>
+          <>
+            <div className={scss.box}>
+              {data?.[0]?.pay_title?.map((el: Scaner, idx: number) => (
+                <div key={idx} className={scss.block}>
+                  <Image
+                    width={250}
+                    height={250}
+                    src={imgError[idx] ? "/fallback-image.jpg" : el?.pay_img}
+                    alt={`scanner-${idx}`}
+                    onError={() => handleImageError(idx)}
+                    priority
+                  />
+                  <h3 className={scss.title}>{el.number}</h3>
+                  <p>{el.info}</p>
+                </div>
+              ))}
+            </div>
+            <Link href={data?.[0]?.whatsapp || "#"}>
+              <button className={scss.button}>отправьте чек</button>
             </Link>
-          </div>
+          </>
         )}
       </div>
     </div>
