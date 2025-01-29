@@ -40,7 +40,8 @@ const CartSection = () => {
   }, []);
 
   useEffect(() => {
-    if (cart?.[0]?.cart_items && cart[0].cart_items.length > 0) {
+    // Проверяем, что cart является массивом и имеет элементы
+    if (Array.isArray(cart) &&cart[0].cart_items && cart.length > 0 ) {
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);
@@ -110,10 +111,7 @@ const CartSection = () => {
                                 <Image
                                   width={130}
                                   height={130}
-                                  src={
-                                    selectedImage?.photo ||
-                                    "/fallback-image.png"
-                                  }
+                                  src={selectedImage?.photo || "/fallback-image.png"}
                                   alt="product"
                                 />
                                 <div className={scss.title}>
@@ -132,10 +130,7 @@ const CartSection = () => {
                                   <div className={scss.plus_minus}>
                                     <button
                                       onClick={() =>
-                                        handleUpdateQuantity(
-                                          item.id,
-                                          item.quantity - 1
-                                        )
+                                        handleUpdateQuantity(item.id, item.quantity - 1)
                                       }
                                     >
                                       -
@@ -143,19 +138,13 @@ const CartSection = () => {
                                     <h4>{item.quantity}</h4>
                                     <button
                                       onClick={() =>
-                                        handleUpdateQuantity(
-                                          item.id,
-                                          item.quantity + 1
-                                        )
+                                        handleUpdateQuantity(item.id, item.quantity + 1)
                                       }
                                     >
                                       +
                                     </button>
                                   </div>
-                                  <p
-                                    className={scss.delete}
-                                    onClick={() => handleDelete(item.id)}
-                                  >
+                                  <p className={scss.delete} onClick={() => handleDelete(item.id)}>
                                     удалить
                                   </p>
                                 </div>

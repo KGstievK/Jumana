@@ -52,6 +52,8 @@
                     gap: 40px;
                     img {
                       border-radius: 4px;
+                      object-fit: cover;
+                      object-position: center top;
                     }
                     .title {
                       display: flex;
@@ -148,9 +150,9 @@
 
       .block_right {
         width: 100%;
-        height: 100vh;
+        height: auto;
         max-width: 500px;
-        padding: 10px 20px;
+        padding: 20px;
         gap: 10px;
         background: #fffaf5;
         display: flex;
@@ -172,6 +174,8 @@
             width: 91px;
             height: 98px;
             border-radius: 4px;
+            object-fit: cover;
+            object-position: center top;
           }
 
           .text {
