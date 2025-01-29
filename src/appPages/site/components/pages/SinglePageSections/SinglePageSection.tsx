@@ -29,6 +29,7 @@ const SinglePageSection: FC = () => {
   const id = useParams();
 
   const { data } = useGetClothesByIdQuery(Number(id.single));
+  console.log("🚀 ~ data:", data);
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [value, setValue] = useState<post_cart_item>({
@@ -220,25 +221,10 @@ const SinglePageSection: FC = () => {
                   </button>
                   <Image src={bagSvg} alt="bag" width={24} height={24} />
                 </div>
-
-                <div className={scss.ListOfReview}>
-                  <div className={scss.lists}>
-                    <div className={scss.listBlock}>
-                      {data?.clothes_review.map((item, idx) => (
-                        <div key={idx}>
-                          <div className={scss.head}>
-                            <img src="" alt="avatar" />
-                            <div className={scss.headTitle}>
-                              <h2>{item.first_name}</h2>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
+
+            <div className={scss.listOfReview}></div>
           </div>
         </div>
         <div className={scss.review}>

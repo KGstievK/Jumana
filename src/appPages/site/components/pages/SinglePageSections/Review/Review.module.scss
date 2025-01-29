@@ -74,6 +74,58 @@
           }
         }
       }
+      .ReviewComment {
+        width: 100%;
+        background: #e7dacf4d;
+        padding: 20px 15px;
+        border-radius: 8px;
+        .lists {
+          width: 100%;
+          display: flex;
+          align-items: start;
+          justify-content: start;
+          flex-direction: column;
+          .block {
+            display: flex;
+            align-items: start;
+            justify-content: start;
+            flex-direction: column;
+            width: 100%;
+            .head {
+              display: flex;
+              align-items: center;
+              justify-content: start;
+              gap: 10px;
+              .foto {
+                font-size: 20px;
+              }
+
+              .headTitle {
+                h2 {
+                  font-size: 20px;
+                  font-weight: 500;
+                  line-height: 24.2px;
+                }
+                h4 {
+                  font-size: 12px;
+                  font-weight: 500;
+                  color: #9e9e9e;
+                }
+              }
+
+              button {
+                margin-left: auto;
+                padding: 8px;
+                display: flex;
+                align-items: center;
+                // font-size: 12px;
+                font-weight: 550;
+                color: white;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

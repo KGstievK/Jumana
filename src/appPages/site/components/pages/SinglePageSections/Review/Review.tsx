@@ -8,6 +8,9 @@ import { useGetMeQuery } from "@/redux/api/auth";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import whiteStar from "@/assets/icons/whiteStar.svg";
+import { FaUser } from "react-icons/fa6";
+import { CiStar } from "react-icons/ci";
 
 const Review = () => {
   const id = useParams();
@@ -49,7 +52,7 @@ const Review = () => {
           <h1 className="title">Отзывы</h1>
           <div className={scss.ReviewBlock}>
             <div className={scss.ReviewForm}>
-              <h2>Оставить отзыв</h2>
+              {/* <h2>Оставить отзыв</h2> */}
               <p>Оставляйте свои комментарии здесь для других клиентов</p>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex gap="middle" vertical className={scss.Flex}>
@@ -68,7 +71,31 @@ const Review = () => {
                 <button type="submit">Отправить отзыв</button>
               </form>
             </div>
-            <div className={scss.ReviewComment}></div>
+            <div className={scss.ReviewComment}>
+              <div className={scss.lists}>
+                {clothesResponse?.clothes_review.map((item, idx) => (
+                  <div key={idx} className={scss.block}>
+                    <div className={scss.head}>
+                      <FaUser className={scss.foto} />
+                      <div className={scss.headTitle}>
+                        <h2>
+                          {item.author.first_name
+                            ? item.author.first_name
+                            : "Anonymous user"}
+                        </h2>
+                        <h4>{item.created_date}</h4>
+                      </div>
+                      <button>
+                        <CiStar />
+
+                        {item.stars}
+                      </button>
+                    </div>
+                    <p>{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
