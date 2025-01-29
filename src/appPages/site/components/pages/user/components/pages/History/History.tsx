@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import styles from "./History.module.scss";
 import Image from "next/image";
 import { useGetOrderQuery } from "@/redux/api/product";
-import { IOrder } from "@/types/schema";
 import OrderStatusModal from "./OrderStatusModal";
 
 const History = () => {
   const { data } = useGetOrderQuery();
+  console.log("🚀 ~ History ~ data:", data)
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
