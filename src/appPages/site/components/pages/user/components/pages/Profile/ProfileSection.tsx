@@ -16,7 +16,6 @@ const ProfileSection: FC = () => {
       console.error("User data not available");
       return;
     }
-
     const dataUser = {
       id: response[0].id,
       username: userData.username,
@@ -26,10 +25,12 @@ const ProfileSection: FC = () => {
       address: userData.address,
       number: userData.number,
     };
+    console.log("🚀 ~ constonSubmit:SubmitHandler<AUTH.PutMeRequest>= ~ dataUser:", dataUser)
 
     try {
       const { data: userId } = await putMe(dataUser);
-      window.location.reload();
+      console.log("🚀 ~ constonSubmit:SubmitHandler<AUTH.PutMeRequest>= ~ userId:", userId)
+      // window.location.reload();
     } catch (e) {
       console.error("An error occurred:", e);
     }
@@ -50,7 +51,7 @@ const ProfileSection: FC = () => {
                   <h2>{el.first_name}</h2>
                   <h2>{el.last_name}</h2>
                 </div>
-                <p>E-mail адрес</p>
+                <p>User nameс</p>
                 <h2>{el.username}</h2>
                 <p>E-mail адрес</p>
                 <h2>{el.email}</h2>

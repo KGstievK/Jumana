@@ -9,24 +9,6 @@ namespace AUTH {
     number: string;
   }[];
   type GetRequest = void;
-  type GetIdResponse = {
-    id: number
-    username: string
-    first_name: string;
-    last_name: string;
-    email: string
-    address: string;
-    number: string;
-  }[];
-  type GetIdRequest = {
-    id: number
-    username: string
-    first_name: string;
-    last_name: string;
-    email: string
-    address: string;
-    number: string;
-  };
 
   type PutMeResponse = {
   }
