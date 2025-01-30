@@ -1,12 +1,13 @@
 .CheckoutSection {
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: 20px 0;
 
   .content {
     display: flex;
     justify-content: space-between;
     .block_left {
-      width: 702px;
+      max-width: 702px;
+      width: 100%;
       padding: 20px;
       border-radius: 10px;
       h2 {
@@ -124,9 +125,6 @@
                 }
               }
             }
-
-           
-
             &:hover {
               background: #fbeae6;
               border-color: #90312f;
@@ -322,5 +320,14 @@
 
   &.close {
     animation: slideDown 0.5s ease-in forwards;
+  }
+}
+
+@media (max-width: 1200px) {
+  .CheckoutSection {
+    .content {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
