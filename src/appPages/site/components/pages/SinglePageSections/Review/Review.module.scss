@@ -76,28 +76,43 @@
       }
       .ReviewComment {
         width: 100%;
+        border-radius: 8px;
         background: #e7dacf4d;
         padding: 20px 15px;
-        border-radius: 8px;
+        max-height: 300px;
+        overflow-y: scroll;
+        scrollbar-width: none; /* Для Firefox */
+        -ms-overflow-style: none; /* Для Internet Explorer и Edge */
+
         .lists {
           width: 100%;
           display: flex;
           align-items: start;
           justify-content: start;
           flex-direction: column;
+
           .block {
             display: flex;
             align-items: start;
             justify-content: start;
             flex-direction: column;
+            gap: 5px;
             width: 100%;
+            margin-bottom: 15px;
             .head {
               display: flex;
               align-items: center;
               justify-content: start;
               gap: 10px;
+              width: 100%;
               .foto {
                 font-size: 20px;
+              }
+              p {
+                font-size: 16px;
+                font-weight: 300;
+                line-height: 24px;
+                color: #0c0c0c;
               }
 
               .headTitle {
@@ -115,16 +130,31 @@
 
               button {
                 margin-left: auto;
-                padding: 8px;
+                padding: 5px;
                 display: flex;
                 align-items: center;
-                // font-size: 12px;
-                font-weight: 550;
+                font-size: 15px;
+                font-weight: 500;
                 color: white;
+                span {
+                  font-size: 20px;
+                }
               }
             }
           }
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .Review {
+    .content {
+      .ReviewBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
       }
     }
   }

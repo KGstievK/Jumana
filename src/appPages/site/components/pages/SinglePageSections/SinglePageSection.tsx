@@ -146,7 +146,7 @@ const SinglePageSection: FC = () => {
             <h1>{clothes_name}</h1>
             <div className={scss.price}>
               <del>{price} сом</del>
-              <h4>{Math.round(discount_price)} сом</h4>
+              <h4>{Math.round(Number(discount_price))} сом</h4>
             </div>
             <div className={scss.colors}>
               <h5>Цвета:</h5>
@@ -176,7 +176,11 @@ const SinglePageSection: FC = () => {
             <div className={scss.sizes}>
               <Sizes
                 sizes={sizes}
-                availableSizes={availableSizes}
+                availableSizes={
+                  Array.isArray(availableSizes)
+                    ? availableSizes
+                    : availableSizes?.split(",")
+                }
                 selectedSize={selectedSize}
                 onClick={(size) => {
                   updateValue("size", size);
