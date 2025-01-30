@@ -120,35 +120,6 @@ interface patch_cart_item {
   quantity: number;
 }
 
-interface clothesById {
-  id: number;
-  clothes_name: string;
-  clothes_photo: string;
-  category: Array<{
-    category_name: string;
-  }>;
-  promo_category: Array<{
-    promo_category: string;
-    time: any;
-  }>;
-  quantities: number;
-  active: boolean;
-  price: number;
-  discount_price: number;
-  size: Array<string>;
-  average_rating: number;
-  made_in: string;
-  textile_clothes: Array<{
-    textile_name: string;
-  }>;
-  clothes_img: Array<{
-    id: number;
-    photo: string;
-    color: string;
-  }>;
-  clothes_review: Array<any>;
-  clothes_description: string;
-}
 interface AboutUs {
   title: string;
   made: string;
@@ -213,7 +184,7 @@ interface Textile {
 interface IOrderPost {
   order_user: number;
   cart_id: number;
-  delivery: "курьер" | "самовывоз";
+  delivery: "курьер" | "самовызов";
   first_name: string;
   phone_number: string;
   city: string;
@@ -254,8 +225,12 @@ interface IOrder {
   address: string;
 }
 interface Pay {
-  pay_img: string;
-  whatsapp: string;
+  whatsapp: string
+  pay_title: Array<{
+    pay_img: string
+    number: string
+    info: string
+  }>
 }
 
 interface SingleProductData {
