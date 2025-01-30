@@ -1,5 +1,4 @@
 "use client";
-
 import star from "@/assets/images/star.png";
 import backIcon from "@/assets/icons/backIcon.svg";
 import bagSvg from "@/assets/icons/bag-happy.svg";
@@ -227,8 +226,6 @@ const SinglePageSection: FC = () => {
                 </div>
               </div>
             </div>
-
-            <div className={scss.listOfReview}></div>
           </div>
         </div>
         <div className={scss.review}>
