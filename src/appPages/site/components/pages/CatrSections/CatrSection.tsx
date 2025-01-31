@@ -49,13 +49,31 @@ const CartSection = () => {
   }, [refetch]);
 
   useEffect(() => {
-    if (Array.isArray(cart) && cart[0].cart_items && cart.length > 0) {
+    if (Array.isArray(cart) && cart[0]?.cart_items && cart.length > 0) {
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);
 
   const handleRoute = () => router.push("/catalog");
-  const goToCheckout = () => router.push("/cart/checkout");
+  
+  const goToCheckout = async () => {
+    try {
+      
+      localStorage.setItem('cartItems', JSON.stringify(basketData));
+      
+      router.push("/cart/checkout");
+      setBasketData([]);
+
+      
+      await refetch();
+      
+      for (const item of basketData) {
+        await deleteMutation(item.id);
+      }
+    } catch (error) {
+      console.error("Error processing checkout:", error);
+    }
+  };
 
   const totalPrice = cart && Array.isArray(cart) && cart[0]?.total_price;
 
@@ -101,13 +119,11 @@ const CartSection = () => {
                     <thead>
                       <tr>
                         <th>
-                          {" "}
                           <div className={scss.product}>
                             <p>Продукт</p>
                           </div>
                         </th>
                         <th>
-                          {" "}
                           <div className={scss.left_box}>
                             <p>Цена</p>
                             <p>Количество</p>
