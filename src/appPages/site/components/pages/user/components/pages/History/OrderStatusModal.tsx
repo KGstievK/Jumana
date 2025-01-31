@@ -7,7 +7,12 @@ import { HiOutlineArrowPath } from "react-icons/hi2";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FaBoxOpen } from "react-icons/fa6";
 
-type OrderStatus = "Oбработка" | "Собирается" | "В пути" | "Доставлен";
+type OrderStatus =
+  | "Oбработка"
+  | "заказ собирается"
+  | "в процессе  доставки"
+  | "Доставлен"
+  | "Отменен";
 
 interface CartItem {
   clothes: {
@@ -26,7 +31,7 @@ interface Cart {
 }
 
 interface IOrder {
-  order_status: OrderStatus;  // Burada string yerine OrderStatus kullanıyoruz
+  order_status: OrderStatus; 
   date: string;
   cart: Cart;
 }
@@ -44,14 +49,18 @@ const OrderStatusModal = ({
 }: OrderStatusModalProps) => {
   if (!isOpen) return null;
 
-  const getTimelineStatus = (currentStatus: OrderStatus, itemStatus: OrderStatus): boolean => {
+  const getTimelineStatus = (
+    currentStatus: OrderStatus,
+    itemStatus: OrderStatus
+  ): boolean => {
     const statusOrder = {
       "Oбработка": 1,
-      "Собирается": 2,
-      "В пути": 3,
-      "Доставлен": 4
+      "заказ собирается": 2,
+      "в процессе  доставки": 3,
+      "Доставлен": 4,
+      "Отменен": 5,
     };
-  
+
     return statusOrder[currentStatus] >= statusOrder[itemStatus];
   };
 
@@ -59,23 +68,28 @@ const OrderStatusModal = ({
     {
       icon: <GrBasket />,
       status: "Oбработка" as OrderStatus,
-      text: "Заказ размещен"
+      text: "Заказ размещен",
     },
     {
       icon: <HiOutlineArrowPath />,
-      status: "Собирается" as OrderStatus,
-      text: "Собирается"
+      status: "заказ собирается" as OrderStatus,
+      text: "Собирается",
     },
     {
       icon: <TbTruckDelivery />,
-      status: "В пути" as OrderStatus,
-      text: "В пути"
+      status: "в процессе  доставки" as OrderStatus,
+      text: "В пути",
     },
     {
       icon: <FaBoxOpen />,
       status: "Доставлен" as OrderStatus,
-      text: "Доставлен"
-    }
+      text: "Доставлен",
+    },
+    {
+      icon: <FaBoxOpen />,
+      status: "Отменен" as OrderStatus,
+      text: "Отменен",
+    },
   ];
 
   return (
@@ -96,9 +110,7 @@ const OrderStatusModal = ({
                   : ""
               }`}
             >
-              <div className={styles.icon}>
-                {item.icon}
-              </div>
+              <div className={styles.icon}>{item.icon}</div>
               <p>{item.text}</p>
             </div>
           ))}
@@ -108,11 +120,15 @@ const OrderStatusModal = ({
           <p>
             {orderData.order_status === "Oбработка"
               ? "Ваш заказ обрабатывается."
-              : orderData.order_status === "Собирается"
+              : orderData.order_status === "заказ собирается"
               ? "Ваш заказ собирается."
-              : orderData.order_status === "В пути"
+              : orderData.order_status === "в процессе  доставки"
               ? "Ваш заказ в пути."
-              : "Ваш заказ доставлен."}
+              : orderData.order_status === "Доставлен"
+              ? "Ваш заказ доставлен"
+              : orderData.order_status === "Отменен"
+              ? "Ваш заказ отменен."
+              : "доставка"}
           </p>
           <div className={styles.orderDetails}>
             <div>

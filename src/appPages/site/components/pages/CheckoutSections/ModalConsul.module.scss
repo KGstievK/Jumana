@@ -19,7 +19,6 @@
     max-width: 700px;
     width: clamp(300px, 60%, 40%);
 
-    // height: clamp(400px, 70%, 750px);
     height: auto;
 
     margin: auto;
@@ -31,7 +30,7 @@
       top: 20px;
       right: 30px;
     }
-
+    
     .icon1 {
       height: clamp(80px, 10vw, 70%);
 

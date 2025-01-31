@@ -26,7 +26,7 @@ namespace PRODUCT {
   type postOrderRes = IOrder;
   type postOrderReq = IOrderPost;
 
-  type getOrderRes = IOrder;
+  type getOrderRes = IOrder[];
   type getOrderReq = void;
   
   type getPayRes = Pay;
