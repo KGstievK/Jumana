@@ -50,6 +50,7 @@ const CartSection = () => {
 
   useEffect(() => {
     if (Array.isArray(cart) && cart[0]?.cart_items && cart.length > 0) {
+
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);
