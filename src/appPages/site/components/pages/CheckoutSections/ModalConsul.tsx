@@ -67,19 +67,19 @@ const ModalConsul: React.FC<ModalConsulProps> = ({ type, onClose }) => {
             </div>
           </div>
         ) : (
-          <>
+          <div className={scss.window_modal}>
             <div className={scss.box}>
               {data?.[0]?.pay_title?.map((el: Scaner, idx: number) => (
                 <div key={idx} className={scss.block}>
                   <Image
-                    width={250}
-                    height={250}
+                    width={300}
+                    height={300}
                     src={imgError[idx] ? "/fallback-image.jpg" : el?.pay_img}
                     alt={`scanner-${idx}`}
                     onError={() => handleImageError(idx)}
                     priority
                   />
-                  <h3 className={scss.title}>{el.number}</h3>
+                  <h4 className={scss.title}>{el.number}</h4>
                   <p>{el.info}</p>
                 </div>
               ))}
@@ -87,7 +87,7 @@ const ModalConsul: React.FC<ModalConsulProps> = ({ type, onClose }) => {
             <Link href={data?.[0]?.whatsapp || "#"}>
               <button className={scss.button}>отправьте чек</button>
             </Link>
-          </>
+          </div>
         )}
       </div>
     </div>

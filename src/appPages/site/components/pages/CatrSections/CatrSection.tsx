@@ -40,14 +40,37 @@ const CartSection = () => {
   }, []);
 
   useEffect(() => {
+<<<<<<< HEAD
     // Проверяем, что cart является массивом и имеет элементы
     if (cart?.[0]?.cart_items && cart[0].cart_items.length > 0) {
+=======
+    if (Array.isArray(cart) && cart[0]?.cart_items && cart.length > 0) {
+
+>>>>>>> 5a2c8321d5f8f358e6be825a0e8f32abe0bf538a
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);
 
   const handleRoute = () => router.push("/catalog");
-  const goToCheckout = () => router.push("/cart/checkout");
+  
+  const goToCheckout = async () => {
+    try {
+      
+      localStorage.setItem('cartItems', JSON.stringify(basketData));
+      
+      router.push("/cart/checkout");
+      setBasketData([]);
+
+      
+      await refetch();
+      
+      for (const item of basketData) {
+        await deleteMutation(item.id);
+      }
+    } catch (error) {
+      console.error("Error processing checkout:", error);
+    }
+  };
 
   const totalPrice = cart && Array.isArray(cart) && cart[0]?.total_price;
 
@@ -92,10 +115,18 @@ const CartSection = () => {
                   <table>
                     <thead>
                       <tr>
-                        <th>Продукт</th>
-                        <th>Цена</th>
-                        <th>Количество</th>
-                        <th>Всего</th>
+                        <th>
+                          <div className={scss.product}>
+                            <p>Продукт</p>
+                          </div>
+                        </th>
+                        <th>
+                          <div className={scss.left_box}>
+                            <p>Цена</p>
+                            <p>Количество</p>
+                            <p>Всего</p>
+                          </div>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -111,11 +142,14 @@ const CartSection = () => {
                                 <Image
                                   width={130}
                                   height={130}
-                                  src={selectedImage?.photo || "/fallback-image.png"}
+                                  src={
+                                    selectedImage?.photo ||
+                                    "/fallback-image.png"
+                                  }
                                   alt="product"
                                 />
                                 <div className={scss.title}>
-                                  <h3>{item.clothes.clothes_name}</h3>
+                                  <h4>{item.clothes.clothes_name}</h4>
                                   <p>{selectedImage?.color}</p>
                                 </div>
                               </div>
@@ -130,7 +164,10 @@ const CartSection = () => {
                                   <div className={scss.plus_minus}>
                                     <button
                                       onClick={() =>
-                                        handleUpdateQuantity(item.id, item.quantity - 1)
+                                        handleUpdateQuantity(
+                                          item.id,
+                                          item.quantity - 1
+                                        )
                                       }
                                     >
                                       -
@@ -138,17 +175,25 @@ const CartSection = () => {
                                     <h4>{item.quantity}</h4>
                                     <button
                                       onClick={() =>
-                                        handleUpdateQuantity(item.id, item.quantity + 1)
+                                        handleUpdateQuantity(
+                                          item.id,
+                                          item.quantity + 1
+                                        )
                                       }
                                     >
                                       +
                                     </button>
                                   </div>
-                                  <p className={scss.delete} onClick={() => handleDelete(item.id)}>
+                                  <p
+                                    className={scss.delete}
+                                    onClick={() => handleDelete(item.id)}
+                                  >
                                     удалить
                                   </p>
                                 </div>
-                                <h2>{item.total_price}c</h2>
+                                <div className={scss.price2}>
+                                  <h4>{item.total_price}c</h4>
+                                </div>
                               </div>
                             </td>
                           </tr>
