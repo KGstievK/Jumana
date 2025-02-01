@@ -1,13 +1,13 @@
-interface User {
-  _id?: number;
-  username: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  address: string;
-  index_pochta: string;
-  number: string;
-}
+// interface User {
+//   _id?: number;
+//   username: string;
+//   email: string;
+//   first_name: string;
+//   last_name: string;
+//   address: string;
+//   index_pochta: string;
+//   number: string;
+// }
 
 interface GetContactInfo {
   messenger: string;

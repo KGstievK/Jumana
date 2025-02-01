@@ -30,7 +30,7 @@ const ProfileSection: FC = () => {
     try {
       const { data: userId } = await putMe(dataUser);
       console.log("🚀 ~ constonSubmit:SubmitHandler<AUTH.PutMeRequest>= ~ userId:", userId)
-      // window.location.reload();
+      window.location.reload();
     } catch (e) {
       console.error("An error occurred:", e);
     }
