@@ -1,5 +1,10 @@
 .Header {
-  padding-block: 14px;
+  padding-block: 10px;
+  position: sticky;
+  z-index: 999;
+  top: 0;
+  background: #fff;
+
   .content {
     display: flex;
     align-items: center;

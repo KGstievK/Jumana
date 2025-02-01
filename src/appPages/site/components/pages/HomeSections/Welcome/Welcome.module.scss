@@ -124,6 +124,7 @@
                 position: absolute;
                 top: 49%;
                 left: 70px;
+                object-fit: cover;
                 @media (max-width: 400px) {
                   top: 29%;
                 }
@@ -147,6 +148,7 @@
           img {
             z-index: 2;
             margin-bottom: 50px;
+            object-fit: cover;
             @media (max-width: 400px) {
               margin-bottom: 0;
               z-index: 2;

@@ -187,7 +187,7 @@ const Cards: FC<{
                           el: { photo: string | StaticImport },
                           index: React.Key | null | undefined
                         ) => (
-                          <Link href={`/${item.id}`}>
+                          <Link href={`/${item.id}`} key={item.id}>
                             <Image
                               key={index}
                               width={5000}

@@ -20,12 +20,12 @@ const Header = () => {
       name: "Категории",
     },
     {
-      link: "/about",
-      name: "О нас",
+      link: "/new",
+      name: "Новинки",
     },
     {
-      link: "/contacts",
-      name: "Контакты",
+      link: "/about",
+      name: "О нас",
     },
   ];
   return (
