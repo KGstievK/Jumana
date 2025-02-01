@@ -13,6 +13,7 @@ import heartRed from "@/assets/icons/red-heart-icon.svg";
 import star from "@/assets/images/star.png";
 import ColorsClothes from "../../../ui/colors/Colors";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import Link from "next/link";
 
 interface ClothesCategoryItem {
   clothes_category: Array<{
@@ -149,7 +150,7 @@ const Cards: FC<{
                 <div
                   key={item.id}
                   className={scss.card}
-                  onClick={() => router.push(`/${item.id}`)}
+                  // onClick={() => router.push(`/${item.id}`)}
                 >
                   <div className={scss.blockImg}>
                     <div className={scss.like}>
@@ -165,8 +166,8 @@ const Cards: FC<{
                       </div>
                       <div
                         className={scss.heart}
-                        onClick={(e,) => {
-                          e.stopPropagation(), handleFavoriteClick(e, item);
+                        onClick={(e) => {
+                          e.stopPropagation(), handleFavoriteClick(e, item.id);
                         }}
                       >
                         <Image
@@ -190,15 +191,17 @@ const Cards: FC<{
                           el: { photo: string | StaticImport },
                           index: React.Key | null | undefined
                         ) => (
-                          <Image
-                            key={index}
-                            width={5000}
-                            height={3000}
-                            layout="intrinsic"
-                            src={el.photo}
-                            alt="photo"
-                            className={scss.mainImg}
-                          />
+                          <Link href={`/${item.id}`}>
+                            <Image
+                              key={index}
+                              width={5000}
+                              height={3000}
+                              layout="intrinsic"
+                              src={el.photo}
+                              alt="photo"
+                              className={scss.mainImg}
+                            />
+                          </Link>
                         )
                       )}
                   </div>
