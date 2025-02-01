@@ -40,13 +40,8 @@ const CartSection = () => {
   }, []);
 
   useEffect(() => {
-<<<<<<< HEAD
-    // Проверяем, что cart является массивом и имеет элементы
-    if (cart?.[0]?.cart_items && cart[0].cart_items.length > 0) {
-=======
     if (Array.isArray(cart) && cart[0]?.cart_items && cart.length > 0) {
 
->>>>>>> 5a2c8321d5f8f358e6be825a0e8f32abe0bf538a
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);

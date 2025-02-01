@@ -43,16 +43,10 @@ const Welcome = () => {
     <section className={scss.Welcome}>
       <div className="container">
         <div className={scss.content}>
-          <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y]}
-            spaceBetween={50}
-            slidesPerView={1}
-            navigation
-            pagination={{ clickable: true }}
-            scrollbar={{ draggable: true }}
+          <div
             className={scss.Swiper}
           >
-            <SwiperSlide className={scss.SwiperSlide}>
+            <div className={scss.SwiperSlide}>
               <div className={scss.Swiper_Title}>
                 <h4>{data[0].made}</h4>
                 <h1>{data[0].title}</h1>
@@ -86,8 +80,8 @@ const Welcome = () => {
                   />
                 ))}
               </div>
-            </SwiperSlide>
-          </Swiper>
+            </div>
+          </div>
         </div>
       </div>
     </section>
