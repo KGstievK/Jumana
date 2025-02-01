@@ -34,7 +34,7 @@ const CartSection = () => {
   const [updateMutation] = useUpdateBasketMutation();
   const [deleteMutation] = useDeleteBasketMutation();
   const router = useRouter();
-
+// reset
   useEffect(() => {
     refetch();
   }, []);
