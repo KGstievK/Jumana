@@ -251,13 +251,13 @@
       }
     }
   }
-  .tabBar {
-    display: none;
-  }
 }
 
 @media (max-width: 750px) {
   .SinglePageSection {
+    .review {
+      margin-top: 10px;
+    }
     .header {
       display: flex;
       align-items: center;
@@ -291,10 +291,12 @@
           }
         }
         .thumbnails {
+          display: flex;
+          justify-content: space-between;
           .thumbnail {
             img {
-              width: 180px;
-              height: 200px;
+              width: 100px;
+              height: 120px;
             }
           }
         }
@@ -318,6 +320,7 @@
 
         .description {
           width: 100%;
+          margin-bottom: 0;
 
           p {
             width: 99%;
@@ -355,8 +358,5 @@
         }
       }
     }
-  }
-  .tabBar {
-    display: flex;
   }
 }
