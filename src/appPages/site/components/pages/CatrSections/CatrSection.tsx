@@ -28,20 +28,18 @@ interface CartItem {
 }
 
 const CartSection = () => {
-  const { data: cart, refetch } = useGetCartQuery();
-  console.log("🚀 ~ CartSection ~ cart:", cart);
+  const { data: cart, refetch, isLoading } = useGetCartQuery();
   const [basketData, setBasketData] = useState<CartItem[]>([]);
   const [updateMutation] = useUpdateBasketMutation();
   const [deleteMutation] = useDeleteBasketMutation();
   const router = useRouter();
-// reset
+
   useEffect(() => {
     refetch();
   }, []);
 
   useEffect(() => {
     if (Array.isArray(cart) && cart[0]?.cart_items && cart.length > 0) {
-
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);
@@ -50,12 +48,9 @@ const CartSection = () => {
   
   const goToCheckout = async () => {
     try {
-      
       localStorage.setItem('cartItems', JSON.stringify(basketData));
-      
       router.push("/cart/checkout");
       setBasketData([]);
-
       
       await refetch();
       
@@ -97,13 +92,15 @@ const CartSection = () => {
     }
   };
 
+ 
+
   return (
     <section className={scss.CatrSection}>
       <div className="container">
         <div className={scss.content}>
           <h1>Корзина</h1>
 
-          {basketData.length > 0 ? (
+          {!isLoading && basketData && basketData.length > 0 ? (
             <div className={scss.block}>
               <div className={scss.block_left}>
                 <div className={scss.table}>
@@ -137,10 +134,7 @@ const CartSection = () => {
                                 <Image
                                   width={130}
                                   height={130}
-                                  src={
-                                    selectedImage?.photo ||
-                                    "/fallback-image.png"
-                                  }
+                                  src={selectedImage?.photo || "/fallback-image.png"}
                                   alt="product"
                                 />
                                 <div className={scss.title}>
@@ -158,23 +152,13 @@ const CartSection = () => {
                                 <div className={scss.center}>
                                   <div className={scss.plus_minus}>
                                     <button
-                                      onClick={() =>
-                                        handleUpdateQuantity(
-                                          item.id,
-                                          item.quantity - 1
-                                        )
-                                      }
+                                      onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
                                     >
                                       -
                                     </button>
                                     <h4>{item.quantity}</h4>
                                     <button
-                                      onClick={() =>
-                                        handleUpdateQuantity(
-                                          item.id,
-                                          item.quantity + 1
-                                        )
-                                      }
+                                      onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                                     >
                                       +
                                     </button>
