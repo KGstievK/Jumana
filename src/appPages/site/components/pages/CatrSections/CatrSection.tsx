@@ -45,18 +45,11 @@ const CartSection = () => {
   }, [cart]);
 
   const handleRoute = () => router.push("/catalog");
-  
+
   const goToCheckout = async () => {
     try {
-      localStorage.setItem('cartItems', JSON.stringify(basketData));
+      localStorage.setItem("cartItems", JSON.stringify(basketData));
       router.push("/cart/checkout");
-      setBasketData([]);
-      
-      await refetch();
-      
-      for (const item of basketData) {
-        await deleteMutation(item.id);
-      }
     } catch (error) {
       console.error("Error processing checkout:", error);
     }
@@ -91,8 +84,6 @@ const CartSection = () => {
       console.error("Delete error:", error);
     }
   };
-
- 
 
   return (
     <section className={scss.CatrSection}>
@@ -134,7 +125,10 @@ const CartSection = () => {
                                 <Image
                                   width={130}
                                   height={130}
-                                  src={selectedImage?.photo || "/fallback-image.png"}
+                                  src={
+                                    selectedImage?.photo ||
+                                    "/fallback-image.png"
+                                  }
                                   alt="product"
                                 />
                                 <div className={scss.title}>
@@ -152,13 +146,23 @@ const CartSection = () => {
                                 <div className={scss.center}>
                                   <div className={scss.plus_minus}>
                                     <button
-                                      onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                                      onClick={() =>
+                                        handleUpdateQuantity(
+                                          item.id,
+                                          item.quantity - 1
+                                        )
+                                      }
                                     >
                                       -
                                     </button>
                                     <h4>{item.quantity}</h4>
                                     <button
-                                      onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                                      onClick={() =>
+                                        handleUpdateQuantity(
+                                          item.id,
+                                          item.quantity + 1
+                                        )
+                                      }
                                     >
                                       +
                                     </button>
