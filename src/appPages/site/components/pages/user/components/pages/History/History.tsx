@@ -85,7 +85,7 @@ const History = () => {
         <OrderStatusModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          orderData={selectedOrder}
+          order_status={selectedOrder}
         />
       )}
     </div>

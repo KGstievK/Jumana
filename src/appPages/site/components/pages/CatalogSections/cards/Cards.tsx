@@ -150,7 +150,7 @@ const Cards: FC<{
                 <div
                   key={item.id}
                   className={scss.card}
-                  // onClick={() => router.push(`/${item.id}`)}
+                  onClick={() => router.push(`/${item.id}`)}
                 >
                   <div className={scss.blockImg}>
                     <div className={scss.like}>

@@ -10,6 +10,7 @@ import {
 } from "@/redux/api/product";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ModalConsul from "./ModalConsul";
+import axios from "axios";
 
 interface CartItem {
   id: number;
@@ -74,6 +75,9 @@ const CheckoutSection = () => {
     }
   }, [cart]);
 
+  const TelegramToken = process.env.TELEGRAM_TOKEN
+  const TelegramChat = process.env.TELEGRAM_CHAT_ID
+
   const totalPrice = cart && Array.isArray(cart) && cart[0]?.total_price;
 
   const handleNextStep = () => {
@@ -132,6 +136,21 @@ const CheckoutSection = () => {
     try {
       await postOrderMutation(orderData);
       handleOpenModal();
+
+      const messageModel = (FormData: IOrderPost) => {
+        let messageTG = `Кто: <b>${FormData.first_name}</b>\n`;
+        messageTG += `Продукт: <b>${FormData.cart_id}</b>\n`;
+        messageTG += `Город: <b>${FormData.city}</b>\n`;
+        messageTG += `Адрес: <b>${FormData.address}</b>\n`;
+        messageTG += `Номер Тел: <b>${FormData.phone_number}</b>\n`;
+        return messageTG;
+      };
+      const message = messageModel
+      await axios.post(`https://api.telegram.org/bot${TelegramToken}/sendMessage`, {
+        chat_id: TelegramChat,
+        parse_mode: "html",
+        text: message
+      })
     } catch (error) {
       console.error("Order error:", error);
       setValidationError("Произошла ошибка при оформлении заказа");
