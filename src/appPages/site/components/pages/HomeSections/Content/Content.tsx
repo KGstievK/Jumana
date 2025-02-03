@@ -2,30 +2,30 @@ import Image from "next/image";
 import scss from "./Content.module.scss";
 import arrow from "@/assets/icons/arrow.svg";
 import { useRouter } from "next/navigation";
-import { useGetSaleContentQuery } from "@/redux/api/category";
+import { useGetEndContentQuery } from "@/redux/api/category";
 
 const Content = () => {
   const router = useRouter();
-  const { data } = useGetSaleContentQuery();
+  const { data } = useGetEndContentQuery();
+  console.log("🚀 ~ Content ~ data:", data);
+
+  // Если данных нет, не рендерим компонент
+  if (!data || data.length === 0) return null;
 
   return (
-    <>
-      {data?.map((item, idx) => (
-        <section key={idx} className={scss.Content}>
-          <div className={scss.content}>
-            <h1>
-              Мы создаём одежду, которая объединяет традиции и современный
-              стиль. В каждой детали — качество, комфорт и забота о вас. Наши
-              коллекции вдохновляют и подчёркивают вашу индивидуальность.
-            </h1>
-            <p>С любовью, Jumana</p>
+    <section className={scss.Content}>
+      <div className={scss.content}>
+        {data.map((item, idx) => (
+          <div key={idx} className={scss.block}>
+            <h1>{item.text}</h1>
+            <p>{item.title}</p>
             <button onClick={() => router.push("/about")}>
               Подробнее <Image src={arrow} alt="arrow" />
             </button>
           </div>
-        </section>
-      ))}
-    </>
+        ))}
+      </div>
+    </section>
   );
 };
 

@@ -42,17 +42,21 @@ interface ClothesCategoryItem {
 }
 
 const Popular = () => {
+  const router = useRouter();
+
   const { data } = useGetAllClothesQuery();
+
+  // if (!data || data.length === 0) return null;
+
+  const [postToFavorite] = usePostToFavoriteMutation();
+  const [deleteFavorite] = useDeleteFavoriteMutation();
+
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
       (category: { promo_category: string }) =>
         category.promo_category.toLowerCase() === "популярные"
     )
   );
-  const router = useRouter();
-
-  const [postToFavorite] = usePostToFavoriteMutation();
-  const [deleteFavorite] = useDeleteFavoriteMutation();
 
   const { data: favoriteItems } = useGetToFavoriteQuery();
 
@@ -92,24 +96,24 @@ const Popular = () => {
   return (
     <section className={scss.Popular}>
       <div className="container">
-        {newArrivals
-          ?.slice(0, window.innerWidth <= 768 ? 2 : 4)
-          .map((item, idx) => (
-            <div key={idx} className={scss.content}>
-              <div className={scss.navigate_title}>
-                <h1 className="title">Популярные товары</h1>
-                <Link href="/popular">
-                  <button>
-                    Посмотреть все <Image src={arrow} alt="arrow" />
-                  </button>
-                </Link>
-              </div>
-              <ul>
-                <li>туника</li>
-                <li>платье</li>
-                <li>платок</li>
-              </ul>
-              <div className={scss.cards}>
+        <div className={scss.content}>
+          <div className={scss.navigate_title}>
+            <h1 className="title">Популярные товары</h1>
+            <Link href="/popular">
+              <button>
+                Посмотреть все <Image src={arrow} alt="arrow" />
+              </button>
+            </Link>
+          </div>
+          <ul>
+            <li>туника</li>
+            <li>платье</li>
+            <li>платок</li>
+          </ul>
+          <div className={scss.cards}>
+            {newArrivals
+              ?.slice(0, window.innerWidth <= 768 ? 2 : 4)
+              .map((item, idx) => (
                 <div
                   key={item.id}
                   className={scss.card}
@@ -184,16 +188,16 @@ const Popular = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className={scss.navigate_mobile}>
-                <Link href="/popular">
-                  <button>
-                    Посмотреть все <Image src={arrow} alt="arrow" />
-                  </button>
-                </Link>
-              </div>
-            </div>
-          ))}
+              ))}
+          </div>
+          <div className={scss.navigate_mobile}>
+            <Link href="/popular">
+              <button>
+                Посмотреть все <Image src={arrow} alt="arrow" />
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -26,4 +26,10 @@ namespace ICATEGORY {
 
   type getSaleInfoRes = SaleContent[];
   type getSaleInfoReq = void;
+
+  type getEndContentRes = {
+    title: string;
+    text: string;
+  }[];
+  type getEndContentReq = void;
 }

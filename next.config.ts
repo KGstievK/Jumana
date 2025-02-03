@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["13.51.108.235"],
+    domains: ["13.51.205.81"],
     remotePatterns: [
       {
         protocol: "http",
