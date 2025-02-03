@@ -35,6 +35,15 @@ const api = index.injectEndpoints({
       providesTags: ["category"],
     }),
 
+    getEndContent: build.query<
+      ICATEGORY.getEndContentRes,
+      ICATEGORY.getEndContentReq
+    >({
+      query: () => ({
+        url: "/end_title/",
+        method: "GET",
+      }),
+    }),
     getAllCategory: build.query<
       ICATEGORY.getCategoryRes,
       ICATEGORY.getCategoryReq
@@ -114,5 +123,6 @@ export const {
   useDeleteFavoriteMutation,
   useGetFirstSectionQuery,
   useGetContactInfoQuery,
-  useGetSaleContentQuery
+  useGetSaleContentQuery,
+  useGetEndContentQuery,
 } = api;

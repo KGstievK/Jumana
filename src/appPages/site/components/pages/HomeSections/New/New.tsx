@@ -41,7 +41,7 @@ interface ClothesCategoryItem {
 }
 
 const New = () => {
-  const { data } = useGetAllClothesQuery();
+  const { data, isLoading } = useGetAllClothesQuery();
   const router = useRouter();
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
@@ -87,28 +87,29 @@ const New = () => {
       console.error("Favori işlemi başarısız:", error);
     }
   };
+  console.log("🚀 ~ New ~ newArrivals:", newArrivals);
 
   return (
     <section className={scss.New}>
       <div className="container">
-        {newArrivals
-          ?.slice(0, window.innerWidth <= 768 ? 2 : 4)
-          .map((item, idx) => (
-            <div key={idx} className={scss.content}>
-              <div className={scss.navigate_title}>
-                <h1 className="title">Новинки</h1>
-                <Link href="/new">
-                  <button>
-                    Посмотреть все <Image src={arrow} alt="arrow" />
-                  </button>
-                </Link>
-              </div>
-              <ul>
-                <li>туника</li>
-                <li>платье</li>
-                <li>платок</li>
-              </ul>
-              <div className={scss.cards}>
+        <div className={scss.content}>
+          <div className={scss.navigate_title}>
+            <h1 className="title">Новинки</h1>
+            <Link href="/new">
+              <button>
+                Посмотреть все <Image src={arrow} alt="arrow" />
+              </button>
+            </Link>
+          </div>
+          <ul>
+            <li>туника</li>
+            <li>платье</li>
+            <li>платок</li>
+          </ul>
+          <div className={scss.cards}>
+            {newArrivals
+              ?.slice(0, window.innerWidth <= 768 ? 2 : 4)
+              .map((item, idx) => (
                 <div
                   key={item.id}
                   className={scss.card}
@@ -183,16 +184,16 @@ const New = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className={scss.navigate_mobile}>
-                <Link href="/new">
-                  <button>
-                    Посмотреть все <Image src={arrow} alt="arrow" />
-                  </button>
-                </Link>
-              </div>
-            </div>
-          ))}
+              ))}
+          </div>
+          <div className={scss.navigate_mobile}>
+            <Link href="/new">
+              <button>
+                Посмотреть все <Image src={arrow} alt="arrow" />
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -11,14 +11,12 @@ const Sale = () => {
       {data?.map((item, idx) => (
         <div key={idx} className={scss.content}>
           <div className={scss.SaleLeft}>
-
             <img src={item.img} alt="Sale" />
           </div>
           <div className={scss.SaleRight}>
             <h1 className="title">{item.title}</h1>
             <p>{item.text}</p>
             <Link href="/sale">
-
               Подробнее
               <Image src={arrow} alt="arrow" />
             </Link>
