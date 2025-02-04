@@ -1,11 +1,11 @@
-import ProfileSection from "./Profile/ProfileSection"
+import ProfileSection from "./Profile/ProfileSection";
 
 const Profile = () => {
   return (
-    <div>
-      <ProfileSection/>
-    </div>
-  )
-}
+    <>
+      <ProfileSection />
+    </>
+  );
+};
 
-export default Profile
+export default Profile;

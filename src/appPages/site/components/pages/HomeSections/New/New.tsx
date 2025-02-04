@@ -41,7 +41,7 @@ interface ClothesCategoryItem {
 }
 
 const New = () => {
-  const { data, isLoading } = useGetAllClothesQuery();
+  const { data } = useGetAllClothesQuery();
   const router = useRouter();
   const newArrivals = data?.filter((item) =>
     item.promo_category.some(
@@ -88,6 +88,10 @@ const New = () => {
     }
   };
   console.log("🚀 ~ New ~ newArrivals:", newArrivals);
+
+  if (!newArrivals || newArrivals.length === 0) {
+    return null;
+  }
 
   return (
     <section className={scss.New}>
