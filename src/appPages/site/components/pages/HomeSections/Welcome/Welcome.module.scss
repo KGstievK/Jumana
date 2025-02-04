@@ -98,6 +98,7 @@
                 transition: 0.3s;
                 @media (max-width: 400px) {
                   height: 530px;
+                  width: 350px;
                 }
               }
             }
@@ -124,8 +125,11 @@
                 position: absolute;
                 top: 49%;
                 left: 70px;
+                object-fit: cover;
                 @media (max-width: 400px) {
-                  top: 29%;
+                  top: 48%;
+                  width: 20px;
+                  height: 20px;
                 }
               }
             }
@@ -147,6 +151,7 @@
           img {
             z-index: 2;
             margin-bottom: 50px;
+            object-fit: cover;
             @media (max-width: 400px) {
               margin-bottom: 0;
               z-index: 2;

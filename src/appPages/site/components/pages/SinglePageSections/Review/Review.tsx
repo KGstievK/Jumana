@@ -21,6 +21,26 @@ const Review = () => {
   const [value, setValue] = useState(0);
 
   const [PostReviewMutation] = usePostReviewMutation();
+  const formatDate = (dateString: string) => {
+    const months = [
+      "январь",
+      "февраль",
+      "март",
+      "апрель",
+      "май",
+      "июнь",
+      "июль",
+      "август",
+      "сентябрь",
+      "октябрь",
+      "ноябрь",
+      "декабрь",
+    ];
+
+    const [day, month, year] = dateString.split(/[-\s:]/);
+
+    return `${months[Number(month) - 1]} ${Number(day)}, ${year}`;
+  };
 
   const onSubmit: SubmitHandler<REVIEW.ReviewRequest> = async (ReviewData) => {
     if (!userResponse?.map((el) => el.id)) {
@@ -72,7 +92,7 @@ const Review = () => {
                 <button type="submit">Отправить отзыв</button>
               </form>
             </div>
-            <div>
+            <>
               {clothesResponse?.clothes_review &&
               clothesResponse.clothes_review.length > 0 ? (
                 <div className={scss.ReviewComment}>
@@ -87,7 +107,7 @@ const Review = () => {
                                 ? item.author.first_name
                                 : "Anonymous user"}
                             </h2>
-                            <h4>{item.created_date}</h4>
+                            <h4>{formatDate(item.created_date)}</h4>
                           </div>
                           <button>
                             <span>
@@ -104,7 +124,7 @@ const Review = () => {
               ) : (
                 <p></p>
               )}
-            </div>
+            </>
           </div>
         </div>
       </section>
@@ -123,6 +143,39 @@ const Review = () => {
                 <button>Войти</button>
               </Link>
             </div>
+            <>
+              {clothesResponse?.clothes_review &&
+              clothesResponse.clothes_review.length > 0 ? (
+                <div className={scss.ReviewComment}>
+                  {clothesResponse.clothes_review.map((item, idx) => (
+                    <div key={idx} className={scss.lists}>
+                      <div className={scss.block}>
+                        <div className={scss.head}>
+                          <FaUser className={scss.foto} />
+                          <div className={scss.headTitle}>
+                            <h2>
+                              {item.author.first_name
+                                ? item.author.first_name
+                                : "Anonymous user"}
+                            </h2>
+                            <h4>{formatDate(item.created_date)}</h4>
+                          </div>
+                          <button>
+                            <span>
+                              <CiStar />
+                            </span>
+                            {item.stars}
+                          </button>
+                        </div>
+                        <p>{item.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p></p>
+              )}
+            </>
           </div>
         </div>
       </section>

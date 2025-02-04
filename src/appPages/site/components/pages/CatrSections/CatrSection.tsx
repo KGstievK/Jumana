@@ -28,8 +28,7 @@ interface CartItem {
 }
 
 const CartSection = () => {
-  const { data: cart, refetch } = useGetCartQuery();
-  console.log("🚀 ~ CartSection ~ cart:", cart);
+  const { data: cart, refetch, isLoading } = useGetCartQuery();
   const [basketData, setBasketData] = useState<CartItem[]>([]);
   const [updateMutation] = useUpdateBasketMutation();
   const [deleteMutation] = useDeleteBasketMutation();
@@ -41,27 +40,16 @@ const CartSection = () => {
 
   useEffect(() => {
     if (Array.isArray(cart) && cart[0]?.cart_items && cart.length > 0) {
-
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);
 
   const handleRoute = () => router.push("/catalog");
-  
+
   const goToCheckout = async () => {
     try {
-      
-      localStorage.setItem('cartItems', JSON.stringify(basketData));
-      
+      localStorage.setItem("cartItems", JSON.stringify(basketData));
       router.push("/cart/checkout");
-      setBasketData([]);
-
-      
-      await refetch();
-      
-      for (const item of basketData) {
-        await deleteMutation(item.id);
-      }
     } catch (error) {
       console.error("Error processing checkout:", error);
     }
@@ -103,7 +91,7 @@ const CartSection = () => {
         <div className={scss.content}>
           <h1>Корзина</h1>
 
-          {basketData.length > 0 ? (
+          {!isLoading && basketData && basketData.length > 0 ? (
             <div className={scss.block}>
               <div className={scss.block_left}>
                 <div className={scss.table}>

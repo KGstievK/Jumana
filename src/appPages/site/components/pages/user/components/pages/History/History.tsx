@@ -7,7 +7,7 @@ import OrderStatusModal from "./OrderStatusModal";
 
 const History = () => {
   const { data } = useGetOrderQuery();
-  console.log("🚀 ~ History ~ data:", data)
+  console.log("🚀 ~ History ~ data:", data);
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -85,7 +85,7 @@ const History = () => {
         <OrderStatusModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          order_status={selectedOrder}
+          order_status={{ ...selectedOrder, order_status: selectedOrder.order_status as OrderStatus }}
         />
       )}
     </div>

@@ -31,7 +31,7 @@ interface Cart {
 }
 
 interface IOrder {
-  order_status: OrderStatus; 
+  order_status: OrderStatus;
   date: string;
   cart: Cart;
 }
@@ -39,13 +39,13 @@ interface IOrder {
 interface OrderStatusModalProps {
   isOpen: boolean;
   onClose: () => void;
-  orderData: IOrder;
+  order_status: IOrder; // Изменил orderData на order_status
 }
 
 const OrderStatusModal = ({
   isOpen,
   onClose,
-  orderData,
+  order_status, // Используем order_status вместо orderData
 }: OrderStatusModalProps) => {
   if (!isOpen) return null;
 
@@ -105,7 +105,7 @@ const OrderStatusModal = ({
             <div
               key={index}
               className={`${styles.timelineItem} ${
-                getTimelineStatus(orderData.order_status, item.status)
+                getTimelineStatus(order_status.order_status, item.status)
                   ? styles.active
                   : ""
               }`}
@@ -118,34 +118,34 @@ const OrderStatusModal = ({
 
         <div className={styles.orderInfo}>
           <p>
-            {orderData.order_status === "Oбработка"
+            {order_status.order_status === "Oбработка"
               ? "Ваш заказ обрабатывается."
-              : orderData.order_status === "заказ собирается"
+              : order_status.order_status === "заказ собирается"
               ? "Ваш заказ собирается."
-              : orderData.order_status === "в процессе  доставки"
+              : order_status.order_status === "в процессе  доставки"
               ? "Ваш заказ в пути."
-              : orderData.order_status === "Доставлен"
+              : order_status.order_status === "Доставлен"
               ? "Ваш заказ доставлен"
-              : orderData.order_status === "Отменен"
+              : order_status.order_status === "Отменен"
               ? "Ваш заказ отменен."
               : "доставка"}
           </p>
           <div className={styles.orderDetails}>
             <div>
               <span>Дата заказа</span>
-              <p>{orderData.date}</p>
+              <p>{order_status.date}</p>
             </div>
             <div>
               <span>Всего</span>
-              <p>{orderData.cart.total_price} c</p>
+              <p>{order_status.cart.total_price} c</p>
             </div>
             <div>
               <span>Номер заказа</span>
-              <p>#{orderData.cart.user}</p>
+              <p>#{order_status.cart.user}</p>
             </div>
           </div>
           <div className={styles.orderItems}>
-            {orderData.cart.cart_items.map((item, idx) => {
+            {order_status.cart.cart_items.map((item, idx) => {
               const selectedImage = item.clothes.clothes_img.find(
                 (img) => img.id === item.color
               );

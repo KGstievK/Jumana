@@ -190,6 +190,15 @@ interface IOrderPost {
   city: string;
   address: string;
 }
+
+type OrderStatus =
+  | "Oбработка"
+  | "заказ собирается"
+  | "в процессе  доставки"
+  | "Доставлен"
+  | "Отменен";
+
+
 interface IOrder {
   id: number;
   cart: {
@@ -225,12 +234,12 @@ interface IOrder {
   address: string;
 }
 interface Pay {
-  whatsapp: string
+  whatsapp: string;
   pay_title: Array<{
-    pay_img: string
-    number: string
-    info: string
-  }>
+    pay_img: string;
+    number: string;
+    info: string;
+  }>;
 }
 
 interface SingleProductData {
@@ -369,9 +378,57 @@ interface GetFavorites {
 }
 
 interface firstSection {
-  img1: string;
-  img2: string;
-  img3: string;
   made: string;
   title: string;
+  clothes1: {
+    id: number;
+    promo_category: Array<{
+      promo_category: string;
+    }>;
+    clothes_name: string;
+    price: number;
+    discount_price: number;
+    size: Array<string>;
+    average_rating: number;
+    created_date: string;
+    clothes_img: Array<{
+      id: number;
+      photo: string;
+      color: string;
+    }>;
+  };
+  clothes2: {
+    id: number;
+    promo_category: Array<{
+      promo_category: string;
+    }>;
+    clothes_name: string;
+    price: number;
+    discount_price: number;
+    size: Array<string>;
+    average_rating: number;
+    created_date: string;
+    clothes_img: Array<{
+      id: number;
+      photo: string;
+      color: string;
+    }>;
+  };
+  clothes3: {
+    id: number;
+    promo_category: Array<{
+      promo_category: string;
+    }>;
+    clothes_name: string;
+    price: number;
+    discount_price: number;
+    size: Array<string>;
+    average_rating: number;
+    created_date: string;
+    clothes_img: Array<{
+      id: number;
+      photo: string;
+      color: string;
+    }>;
+  };
 }

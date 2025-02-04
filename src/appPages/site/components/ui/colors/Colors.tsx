@@ -34,7 +34,6 @@ const ColorsClothes: FC<IPropsColors> = ({ clothesImg, onClick }) => {
       золотой: "gold",
       серебряный: "silver",
       бордовый: "maroon",
-
       // Добавляем английские названия
       gray: "gray",
       brown: "brown",

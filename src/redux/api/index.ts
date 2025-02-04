@@ -8,20 +8,17 @@ const baseQuery = fetchBaseQuery({
 	baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
 	prepareHeaders: (headers) => {
 		let token = null;
-		const localStorageData = JSON.parse(localStorage.getItem('accessToken')!);
-		const SessionStorageData = JSON.parse(sessionStorage.getItem('accessToken')!);
-		if (localStorageData) {
-			const { access } = localStorageData;
-			token = access;
-		}
-		if (SessionStorageData) {
-			const { access } = SessionStorageData;
-			token = access;
-		}
-		if (token) {
-			headers.set('Authorization', `Bearer ${token}`);
-		}
-		return headers;
+		if (typeof window !== "undefined") {  // Убедимся, что код выполняется на клиенте
+      const localStorageData = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const SessionStorageData = JSON.parse(sessionStorage.getItem("accessToken") || "null");
+
+      token = SessionStorageData?.access || localStorageData?.access || null;
+    }
+
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
 	}
 });
 

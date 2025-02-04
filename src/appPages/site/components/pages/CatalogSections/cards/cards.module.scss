@@ -12,7 +12,7 @@
       gap: 20px;
       flex-wrap: wrap;
       .card {
-        max-width: clamp(150px, 20vw, 350px);
+        max-width: 325px;
         width: 100%;
         background: #fff;
         cursor: pointer;
@@ -111,6 +111,7 @@
         align-items: start;
         justify-content: space-between;
         .card {
+          width: 160px;
           margin-bottom: 10px;
           .blockImg {
             .mainImg {
