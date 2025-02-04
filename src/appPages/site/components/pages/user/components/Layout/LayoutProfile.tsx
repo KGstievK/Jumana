@@ -8,14 +8,13 @@ interface LayoutProfileProps {
   children: ReactNode;
 }
 
-
 interface pathProps {
-  label: string
-  path: string
+  label: string;
+  path: string;
 }
 
 const LayoutProfile: FC<LayoutProfileProps> = ({ children }) => {
-  const [path, setPath] = useState<pathProps>()
+  const [path, setPath] = useState<pathProps>();
   const pathname = usePathname();
   const tabs = [
     { label: "Личный Кабинет", path: "/profile" },
@@ -31,7 +30,7 @@ const LayoutProfile: FC<LayoutProfileProps> = ({ children }) => {
     { label: "Выйти", path: "/profile/logout" },
   ];
 
-    // setPath(tabsMobile.map((el) => pathname === "/profile" ? el.path : ''))
+  // setPath(tabsMobile.map((el) => pathname === "/profile" ? el.path : ''))
 
   return (
     <div className={scss.LayoutProfile}>
@@ -41,41 +40,45 @@ const LayoutProfile: FC<LayoutProfileProps> = ({ children }) => {
           <span>/</span>Профиль <span>/</span>
           {tabs.map((iten) => (pathname === iten.path ? iten.label : ""))}
         </p>
-        <p className={scss.mobile} >
+        <p className={scss.mobile}>
           <Link href="/">Главная</Link>
-          <span>/</span><Link href="/profile">Профиль</Link><span>/</span>{tabsMobile.map((iten) => (pathname === "/profile" ? '' : pathname === iten.path ? iten.label : null))}
+          <span>/</span>
+          <Link href="/profile">Профиль</Link>
+          <span>/</span>
+          {tabsMobile.map((iten) =>
+            pathname === "/profile"
+              ? ""
+              : pathname === iten.path
+              ? iten.label
+              : null
+          )}
         </p>
         <div className={scss.content}>
-          <div className={scss.headerMobile}
+          <div
+            className={scss.headerMobile}
             style={{
-              display: pathname === '/profile'
-                ? ""
-                : "none",
+              display: pathname === "/profile" ? "" : "none",
             }}
           >
             <Header />
           </div>
-          <div className={scss.headerDeckstop}
+          <div
+            className={scss.headerDeckstop}
             style={{
-              display: pathname === '/profile'
-                ? ""
-                : "",
+              display: pathname === "/profile" ? "" : "",
             }}
           >
             <Header />
           </div>
-          <main className={scss.mainMobile}
+          <main
+            className={scss.mainMobile}
             style={{
-              display: pathname === '/profile'
-                ? "none"
-                : "",
+              display: pathname === "/profile" ? "none" : "",
             }}
           >
             {children}
           </main>
-          <main className={scss.mainDeckstop}>
-            {children}
-          </main>
+          <main className={scss.mainDeckstop}>{children}</main>
         </div>
       </div>
     </div>

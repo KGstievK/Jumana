@@ -46,8 +46,6 @@ const Popular = () => {
 
   const { data } = useGetAllClothesQuery();
 
-  // if (!data || data.length === 0) return null;
-
   const [postToFavorite] = usePostToFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
 
@@ -92,6 +90,10 @@ const Popular = () => {
       console.error("Favori işlemi başarısız:", error);
     }
   };
+
+  if (!newArrivals || newArrivals.length === 0) {
+    return null;
+  }
 
   return (
     <section className={scss.Popular}>
