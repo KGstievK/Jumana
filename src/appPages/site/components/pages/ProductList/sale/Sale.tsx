@@ -84,6 +84,10 @@ const SalePage = () => {
     }
   };
 
+  if (!newArrivals || newArrivals.length === 0) {
+    return null;
+  }
+
   return (
     <div id={scss.Cards}>
       <div className="container">
