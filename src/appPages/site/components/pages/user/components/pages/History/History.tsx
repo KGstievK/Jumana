@@ -34,7 +34,8 @@ interface IOrder {
 }
 
 const mapToOrderStatus = (status: string): OrderStatus => {
-  switch (status.toLowerCase()) {
+  const normalizedStatus = status.toLowerCase();
+  switch (normalizedStatus) {
     case "обработка":
       return "Обработка";
     case "заказ собирается":
@@ -46,13 +47,13 @@ const mapToOrderStatus = (status: string): OrderStatus => {
     case "отменен":
       return "Отменен";
     default:
-      throw new Error(`Неизвестный статус: ${status}`);
+      console.warn(`Неизвестный статус: ${status}`);
+      return "Обработка"; // Вернем статус по умолчанию
   }
 };
 
 const History = () => {
   const { data } = useGetOrderQuery();
-  console.log("🚀 ~ History ~ data:", data);
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("current");

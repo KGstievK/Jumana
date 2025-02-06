@@ -55,10 +55,10 @@ const SignInPage: FC = () => {
           placeholder="User Name"
           {...register("username", { required: true })}
           aria-invalid={errors.username ? "true" : "false"}
-          />
-          {errors.username?.type === "required" && (
-            <p role="alert">*Введите имя пользователя</p>
-          )}
+        />
+        {errors.username?.type === "required" && (
+          <p role="alert">*Введите имя пользователя</p>
+        )}
 
         <input
           type="password"
@@ -66,7 +66,7 @@ const SignInPage: FC = () => {
           {...register("password", { required: true })}
           aria-invalid={errors.password ? "true" : "false"}
         />
-         {errors.password && <p role="alert">*Введите пароль</p>}
+        {errors.password && <p role="alert">*Введите пароль</p>}
         <div className={scss.links}>
           <ConfigProvider
             theme={{

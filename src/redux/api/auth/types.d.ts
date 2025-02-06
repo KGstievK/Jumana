@@ -1,26 +1,25 @@
 namespace AUTH {
   type GetResponse = {
-    id: number
-    username: string
+    id: number;
+    username: string;
     first_name: string;
     last_name: string;
-    email: string
+    email: string;
     address: string;
     number: string;
   }[];
   type GetRequest = void;
 
-  type PutMeResponse = {
-  }
+  type PutMeResponse = {};
   type PutMeRequest = {
-    id: number
-    username: string
+    id: number;
+    username: string;
     first_name: string;
     last_name: string;
-    email: string
+    email: string;
     address: string;
     number: string;
-  }
+  };
 
   type PostLoginResponse = {
     access: string;
@@ -43,8 +42,7 @@ namespace AUTH {
     confirm_password: string;
   };
 
-  type PostLogoutResponse = {
-  };
+  type PostLogoutResponse = {};
   type PostLogoutRequest = void;
 
   type PatchRefreshResponse = {
@@ -52,7 +50,7 @@ namespace AUTH {
     refresh: string;
   };
   type PatchRefreshRequest = {
-    refresh: string
+    refresh: string;
   };
 
   type PostForgotPasswordResponse = {
