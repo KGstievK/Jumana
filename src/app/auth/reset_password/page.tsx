@@ -1,10 +1,10 @@
 'use client'
-import ResetPasswordPage from "@/appPages/auth/components/pages/ResetPasswordPage";
+// import ResetPasswordPage from "@/appPages/auth/components/pages/ResetPasswordPage";
 
 const page = () => {
   return (
     <div>
-      <ResetPasswordPage/>
+      {/* <ResetPasswordPage/> */}
     </div>
   );
 };

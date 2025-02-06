@@ -62,6 +62,10 @@ const CheckoutSection = () => {
   } = useForm<IOrderPost>({
     mode: "onChange",
   });
+
+  const TelegramToken = process.env.NEXT_PUBLIC_TELEGRAM_TOKEN;
+  const TelegramChat = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
+
   const [step, setStep] = useState(1);
   const { data: check } = useGetOrderQuery();
   console.log("🚀 ~ CheckoutSection ~ check:", check);
@@ -74,9 +78,6 @@ const CheckoutSection = () => {
       setBasketData(cart[0].cart_items);
     }
   }, [cart]);
-
-  const TelegramToken = process.env.TELEGRAM_TOKEN
-  const TelegramChat = process.env.TELEGRAM_CHAT_ID
 
   const totalPrice = cart && Array.isArray(cart) && cart[0]?.total_price;
 
@@ -133,27 +134,44 @@ const CheckoutSection = () => {
       address: data.address,
     };
 
+    const messageModel = (data: IOrderPost) => {
+      let messageTG = `Кто получатель: <b>${data.first_name}</b>\n`;
+      messageTG += `Аккаунт получателя: <b>${cart[0].user}</b>\n`;
+      messageTG += `Продукт: 
+        название: <b>${cart[0].cart_items.map((e) => e.clothes.clothes_name)}</b>\n
+        цвет: <b>${cart[0].cart_items.map((e) => e.color)}</b>\n
+        размер: <b>${cart[0].cart_items.map((e) => e.size)}</b>\n
+        количество: <b>${cart[0].cart_items.map((e) => e.quantity)}</b>\n
+        единица стоимости: <b>${cart[0].cart_items.map(
+            (e) => e.price_clothes
+          )}</b>\n
+        `;
+      messageTG += `Стоимость: <b>${cart[0].total_price}</b>\n`;
+      messageTG += `Способ получения: <b>${data.delivery}</b>\n`;
+      messageTG += `Город: <b>${data.city}</b>\n`;
+      messageTG += `Адрес: <b>${data.address}</b>\n`;
+      messageTG += `Номер Тел: <b>${data.phone_number}</b>\n`;
+      return messageTG;
+    };
+
     try {
       await postOrderMutation(orderData);
-      handleOpenModal();
-
-      const messageModel = (FormData: IOrderPost) => {
-        let messageTG = `Кто: <b>${FormData.first_name}</b>\n`;
-        messageTG += `Продукт: <b>${FormData.cart_id}</b>\n`;
-        messageTG += `Город: <b>${FormData.city}</b>\n`;
-        messageTG += `Адрес: <b>${FormData.address}</b>\n`;
-        messageTG += `Номер Тел: <b>${FormData.phone_number}</b>\n`;
-        return messageTG;
-      };
-      const message = messageModel
-      await axios.post(`https://api.telegram.org/bot${TelegramToken}/sendMessage`, {
-        chat_id: TelegramChat,
-        parse_mode: "html",
-        text: message
-      })
+      const message = messageModel(data);
+      console.log(
+        "🚀 ~ constonSubmit:SubmitHandler<IOrderPost>= ~ message:",
+        message
+      );
+      await axios.post(
+        `https://api.telegram.org/bot${TelegramToken}/sendMessage`,
+        {
+          chat_id: TelegramChat,
+          parse_mode: "html",
+          text: message,
+        }
+      );
+      console.log("Сообщение отправлено в Telegram");
     } catch (error) {
-      console.error("Order error:", error);
-      setValidationError("Произошла ошибка при оформлении заказа");
+      console.error("Ошибка при оформлении заказа", error);
     }
     console.log(
       "🚀 ~ constonSubmit:SubmitHandler<IOrderPost>= ~ orderData:",
