@@ -198,7 +198,6 @@ type OrderStatus =
   | "Доставлен"
   | "Отменен";
 
-
 interface IOrder {
   id: number;
   cart: {
@@ -206,6 +205,7 @@ interface IOrder {
     user: number;
     total_price: string;
     cart_items: Array<{
+      order_status: string;
       id: number;
       clothes: {
         clothes_name: string;

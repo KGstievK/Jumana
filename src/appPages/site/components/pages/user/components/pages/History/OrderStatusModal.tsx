@@ -8,9 +8,9 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { FaBoxOpen } from "react-icons/fa6";
 
 type OrderStatus =
-  | "Oбработка"
+  | "Обработка"
   | "заказ собирается"
-  | "в процессе  доставки"
+  | "в процессе доставки"
   | "Доставлен"
   | "Отменен";
 
@@ -39,13 +39,15 @@ interface IOrder {
 interface OrderStatusModalProps {
   isOpen: boolean;
   onClose: () => void;
-  order_status: IOrder; // Изменил orderData на order_status
+  order_status: IOrder;
 }
+
+const normalizeStatus = (status: string) => status.trim().toLowerCase();
 
 const OrderStatusModal = ({
   isOpen,
   onClose,
-  order_status, // Используем order_status вместо orderData
+  order_status,
 }: OrderStatusModalProps) => {
   if (!isOpen) return null;
 
@@ -53,21 +55,26 @@ const OrderStatusModal = ({
     currentStatus: OrderStatus,
     itemStatus: OrderStatus
   ): boolean => {
-    const statusOrder = {
-      "Oбработка": 1,
+    const statusOrder: Record<string, number> = {
+      обработка: 1,
       "заказ собирается": 2,
-      "в процессе  доставки": 3,
-      "Доставлен": 4,
-      "Отменен": 5,
+      "в процессе доставки": 3,
+      доставлен: 4,
+      отменен: 5,
     };
 
-    return statusOrder[currentStatus] >= statusOrder[itemStatus];
+    return (
+      statusOrder[normalizeStatus(currentStatus)] >=
+      statusOrder[normalizeStatus(itemStatus)]
+    );
   };
 
   const timelineItems = [
+    { icon: <FaBoxOpen />, status: "Отменен" as OrderStatus, text: "Отменен" },
+
     {
       icon: <GrBasket />,
-      status: "Oбработка" as OrderStatus,
+      status: "Обработка" as OrderStatus,
       text: "Заказ размещен",
     },
     {
@@ -77,18 +84,13 @@ const OrderStatusModal = ({
     },
     {
       icon: <TbTruckDelivery />,
-      status: "в процессе  доставки" as OrderStatus,
+      status: "в процессе доставки" as OrderStatus,
       text: "В пути",
     },
     {
       icon: <FaBoxOpen />,
       status: "Доставлен" as OrderStatus,
       text: "Доставлен",
-    },
-    {
-      icon: <FaBoxOpen />,
-      status: "Отменен" as OrderStatus,
-      text: "Отменен",
     },
   ];
 
@@ -118,14 +120,14 @@ const OrderStatusModal = ({
 
         <div className={styles.orderInfo}>
           <p>
-            {order_status.order_status === "Oбработка"
+            {order_status.order_status === "Обработка"
               ? "Ваш заказ обрабатывается."
               : order_status.order_status === "заказ собирается"
               ? "Ваш заказ собирается."
-              : order_status.order_status === "в процессе  доставки"
+              : order_status.order_status === "в процессе доставки"
               ? "Ваш заказ в пути."
               : order_status.order_status === "Доставлен"
-              ? "Ваш заказ доставлен"
+              ? "Ваш заказ доставлен."
               : order_status.order_status === "Отменен"
               ? "Ваш заказ отменен."
               : "доставка"}

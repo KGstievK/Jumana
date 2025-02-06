@@ -5,7 +5,11 @@ import bagSvg from "@/assets/icons/bag-happy.svg";
 import Image from "next/image";
 import Link from "next/link";
 import scss from "./SinglePageSection.module.scss";
-import { useAddToBasketMutation } from "@/redux/api/product";
+import {
+  useAddToBasketMutation,
+  useGetCartQuery,
+  useUpdateBasketMutation,
+} from "@/redux/api/product";
 import { useGetClothesByIdQuery } from "@/redux/api/category";
 import { useParams, useRouter } from "next/navigation";
 import ColorsClothes from "../../ui/colors/Colors";
@@ -26,9 +30,8 @@ interface clothesImg {
 
 const SinglePageSection: FC = () => {
   const id = useParams();
-
+  const { data: cart } = useGetCartQuery() as any;
   const { data } = useGetClothesByIdQuery(Number(id.single));
-  console.log("🚀 ~ data:", data);
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [value, setValue] = useState<post_cart_item>({
@@ -46,6 +49,7 @@ const SinglePageSection: FC = () => {
 
   const [count, setCounter] = useState<number>(1);
   const [addBasketMutation] = useAddToBasketMutation();
+  const [updateBasketMutation] = useUpdateBasketMutation();
   const router = useRouter();
 
   const updateValue = (key: keyof post_cart_item, newValue: any) => {
@@ -162,7 +166,6 @@ const SinglePageSection: FC = () => {
               <h5>Ткань:</h5>
               <h4>
                 {textile_clothes
-
                   .map((el: { textile_name: string }) =>
                     capitalize(el.textile_name)
                   )
@@ -205,19 +208,36 @@ const SinglePageSection: FC = () => {
                 </div>
                 <div className={scss.cart}>
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       if (!value.size || !value.color_id || !value.clothes_id) {
-                        ("Выберите размер и цвет товара!");
                         return;
                       }
 
-                      const payload = {
-                        ...value,
-                        quantity: count,
-                      };
+                      try {
+                        const sameItem = cart?.[0]?.cart_items?.find(
+                          (item: cart) =>
+                            item.clothes.clothes_name === clothes_name &&
+                            item.color === value.color_id
+                        );
 
-                      addBasketMutation(payload);
-                      router.push("/cart");
+                        if (sameItem) {
+                          await updateBasketMutation({
+                            id: sameItem.id,
+                            updateBasket: {
+                              quantity: sameItem.quantity + count,
+                            },
+                          });
+                        } else {
+                          await addBasketMutation({
+                            ...value,
+                            quantity: count,
+                          });
+                        }
+
+                        router.push("/cart");
+                      } catch (error) {
+                        console.error("Error adding to cart:", error);
+                      }
                     }}
                   >
                     В корзинку
