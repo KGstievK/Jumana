@@ -5,10 +5,17 @@ import Image from "next/image";
 import { useGetOrderQuery } from "@/redux/api/product";
 import OrderStatusModal from "./OrderStatusModal";
 
+type OrderStatus =
+  | "Обработка"
+  | "заказ собирается"
+  | "в процессе доставки"
+  | "Доставлен"
+  | "Отменен";
+
 interface IOrder {
   id: number;
   date: string;
-  order_status: string;
+  order_status: string; // Здесь статус приходит как строка
   cart: {
     user: number;
     total_price: string;
@@ -26,8 +33,26 @@ interface IOrder {
   };
 }
 
+const mapToOrderStatus = (status: string): OrderStatus => {
+  switch (status.toLowerCase()) {
+    case "обработка":
+      return "Обработка";
+    case "заказ собирается":
+      return "заказ собирается";
+    case "в процессе доставки":
+      return "в процессе доставки";
+    case "доставлен":
+      return "Доставлен";
+    case "отменен":
+      return "Отменен";
+    default:
+      throw new Error(`Неизвестный статус: ${status}`);
+  }
+};
+
 const History = () => {
   const { data } = useGetOrderQuery();
+  console.log("🚀 ~ History ~ data:", data);
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("current");
@@ -42,25 +67,32 @@ const History = () => {
     setSelectedOrder(null);
   };
 
-  const filteredOrders = data?.filter((order) =>
-    filter === "current"
-      ? !["delivered", "cancelled"].includes(order.order_status)
-      : order.order_status === "delivered"
+  const deliveredOrders = data?.filter(
+    (order) => order.order_status.toLowerCase() === "доставлен"
   );
 
-  const currentCount =
-    data?.filter(
-      (order) => !["delivered", "cancelled"].includes(order.order_status)
-    ).length || 0;
+  const currentOrders = data?.filter(
+    (order) =>
+      !["доставлен", "отменен"].includes(order.order_status.toLowerCase())
+  );
 
-  const deliveredCount =
-    data?.filter((order) => order.order_status === "delivered").length || 0;
+  const filteredOrders =
+    filter === "current"
+      ? currentOrders?.map((order) => ({
+          ...order,
+          cart: {
+            ...order.cart,
+            cart_items: order.cart.cart_items.filter(
+              (item) => item.order_status !== "Доставлен"
+            ),
+          },
+        }))
+      : deliveredOrders;
 
   return (
     <div className={styles.History}>
       <h2>История заказов</h2>
       <p>Отслеживание, возврат или покупка товаров</p>
-
       <div className={styles.tabs}>
         <div
           className={`${styles.tab} ${
@@ -68,7 +100,8 @@ const History = () => {
           }`}
           onClick={() => setFilter("current")}
         >
-          Текущий <span className={styles.count}>{currentCount}</span>
+          Текущий
+          <span className={styles.count}>{currentOrders?.length || 0}</span>
         </div>
         <div
           className={`${styles.tab} ${
@@ -76,7 +109,8 @@ const History = () => {
           }`}
           onClick={() => setFilter("delivered")}
         >
-          Доставлен <span className={styles.count}>{deliveredCount}</span>
+          Доставлен
+          <span className={styles.count}>{deliveredOrders?.length || 0}</span>
         </div>
       </div>
 
@@ -103,13 +137,11 @@ const History = () => {
                 <button onClick={() => handleOpenModal(el)}>Подробнее</button>
               </div>
             </div>
-
             <div className={styles.order_items}>
               {el.cart.cart_items.map((item, idx) => {
                 const selectedImage = item.clothes.clothes_img.find(
                   (img) => img.id === item.color
                 );
-
                 return (
                   <div key={idx} className={styles.item}>
                     <Image
@@ -132,7 +164,7 @@ const History = () => {
           onClose={handleCloseModal}
           order_status={{
             ...selectedOrder,
-            order_status: selectedOrder.order_status as OrderStatus,
+            order_status: mapToOrderStatus(selectedOrder.order_status), // Используем функцию преобразования
           }}
         />
       )}
