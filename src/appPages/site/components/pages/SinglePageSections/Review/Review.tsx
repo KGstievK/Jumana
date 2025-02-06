@@ -107,7 +107,7 @@ const Review = () => {
                                 ? item.author.first_name
                                 : "Anonymous user"}
                             </h2>
-                            <h4>{formatDate(item.created_date)}</h4>
+                            <h4>{formatDate(item.created_date)} г</h4>
                           </div>
                           <button>
                             <span>
