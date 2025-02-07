@@ -90,6 +90,10 @@ const api = index.injectEndpoints({
         url: `/order/create/`,
         method: `POST`,
         body: data,
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
       }),
     }),
 

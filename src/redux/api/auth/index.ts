@@ -25,6 +25,7 @@ const api = index.injectEndpoints({
         url: "/register/",
         method: "POST",
         body: data,
+
       }),
       invalidatesTags: ["auth"],
     }),
@@ -56,30 +57,48 @@ const api = index.injectEndpoints({
       }),
       invalidatesTags: ["auth"],
     }),
-    postForgotPassword: build.mutation<
+    postPasswordReset: build.mutation<
       AUTH.PostForgotPasswordResponse,
       AUTH.PostForgotPasswordRequest
     >({
       query: (data) => ({
-        url: "/auth/forgot",
+        url: "/password_reset/",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    postVerifyResetCode: build.mutation<
+    AUTH.PostVerifyResetCodeResponse,
+    AUTH.PostVerifyResetCodeRequest
+    >({
+      query: (data) => ({
+        url: "/password_reset/verify_code/",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    postValidateToken: build.mutation<AUTH.PostValidateTokenResponse, AUTH.PostValidateTokenRequest>({
+      query: (data) => ({
+        url: "/password_reset/validate_token/",
         method: "POST",
         body: data,
       }),
       invalidatesTags: ["auth"],
     }),
-    patchResetPassword: build.mutation<
-      AUTH.PatchResetPasswordResponse,
-      AUTH.PatchResetPasswordRequest
+
+    postConfirmReset: build.mutation<
+      AUTH.PostConfirmResetResponse,
+      AUTH.PostConfirmResetRequest
     >({
       query: (data) => ({
-        url: "/auth/reset-password",
-        method: "PATCH",
+        url: "/password_reset/confirm/",
+        method: "POST",
         body: data,
       }),
-      invalidatesTags: ["auth"],
     }),
   }),
 });
+
 export const {
   useGetMeQuery,
   usePutMeMutation,
@@ -87,6 +106,9 @@ export const {
   usePostRegistrationMutation,
   usePostLogoutMutation,
   usePatchRefreshTokenMutation,
-  usePatchResetPasswordMutation,
-  usePostForgotPasswordMutation,
+
+  usePostPasswordResetMutation,
+  usePostVerifyResetCodeMutation,
+  usePostValidateTokenMutation,
+  usePostConfirmResetMutation,
 } = api;

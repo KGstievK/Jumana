@@ -1,14 +1,14 @@
 // import scss from './ResetPasswordPage.module.scss'
 // import Image from 'next/image'
 // import { SubmitHandler, useForm } from 'react-hook-form';
-// import { usePatchResetPasswordMutation,  } from '@/redux/api/auth';
+// // import { usePatchResetPasswordMutation,  } from '@/redux/api/auth';
 // import { useState } from 'react';
 // import logo from "@/assets/icons/logo.svg";
 // import Link from 'next/link';
 
 
 // const ResetPasswordPage = () => {
-//   const [PatchResetPasswordMutation] = usePatchResetPasswordMutation();
+//   // const [PatchResetPasswordMutation] = ();
 
 //   const { register, watch, handleSubmit } = useForm<AUTH.PatchResetPasswordRequest>();
 

@@ -54,18 +54,36 @@ namespace AUTH {
   };
 
   type PostForgotPasswordResponse = {
-    message: string;
+    status: string;
   };
   type PostForgotPasswordRequest = {
     email: string;
-    frontEndUrl: string;
   };
 
-  type PatchResetPasswordResponse = {
-    // message: string;
+  type PostVerifyResetCodeRequest = {
+    email: string;
+    reset_code: string;
+    new_password: string;
   };
-  type PatchResetPasswordRequest = {
-    access: string;
-    newPassword: string;
+
+  type PostVerifyResetCodeResponse = {
+    email: string;
+    reset_code: string;
+    new_password: string;
+  };
+
+  type PostValidateTokenResponse = {
+    status: string
+  }
+  
+  type PostValidateTokenRequest = {
+    token: string
+  }
+
+  type PostConfirmResetResponse = {
+    status: string
+  };
+  type PostConfirmResetRequest = {
+    password: string; token: string
   };
 }
