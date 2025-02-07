@@ -25,6 +25,7 @@ const api = index.injectEndpoints({
         url: "/register/",
         method: "POST",
         body: data,
+
       }),
       invalidatesTags: ["auth"],
     }),
@@ -82,7 +83,9 @@ const api = index.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["auth"],
     }),
+
     postConfirmReset: build.mutation<
       AUTH.PostConfirmResetResponse,
       AUTH.PostConfirmResetRequest
@@ -103,6 +106,7 @@ export const {
   usePostRegistrationMutation,
   usePostLogoutMutation,
   usePatchRefreshTokenMutation,
+
   usePostPasswordResetMutation,
   usePostVerifyResetCodeMutation,
   usePostValidateTokenMutation,
