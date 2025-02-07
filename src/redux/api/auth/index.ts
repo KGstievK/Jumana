@@ -1,92 +1,92 @@
-  import { api as index } from "..";
+import { api as index } from "..";
 
-  const api = index.injectEndpoints({
-    endpoints: (build) => ({
-      getMe: build.query<AUTH.GetResponse, AUTH.GetRequest>({
-        query: () => ({
-          url: `/profile/`,
-          method: "GET",
-        }),
-        providesTags: ["auth"],
+const api = index.injectEndpoints({
+  endpoints: (build) => ({
+    getMe: build.query<AUTH.GetResponse, AUTH.GetRequest>({
+      query: () => ({
+        url: `/profile/`,
+        method: "GET",
       }),
-      postLogin: build.mutation<AUTH.PostLoginResponse, AUTH.PostLoginRequest>({
-        query: (data) => ({
-          url: "/login/",
-          method: "POST",
-          body: data,
-        }),
-        invalidatesTags: ["auth"],
+      providesTags: ["auth"],
+    }),
+    postLogin: build.mutation<AUTH.PostLoginResponse, AUTH.PostLoginRequest>({
+      query: (data) => ({
+        url: "/login/",
+        method: "POST",
+        body: data,
       }),
-      postRegistration: build.mutation<
+      invalidatesTags: ["auth"],
+    }),
+    postRegistration: build.mutation<
       AUTH.PostRegistrationResponse,
       AUTH.PostRegistrationRequest
-      >({
-        query: (data) => ({
-          url: "/register/",
-          method: "POST",
-          body: data,
-        }),
-        invalidatesTags: ["auth"],
+    >({
+      query: (data) => ({
+        url: "/register/",
+        method: "POST",
+        body: data,
       }),
-      postLogout: build.mutation<AUTH.PostLogoutResponse, AUTH.PostLogoutRequest>(
-        {
-          query: () => ({
-            url: "/logout/",
-            method: "POST",
-          }),
-          invalidatesTags: ["auth"],
-        }
-      ),
-      putMe: build.mutation<AUTH.PutMeResponse, AUTH.PutMeRequest>({
-        query: ({id, ...data}) => ({
-          url: `/profile/${id}/`,
-          method: "PUT",
-          body: data,
-        }),
-        invalidatesTags: ["auth"],
-      }),
-      patchRefreshToken: build.mutation<
-        AUTH.PatchRefreshResponse,
-        AUTH.PatchRefreshRequest
-      >({
-        query: (data) => ({
-          url: "/api/token/refresh/",
-          method: "POST",
-          body: data,
-        }),
-        invalidatesTags: ["auth"],
-      }),
-      postForgotPassword: build.mutation<
-        AUTH.PostForgotPasswordResponse,
-        AUTH.PostForgotPasswordRequest
-      >({
-        query: (data) => ({
-          url: "/auth/forgot",
-          method: "POST",
-          body: data,
-        }),
-        invalidatesTags: ["auth"],
-      }),
-      patchResetPassword: build.mutation<
-        AUTH.PatchResetPasswordResponse,
-        AUTH.PatchResetPasswordRequest
-      >({
-        query: (data) => ({
-          url: "/auth/reset-password",
-          method: "PATCH",
-          body: data,
-        }),
-        invalidatesTags: ["auth"],
-      }),
+      invalidatesTags: ["auth"],
     }),
-  });
-  export const {
-    useGetMeQuery,
-    usePutMeMutation,
-    usePostLoginMutation,
-    usePostRegistrationMutation,
-    usePostLogoutMutation,
-    usePatchRefreshTokenMutation,
-    usePatchResetPasswordMutation,
-    usePostForgotPasswordMutation,
-  } = api;
+    postLogout: build.mutation<AUTH.PostLogoutResponse, AUTH.PostLogoutRequest>(
+      {
+        query: () => ({
+          url: "/logout/",
+          method: "POST",
+        }),
+        invalidatesTags: ["auth"],
+      }
+    ),
+    putMe: build.mutation<AUTH.PutMeResponse, AUTH.PutMeRequest>({
+      query: ({ id, ...data }) => ({
+        url: `/profile/${id}/`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+    patchRefreshToken: build.mutation<
+      AUTH.PatchRefreshResponse,
+      AUTH.PatchRefreshRequest
+    >({
+      query: (data) => ({
+        url: "/api/token/refresh/",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+    postForgotPassword: build.mutation<
+      AUTH.PostForgotPasswordResponse,
+      AUTH.PostForgotPasswordRequest
+    >({
+      query: (data) => ({
+        url: "/auth/forgot",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+    patchResetPassword: build.mutation<
+      AUTH.PatchResetPasswordResponse,
+      AUTH.PatchResetPasswordRequest
+    >({
+      query: (data) => ({
+        url: "/auth/reset-password",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+  }),
+});
+export const {
+  useGetMeQuery,
+  usePutMeMutation,
+  usePostLoginMutation,
+  usePostRegistrationMutation,
+  usePostLogoutMutation,
+  usePatchRefreshTokenMutation,
+  usePatchResetPasswordMutation,
+  usePostForgotPasswordMutation,
+} = api;
