@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import styles from "./History.module.scss";
 import Image from "next/image";
@@ -48,7 +47,7 @@ const mapToOrderStatus = (status: string): OrderStatus => {
       return "Отменен";
     default:
       console.warn(`Неизвестный статус: ${status}`);
-      return "Обработка"; // Вернем статус по умолчанию
+      return "Обработка";
   }
 };
 
@@ -162,10 +161,10 @@ const History = () => {
       {selectedOrder && (
         <OrderStatusModal
           isOpen={isModalOpen}
-          onClose={handleCloseModal}
+          inClose={handleCloseModal}
           order_status={{
             ...selectedOrder,
-            order_status: mapToOrderStatus(selectedOrder.order_status), // Используем функцию преобразования
+            order_status: mapToOrderStatus(selectedOrder.order_status)
           }}
         />
       )}

@@ -114,6 +114,7 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
       case "/profile/favorite":
       case "/profile/history":
       case "/cart":
+      case "/cart/checkout":
         if (status === "rejected") {
           router.push("/auth/sign-in");
         }

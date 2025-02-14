@@ -137,30 +137,30 @@ const CheckoutSection = () => {
     const messageModel = (data: IOrderPost) => {
       let messageTG = `Кто получатель: <b>${data.first_name}</b>\n`;
       messageTG += `Аккаунт получателя: <b>${cart[0].user}</b>\n`;
-      messageTG += `Продукт: 
-        название: <b>${cart[0].cart_items.map((e) => e.clothes.clothes_name)}</b>\n
-        цвет: <b>${cart[0].cart_items.map((e) => e.color)}</b>\n
-        размер: <b>${cart[0].cart_items.map((e) => e.size)}</b>\n
-        количество: <b>${cart[0].cart_items.map((e) => e.quantity)}</b>\n
-        единица стоимости: <b>${cart[0].cart_items.map(
-            (e) => e.price_clothes
-          )}</b>\n
-        `;
-      messageTG += `Стоимость: <b>${cart[0].total_price}</b>\n`;
-      messageTG += `Способ получения: <b>${data.delivery}</b>\n`;
-      messageTG += `Город: <b>${data.city}</b>\n`;
-      messageTG += `Адрес: <b>${data.address}</b>\n`;
-      messageTG += `Номер Тел: <b>${data.phone_number}</b>\n`;
+      messageTG += `Продукт:\n`;
+
+      cart[0].cart_items.forEach((e, index) => {
+        messageTG += `\n🔹 <b>Товар ${index + 1}</b>\n`;
+        messageTG += `Название: <b>${e.clothes.clothes_name}</b>\n`;
+        messageTG += `Цвет: <b>${e.color}</b>\n`;
+        messageTG += `Размер: <b>${e.size}</b>\n`;
+        messageTG += `Количество: <b>${e.quantity}</b>\n`;
+        messageTG += `Цена за шт: <b>${e.price_clothes}</b>\n`;
+      });
+
+      messageTG += `\n💰 Итоговая стоимость: <b>${cart[0].total_price}</b>\n`;
+      messageTG += `📦 Способ получения: <b>${data.delivery}</b>\n`;
+      messageTG += `🏙 Город: <b>${data.city}</b>\n`;
+      messageTG += `📍 Адрес: <b>${data.address}</b>\n`;
+      messageTG += `📞 Номер Тел: <b>${data.phone_number}</b>\n`;
       return messageTG;
     };
 
     try {
       await postOrderMutation(orderData);
       const message = messageModel(data);
-      console.log(
-        "🚀 ~ constonSubmit:SubmitHandler<IOrderPost>= ~ message:",
-        message
-      );
+
+      // Отправка сообщения в Telegram
       await axios.post(
         `https://api.telegram.org/bot${TelegramToken}/sendMessage`,
         {
@@ -169,14 +169,35 @@ const CheckoutSection = () => {
           text: message,
         }
       );
+
       console.log("Сообщение отправлено в Telegram");
+
+      // Отправка фотографий товаров
+      for (const item of cart[0].cart_items) {
+        const imageUrl = item.clothes.clothes_img.map((el) => el.photo);
+
+        for (const url of imageUrl) {
+          await axios.post(
+            `https://api.telegram.org/bot${TelegramToken}/sendPhoto`,
+            {
+              chat_id: TelegramChat,
+              parse_mode: "html",
+              photo: url, // Убедитесь, что URL изображений начинаются с https://
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "cache-control": "no-cache",
+              },
+            }
+          ).catch(error => {
+            console.error("Ошибка при отправке фотографии в Telegram:", error.response?.data || error.message);
+          });
+        }        
+      }
     } catch (error) {
       console.error("Ошибка при оформлении заказа", error);
     }
-    console.log(
-      "🚀 ~ constonSubmit:SubmitHandler<IOrderPost>= ~ orderData:",
-      orderData
-    );
   };
 
   const handleOpenModal = () => {

@@ -1,3 +1,4 @@
+"use client"
 import History from "@/appPages/site/components/pages/user/components/pages/History/History";
 
 const page = () => {

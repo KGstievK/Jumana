@@ -206,8 +206,8 @@ const SinglePageSection: FC = () => {
                     +
                   </button>
                 </div>
-                <div className={scss.cart}>
-                  <button
+               
+                  <button className={scss.cart}
                     onClick={async () => {
                       if (!value.size || !value.color_id || !value.clothes_id) {
                         return;
@@ -241,9 +241,9 @@ const SinglePageSection: FC = () => {
                     }}
                   >
                     В корзинку
+                    <Image src={bagSvg} alt="bag" width={24} height={24} />
                   </button>
-                  <Image src={bagSvg} alt="bag" width={24} height={24} />
-                </div>
+               
               </div>
             </div>
           </div>

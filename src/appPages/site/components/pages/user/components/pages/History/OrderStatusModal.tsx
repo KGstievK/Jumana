@@ -38,7 +38,7 @@ interface IOrder {
 
 interface OrderStatusModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  inClose: () => void;
   order_status: IOrder;
 }
 
@@ -46,7 +46,7 @@ const normalizeStatus = (status: string) => status.trim().toLowerCase();
 
 const OrderStatusModal = ({
   isOpen,
-  onClose,
+  inClose,
   order_status,
 }: OrderStatusModalProps) => {
   if (!isOpen) return null;
@@ -99,7 +99,7 @@ const OrderStatusModal = ({
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
           <h3>Статус заказа</h3>
-          <button onClick={onClose}>&times;</button>
+          <button onClick={inClose}>&times;</button>
         </div>
 
         <div className={styles.statusTimeline}>
