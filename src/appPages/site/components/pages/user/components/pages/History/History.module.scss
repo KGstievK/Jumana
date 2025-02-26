@@ -67,7 +67,21 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-
+    overflow-x: hidden;
+    padding-right: 20px;
+    height: 530px;
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #d3d3d3;
+      border-radius: 10px; 
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--main-color);  
+      border-radius: 20px;
+      border: 3px solid var(--main-color);
+    }
     .order_card {
       border: 1px solid #e5e5e5;
       border-radius: 8px;

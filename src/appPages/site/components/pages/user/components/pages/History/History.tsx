@@ -114,9 +114,9 @@ const History = () => {
         </div>
       </div>
 
+        <div className={styles.content}>
       {filteredOrders?.map((el: IOrder, index: number) => (
-        <div className={styles.content} key={index}>
-          <div className={styles.order_card}>
+          <div className={styles.order_card} key={index}>
             <div className={styles.order_header}>
               <div className={styles.order_info}>
                 <div>
@@ -155,8 +155,8 @@ const History = () => {
               })}
             </div>
           </div>
-        </div>
       ))}
+        </div>
 
       {selectedOrder && (
         <OrderStatusModal
