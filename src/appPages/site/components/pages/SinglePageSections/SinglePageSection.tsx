@@ -16,6 +16,7 @@ import ColorsClothes from "../../ui/colors/Colors";
 import React, { FC, useState, useEffect } from "react";
 import Sizes from "./sizes/Sizes";
 import Review from "./Review/Review";
+import { useForm, Controller } from "react-hook-form"; // Импортируем useForm и Controller
 
 const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
@@ -28,41 +29,39 @@ interface clothesImg {
   color: string;
 }
 
+interface FormValues {
+  color_id: number;
+  size: string;
+}
+
 const SinglePageSection: FC = () => {
   const id = useParams();
   const { data: cart } = useGetCartQuery() as any;
   const { data } = useGetClothesByIdQuery(Number(id.single));
   const [selectedPhoto, setSelectedPhoto] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [value, setValue] = useState<post_cart_item>({
-    clothes: {
-      clothes_name: "",
-    },
-    clothes_id: 0,
-    quantity: 1,
-    size: "",
-    color: {
-      color: "",
-    },
-    color_id: 0,
-  });
-
   const [count, setCounter] = useState<number>(1);
   const [addBasketMutation] = useAddToBasketMutation();
   const [updateBasketMutation] = useUpdateBasketMutation();
   const router = useRouter();
 
-  const updateValue = (key: keyof post_cart_item, newValue: any) => {
-    setValue((prev) => ({ ...prev, [key]: newValue }));
-  };
+  // Инициализация react-hook-form
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue: setFormValue,
+  } = useForm<FormValues>({
+    defaultValues: {
+      color_id: 0,
+      size: "",
+    },
+  });
+  console.log("🚀 ~ errors:", errors)
 
   useEffect(() => {
     if (data?.clothes_img?.length) {
       setSelectedPhoto(data.clothes_img[0].photo);
-    }
-
-    if (data?.id) {
-      setValue((prev) => ({ ...prev, clothes_id: data.id }));
     }
   }, [data]);
 
@@ -72,12 +71,50 @@ const SinglePageSection: FC = () => {
     setCounter((prevCount) =>
       prevCount < data.quantities ? prevCount + 1 : prevCount
     );
-    updateValue("quantity", count + 1);
   };
 
   const decrementCount = () => {
     setCounter((prevCount) => (prevCount > 1 ? prevCount - 1 : prevCount));
-    updateValue("quantity", count - 1);
+  };
+
+  const onSubmit = async (formData: FormValues) => {
+    if (!formData.color_id || !formData.size) {
+      return; // Валидация уже обрабатывается react-hook-form
+    }
+
+    try {
+      const sameItem = cart?.[0]?.cart_items?.find(
+        (item: cart) =>
+          item.clothes.clothes_name === data.clothes_name &&
+          item.color === formData.color_id
+      );
+
+      if (sameItem) {
+        await updateBasketMutation({
+          id: sameItem.id,
+          updateBasket: {
+            quantity: sameItem.quantity + count,
+          },
+        });
+      } else {
+        await addBasketMutation({
+          clothes_id: data.id,
+          color_id: formData.color_id,
+          size: formData.size,
+          quantity: count,
+          clothes: {
+            clothes_name: ""
+          },
+          color: {
+            color: ""
+          }
+        });
+      }
+
+      router.push("/cart");
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
   };
 
   const {
@@ -120,10 +157,7 @@ const SinglePageSection: FC = () => {
                     el.photo === selectedPhoto ? scss.activeThumbnail : ""
                   }`}
                   onClick={() => {
-                    updateValue("color", {
-                      color: el.color,
-                    });
-                    updateValue("color_id", el.id);
+                    setFormValue("color_id", el.id); // Устанавливаем значение цвета в форму
                     setSelectedPhoto(el.photo);
                   }}
                 >
@@ -138,7 +172,7 @@ const SinglePageSection: FC = () => {
             </div>
           </div>
 
-          <div className={scss.info}>
+          <form onSubmit={handleSubmit(onSubmit)} className={scss.info}>
             <div className={scss.headLine}>
               <h3>Категория товара</h3>
               <div className={scss.mark}>
@@ -156,11 +190,13 @@ const SinglePageSection: FC = () => {
               <ColorsClothes
                 clothesImg={clothes_img}
                 onClick={(item) => {
-                  updateValue("color", { color: item.color });
-                  updateValue("color_id", item.id);
+                  setFormValue("color_id", item.id!); // Устанавливаем значение цвета в форму
                   setSelectedPhoto(item.photo);
                 }}
               />
+              {errors.color_id && (
+                <p className={scss.error} role="alert">Пожалуйста, выберите цвет</p>
+              )}
             </div>
             <div className={scss.textile}>
               <h5>Ткань:</h5>
@@ -185,10 +221,13 @@ const SinglePageSection: FC = () => {
                 }
                 selectedSize={selectedSize}
                 onClick={(size) => {
-                  updateValue("size", size);
+                  setFormValue("size", size); // Устанавливаем значение размера в форму
                   setSelectedSize(size);
                 }}
               />
+              {errors.size && (
+                <p className={scss.error} role="alert">Пожалуйста, выберите размер</p>
+              )}
             </div>
             <div className={scss.quantity}>
               <h3>Количество:</h3>
@@ -206,47 +245,13 @@ const SinglePageSection: FC = () => {
                     +
                   </button>
                 </div>
-               
-                  <button className={scss.cart}
-                    onClick={async () => {
-                      if (!value.size || !value.color_id || !value.clothes_id) {
-                        return;
-                      }
-
-                      try {
-                        const sameItem = cart?.[0]?.cart_items?.find(
-                          (item: cart) =>
-                            item.clothes.clothes_name === clothes_name &&
-                            item.color === value.color_id
-                        );
-
-                        if (sameItem) {
-                          await updateBasketMutation({
-                            id: sameItem.id,
-                            updateBasket: {
-                              quantity: sameItem.quantity + count,
-                            },
-                          });
-                        } else {
-                          await addBasketMutation({
-                            ...value,
-                            quantity: count,
-                          });
-                        }
-
-                        router.push("/cart");
-                      } catch (error) {
-                        console.error("Error adding to cart:", error);
-                      }
-                    }}
-                  >
-                    В корзинку
-                    <Image src={bagSvg} alt="bag" width={24} height={24} />
-                  </button>
-               
+                <button type="submit" className={scss.cart}>
+                  В корзинку
+                  <Image src={bagSvg} alt="bag" width={24} height={24} />
+                </button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
         <div className={scss.review}>
           <Review />

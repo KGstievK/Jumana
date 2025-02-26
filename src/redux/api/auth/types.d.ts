@@ -60,30 +60,12 @@ namespace AUTH {
     email: string;
   };
 
-  type PostVerifyResetCodeRequest = {
+  type PostResetPasswordResponse = {
+    message: string;
+  };
+  type PostResetPasswordRequest = {
     email: string;
     reset_code: string;
     new_password: string;
-  };
-
-  type PostVerifyResetCodeResponse = {
-    email: string;
-    reset_code: string;
-    new_password: string;
-  };
-
-  type PostValidateTokenResponse = {
-    status: string
-  }
-  
-  type PostValidateTokenRequest = {
-    token: string
-  }
-
-  type PostConfirmResetResponse = {
-    status: string
-  };
-  type PostConfirmResetRequest = {
-    password: string; token: string
   };
 }

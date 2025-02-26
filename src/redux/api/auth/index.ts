@@ -67,34 +67,27 @@ const api = index.injectEndpoints({
         body: data,
       }),
     }),
-    postVerifyResetCode: build.mutation<
-    AUTH.PostVerifyResetCodeResponse,
-    AUTH.PostVerifyResetCodeRequest
-    >({
-      query: (data) => ({
-        url: "/password_reset/verify_code/",
-        method: "POST",
-        body: data,
-      }),
+    postForgotPassword: build.mutation<
+    AUTH.PostForgotPasswordResponse,
+    AUTH.PostForgotPasswordRequest
+  >({
+    query: (data) => ({
+      url: "password_reset/",
+      method: "POST",
+      body: data,
     }),
-    postValidateToken: build.mutation<AUTH.PostValidateTokenResponse, AUTH.PostValidateTokenRequest>({
-      query: (data) => ({
-        url: "/password_reset/validate_token/",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["auth"],
+    invalidatesTags: ["auth"],
+  }),
+  postResetPassword: build.mutation<
+    AUTH.PostResetPasswordResponse,
+    AUTH.PostResetPasswordRequest
+  >({
+    query: (data) => ({
+      url: "password_reset/verify_code/",
+      method: "POST",
+      body: data,
     }),
-
-    postConfirmReset: build.mutation<
-      AUTH.PostConfirmResetResponse,
-      AUTH.PostConfirmResetRequest
-    >({
-      query: (data) => ({
-        url: "/password_reset/confirm/",
-        method: "POST",
-        body: data,
-      }),
+    invalidatesTags: ["auth"],
     }),
   }),
 });
@@ -108,7 +101,6 @@ export const {
   usePatchRefreshTokenMutation,
 
   usePostPasswordResetMutation,
-  usePostVerifyResetCodeMutation,
-  usePostValidateTokenMutation,
-  usePostConfirmResetMutation,
+  usePostForgotPasswordMutation,
+  usePostResetPasswordMutation,
 } = api;

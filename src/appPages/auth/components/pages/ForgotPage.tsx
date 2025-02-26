@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import logo from "@/assets/icons/logo.svg";
 import Link from "next/link";
-import { usePostPasswordResetMutation } from "@/redux/api/auth";
+import { usePostForgotPasswordMutation, usePostPasswordResetMutation } from "@/redux/api/auth";
 import { useRouter } from "next/navigation";
 
 interface RegisterType {
@@ -13,24 +13,32 @@ interface RegisterType {
 }
 
 const ForgotPage = () => {
-  const [postPasswordResetMutation] = usePostPasswordResetMutation();
-  const router = useRouter()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AUTH.PostForgotPasswordRequest>();
+  const [postForgotPassword] = usePostForgotPasswordMutation();
+  const router = useRouter();
 
-  const { register, handleSubmit } = useForm<RegisterType>();
+  const onSubmit: SubmitHandler<AUTH.PostForgotPasswordRequest> = async (
+    data
+  ) => {
+    console.log(
+      "🚀 ~ constonSubmit:SubmitHandler<IFormForgotPassword>= ~ data:",
+      data
+    );
 
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const onSubmit: SubmitHandler<RegisterType> = async (userData) => {
     try {
-      const response = await postPasswordResetMutation({ email: userData.email });
-      if ('data' in response) {
-        const storage = rememberMe ? localStorage : sessionStorage;
-        storage.setItem("resetStatus", JSON.stringify(response.data));
-      }
-    } catch (e) {
-      console.error("An error occurred:", e);
+      const response = await postForgotPassword(data).unwrap();
+      alert(response.status);
+      router.push("/auth/reset_password");
+    } catch (error: any) {
+      console.error("Ошибка запроса:", error);
+      alert(error?.data?.data?.email?.[0] || "Ошибка при отправке запроса.");
     }
   };
+
 
   return (
     <section className={scss.ForgotPage}>

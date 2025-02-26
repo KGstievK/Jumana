@@ -1,56 +1,72 @@
-// import scss from './ResetPasswordPage.module.scss'
-// import Image from 'next/image'
-// import { SubmitHandler, useForm } from 'react-hook-form';
-// // import { usePatchResetPasswordMutation,  } from '@/redux/api/auth';
-// import { useState } from 'react';
-// import logo from "@/assets/icons/logo.svg";
-// import Link from 'next/link';
+import scss from './ResetPasswordPage.module.scss'
+import Image from 'next/image'
+import { SubmitHandler, useForm } from 'react-hook-form';
+// import { usePatchResetPasswordMutation,  } from '@/redux/api/auth';
+import { useState } from 'react';
+import logo from "@/assets/icons/logo.svg";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { usePostResetPasswordMutation } from '@/redux/api/auth';
 
 
-// const ResetPasswordPage = () => {
-//   // const [PatchResetPasswordMutation] = ();
+const ResetPasswordPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AUTH.PostResetPasswordRequest>();
+  const [postResetPassword] = usePostResetPasswordMutation();
+  const router = useRouter();
 
-//   const { register, watch, handleSubmit } = useForm<AUTH.PatchResetPasswordRequest>();
-
-//   const onSubmit: SubmitHandler<AUTH.PatchResetPasswordRequest> = async (userData) => {
-//     const userDataRest = {
-//       newPassword: userData.newPassword,
-//       token: userData.access
-//     };
-
-//     try {
-//       const response = await PatchResetPasswordMutation(userDataRest);
-//       if (response.data) {
-//         // window.location.reload();
-//       }
-//     } catch (e) {
-//       console.error("An error occurred:", e);
-//     }
-//   };
+  const onSubmit: SubmitHandler<AUTH.PostResetPasswordRequest> = async (data) => {
+    try {
+      const response = await postResetPassword({
+        email: data.email,
+        reset_code: data.reset_code, // Исправлено
+        new_password: data.new_password, // Исправлено
+      }).unwrap(); // Получаем данные ответа напрямую
+      alert(response.message);
+      router.push("/");
+    } catch (error: any) {
+      console.error("Ошибка:", error);
+      alert(error?.data?.message || "Ошибка при сбросе пароля.");
+    }
+  };
   
-//   return (
-//     <section className={scss.ResetPasswordPage}>
-//       <Image src={logo} alt="LOGO" />
-//       <h1>Новый пароль</h1>
-//       <form  onSubmit={handleSubmit(onSubmit)}>
-//         <input
-//           type="text"
-//           {...register("newPassword", { required: true })}
-//           placeholder="Пароль"
-//         />
-//         <input
-//           type="text"
-//           {...register("confirmPassword", {
-//             required: true,
-//             validate: (value: string) =>
-//               value === "newPassword" || "Пароли не совпадают",
-//           })}
-//           placeholder="Повторите пароль"
-//         />
-//         <button type="submit">Войти</button>
-//       </form>
-//     </section>
-//   )
-// }
+  return (
+    <section className={scss.ResetPasswordPage}>
+      <Image src={logo} alt="LOGO" />
+      <h1>Новый пароль</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className={scss.form}>
+        <input
+          type="text"
+          placeholder="Введите новый пароль"
+          {...register("new_password", { required: "Поле обязательно" })}
+        />
+        {errors.new_password && (
+          <p className={scss.error}>{errors.new_password.message}</p>
+        )}
 
-// export default ResetPasswordPage
+        <input
+          type="text"
+          placeholder="Введите email"
+          {...register("email", { required: "Поле обязательно" })}
+        />
+        {errors.email && <p className={scss.error}>{errors.email.message}</p>}
+
+        <input
+          type="text"
+          placeholder="Введите код сброса"
+          {...register("reset_code", { required: "Поле обязательно" })}
+        />
+        {errors.reset_code && (
+          <p className={scss.error}>{errors.reset_code.message}</p>
+        )}
+
+        <button type="submit">Сбросить пароль</button>
+      </form>
+    </section>
+  )
+}
+
+export default ResetPasswordPage

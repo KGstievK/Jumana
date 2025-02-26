@@ -83,9 +83,9 @@ const SignInPage: FC = () => {
               Сохранить вход
             </Checkbox>
           </ConfigProvider>
-          {/* <Link href="/auth/forgot" className={scss.link}>
+          <Link href="/auth/forgot" className={scss.link}>
             Забыли пароль?
-          </Link> */}
+          </Link>
         </div>
         <button type="submit">Войти</button>
       </form>

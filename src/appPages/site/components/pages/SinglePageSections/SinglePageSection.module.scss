@@ -146,6 +146,11 @@
           font-weight: 400;
           color: #a73539;
         }
+        .error {
+          color: red;
+          font-size: 14px;
+          margin-top: 5px;
+        }
       }
 
       .textile {
@@ -181,7 +186,13 @@
           }
         }
       }
-
+      .sizes {
+        p.error {
+          color: red;
+          font-size: 14px;
+          margin-top: 5px;
+        }
+      }
       .quantity {
         display: flex;
         align-items: start;
